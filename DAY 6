@@ -1,0 +1,19 @@
+Array Duplicates
+
+Given an array arr of integers, find all the elements that occur more than once in the array. If no element repeats, return an empty array.
+
+
+vector<int>ans;
+        unordered_map<int,int>mp;
+        for (auto i:arr){
+            mp[i]++;
+        }
+        
+        for (auto i:mp){
+            if (i.second>1){
+                ans.push_back(i.first);
+            }
+        }
+        return ans;
+  }
+};
