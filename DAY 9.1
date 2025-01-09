@@ -1,0 +1,24 @@
+Print Anagrams Together
+
+Given an array of strings, return all groups of strings that are anagrams. The strings in each group
+must be arranged in the order of their appearance in the original array. Refer to the sample case for clarification.
+
+class Solution {
+  public:
+    vector<vector<string>> anagrams(vector<string>& arr) {
+        // code here
+        vector<vector<string>> ans;
+      unordered_map<string, vector<string>> mp;
+      for (auto str: arr){
+          string s= str;
+          sort(s.begin(), s.end());
+          mp[s].push_back(str);
+      }
+      for (auto i: mp){
+          ans.push_back(i.second);
+      }
+      return ans;
+    }
+};
+
+
