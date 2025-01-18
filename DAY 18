@@ -1,0 +1,40 @@
+Reverse a linked list
+
+
+
+
+
+
+
+
+Given the head of a linked list, the task is to reverse this list and return the reversed head.
+
+
+
+
+
+
+
+
+
+
+
+class Solution {
+  public:
+    Node* reverseList(struct Node* head) {
+        // code here
+        if(!head->next)
+        return head;
+        
+        Node *curr = head, *prev = NULL;
+        
+        while(curr) {
+            Node *fut = curr->next;
+            curr->next = prev;
+            prev = curr;
+            curr = fut;
+        }
+        
+        return prev;
+    }
+};
