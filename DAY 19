@@ -1,0 +1,48 @@
+Rotate a Linked List
+
+
+
+
+
+Given the head of a singly linked list, your task is to left rotate the linked list k times.
+
+
+
+
+
+
+
+
+class Solution {
+  public:
+    Node* rotate(Node* head, int k) {
+        // Your code here
+        
+        vector<int> arr;
+        
+        struct Node* temp = head ;
+        
+        while(temp != NULL){
+            arr.push_back(temp -> data);
+            temp = temp ->next;
+        }
+        
+        int n= arr.size();
+        k =  k%n;
+        
+        reverse(arr.begin(), arr.begin()+k);
+        reverse(arr.begin()+k , arr.end());
+        reverse(arr.begin(), arr.end());
+        
+        struct Node* head2 = new Node(arr[0]);
+        struct Node * newele = head2;
+        
+        for(int i=1; i<n; i++){
+             newele -> next = new Node(arr[i]);
+             newele = newele -> next;
+        }
+        
+        return head2;
+        
+    }
+};
