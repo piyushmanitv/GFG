@@ -1,0 +1,100 @@
+Clone List with Next and Random
+
+
+
+You are given a special linked list with n nodes where each node has two pointers a next pointer that points to the next node of the singly linked list, and a random pointer that points to the random node of the linked list.
+
+Construct a copy of this linked list. The copy should consist of the same number of new nodes, where each new node has the value corresponding to its original node. Both the next and random pointer of the new nodes should point to new nodes in the copied list, such that it also represent the same list state. None of the pointers in the new list should point to nodes in the original list.
+
+Return the head of the copied linked list.
+
+NOTE : Original linked list should remain unchanged.
+
+
+
+
+
+
+
+
+
+
+
+class Solution {
+  public:
+    Node *cloneLinkedList(Node *head) {
+        // Write your code here
+        // Map to store new nodes corresponding to
+      // their original nodes
+    unordered_map<Node*, Node*> mp;
+    Node *curr = head;
+  
+    // Traverse original linked list to store new 
+      // nodes corresponding to original linked list
+    while (curr != NULL) {
+        mp[curr] = new Node(curr->data);
+        curr = curr->next;
+    }
+    
+      curr = head;
+      
+    // Loop to update the next and random pointers 
+      // of new nodes 
+    while (curr != NULL) {
+        
+          // Update the next pointer of new node
+          mp[curr]->next = mp[curr->next];
+      
+          // Update the random pointer of new node
+          mp[curr]->random = mp[curr->random];
+      
+          curr = curr->next;
+    }
+  
+    // Return the head of the clone
+    return mp[head];
+}
+
+// Function to print the linked list
+void printList(Node* head) {
+    while (head != NULL) {
+        cout << head->data << "(";
+          if(head->random)
+              cout << head->random->data << ")";
+          else 
+              cout << "null" << ")";
+        
+          if(head->next != NULL)
+              cout << " -> ";
+        head = head->next;
+    }
+    cout << endl;
+}
+
+int main() {
+  
+    // Creating a linked list with random pointer
+    Node* head = new Node(1);
+    head->next = new Node(2);
+    head->next->next = new Node(3);
+    head->next->next->next = new Node(4);
+    head->next->next->next->next = new Node(5);
+    head->random = head->next->next;
+    head->next->random = head;
+    head->next->next->random = head->next->next->next->next;
+    head->next->next->next->random = head->next->next;
+    head->next->next->next->next->random = head->next;
+  
+    // Print the original list
+    cout << "Original linked list:\n";
+    printList(head);
+  
+    // Function call
+    Node* clonedList = cloneLinkedList(head);
+  
+    cout << "Cloned linked list:\n";
+    printList(clonedList);
+  
+    return 0;
+    }
+};
