@@ -1,0 +1,116 @@
+LRU Cache
+
+
+
+
+
+
+Design a data structure that works like a LRU Cache. Here cap denotes the capacity of the cache 
+and Q denotes the number of queries. Query can be of two types:
+
+PUT x y: sets the value of the key x with value y
+GET x: gets the key of x if present else returns -1.
+The LRUCache class has two methods get() and put() which are defined as follows.
+
+get(key): returns the value of the key if it already exists in the cache otherwise returns -1.
+put(key, value): if the key is already present, update its value. If not present, 
+add the key-value pair to the cache. If the cache reaches its capacity it should remove 
+the least recently used item before inserting the new item.
+In the constructor of the class the capacity of the cache should be initialized.
+
+
+
+
+
+
+#include <unordered_map>
+using namespace std;
+
+class LRUCache {
+private:
+    struct Node {
+        int key, value;
+        Node* prev;
+        Node* next;
+
+        Node(int k, int v) : key(k), value(v), prev(nullptr), next(nullptr) {}
+    };
+
+    int capacity;
+    unordered_map<int, Node*> cache;
+    Node* head;
+    Node* tail;
+
+    // Helper function to remove a node from the doubly linked list
+    void removeNode(Node* node) {
+        node->prev->next = node->next;
+        node->next->prev = node->prev;
+    }
+
+    // Helper function to add a node right after the head
+    void addToHead(Node* node) {
+        node->next = head->next;
+        node->prev = head;
+        head->next->prev = node;
+        head->next = node;
+    }
+
+    // Helper function to remove the least recently used node
+    void removeLeastRecentlyUsed() {
+        Node* lru = tail->prev;
+        removeNode(lru);
+        cache.erase(lru->key);
+        delete lru;
+    }
+
+    // Helper function to move a node to the head
+    void moveToHead(Node* node) {
+        removeNode(node);
+        addToHead(node);
+    }
+
+public:
+    // Constructor for initializing the cache capacity
+    LRUCache(int cap) : capacity(cap) {
+        head = new Node(-1, -1); // Dummy head
+        tail = new Node(-1, -1); // Dummy tail
+        head->next = tail;
+        tail->prev = head;
+    }
+
+    ~LRUCache() {
+        // Clean up all dynamically allocated nodes
+        Node* current = head;
+        while (current) {
+            Node* nextNode = current->next;
+            delete current;
+            current = nextNode;
+        }
+    }
+
+    // Function to return the value corresponding to the key
+    int get(int key) {
+        if (cache.find(key) == cache.end()) {
+            return -1;
+        }
+        Node* node = cache[key];
+        moveToHead(node);
+        return node->value;
+    }
+
+    // Function for storing key-value pair
+    void put(int key, int value) {
+        if (cache.find(key) != cache.end()) {
+            Node* node = cache[key];
+            node->value = value; // Update the value
+            moveToHead(node);    // Mark as recently used
+        } else {
+            if (cache.size() == capacity) {
+                removeLeastRecentlyUsed();
+            }
+            Node* newNode = new Node(key, value);
+            cache[key] = newNode;
+            addToHead(newNode);
+        }
+    }
+};
