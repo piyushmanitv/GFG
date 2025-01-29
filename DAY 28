@@ -1,0 +1,29 @@
+Permutations of a String
+
+
+
+
+
+
+Given a string s, which may contain duplicate characters, your task is 
+to generate and return an array of all unique permutations of the string. 
+You can return your answer in any order.
+
+
+
+class Solution {
+  public:
+    vector<string> findPermutation(string &s) {
+        // Code here there
+         vector<string> ans;
+        
+        string str = s;
+        
+        sort(str.begin(),str.end());
+        
+        do{
+            ans.push_back(str);
+        } while(next_permutation(str.begin(),str.end()));
+        return ans;
+    }
+};
