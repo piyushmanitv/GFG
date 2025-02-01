@@ -1,0 +1,48 @@
+Two sum -Pairs with 0 Sum
+
+
+
+
+
+
+Given an integer array arr, return all the unique 
+pairs [arr[i], arr[j]] such that i != j and arr[i] + arr[j] == 0.
+
+Note: The pairs must be returned in sorted order, 
+the solution array should also be sorted, and the answer 
+must not contain any duplicate pairs.
+
+
+
+
+
+class Solution {
+  public:
+    vector<vector<int>> getPairs(vector<int>& arr) {
+        // code here
+        int n = arr.size();
+        vector<vector<int>>result;
+        sort(arr.begin(), arr.end());
+        int i=0, j=arr.size()-1;
+        while(i<j){
+            if(arr[i]+arr[j]==0){
+                result.push_back({arr[i], arr[j]});
+                while(arr[i]==arr[i+1]){ 
+                    i++;
+                }
+                while(arr[j]==arr[j-1]){ 
+                    j--;
+                }
+                i++;
+                j--;
+            }
+            else if(arr[i]+arr[j]>0){
+                j--;
+            }
+            else{
+                i++;
+            }
+        }
+        return result;
+    }
+};
