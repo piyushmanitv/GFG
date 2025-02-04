@@ -1,0 +1,28 @@
+Diameter of a Binary Tree
+
+
+
+Given a binary tree, the diameter (also known as the width) 
+is defined as the number of edges on the longest path between 
+two leaf nodes in the tree. This path may or may not pass through
+the root. Your task is to find the diameter of the tree.
+
+
+
+
+
+class Solution {
+  public:
+    int dfs(Node* root, int& d) {
+        if (!root) return 0;
+        int l = dfs(root->left, d), r = dfs(root->right, d);
+        d = std::max(d, l + r + 1);
+        return 1 + std::max(l, r);
+    }
+
+    int diameter(Node* root) {
+        int d = 0;
+        dfs(root, d);
+        return d-1;
+    }
+};
