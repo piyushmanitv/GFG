@@ -1,0 +1,55 @@
+Construct Tree from Inorder & Preorder
+
+
+
+
+
+
+
+Given two arrays representing the inorder and preorder 
+traversals of a binary tree, construct the tree and return
+the root node of the constructed tree.
+
+Note: The output is written in postorder traversal.
+
+
+
+
+
+
+
+
+
+
+class Solution {
+public:
+    unordered_map<int, int> inorderIndex;
+    int preorderIndex = 0;
+
+    Node* buildTreeHelper(vector<int> &preorder, vector<int> &inorder, int left, int right) {
+        if (left > right) return nullptr;
+
+        int rootValue = preorder[preorderIndex++];
+        Node* root = new Node(rootValue);
+
+        int inorderPos = inorderIndex[rootValue];
+        root->left = buildTreeHelper(preorder, inorder, left, inorderPos - 1);
+        root->right = buildTreeHelper(preorder, inorder, inorderPos + 1, right);
+
+        return root;
+    }
+
+    Node* buildTree(vector<int> &inorder, vector<int> &preorder) {
+        for (int i = 0; i < inorder.size(); i++) 
+            inorderIndex[inorder[i]] = i;
+
+        return buildTreeHelper(preorder, inorder, 0, inorder.size() - 1);
+    }
+
+    void postorderTraversal(Node* root, vector<int>& postorder) {
+        if (!root) return;
+        postorderTraversal(root->left, postorder);
+        postorderTraversal(root->right, postorder);
+        postorder.push_back(root->data);
+    }
+};
