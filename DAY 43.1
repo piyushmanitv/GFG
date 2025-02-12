@@ -1,0 +1,39 @@
+Array Subset
+
+
+
+Given two arrays a[] and b[], your task is to determine whether b[] is a subset of a[].
+
+
+
+
+class Solution {
+  public:
+    // Function to check if b is a subset of a
+    bool isSubset(vector<int> &a, vector<int> &b) {
+        // Your code here.
+        sort(a.begin(), a.end());
+    sort(b.begin(), b.end());
+
+    int i = 0, j = 0;
+
+    // Traverse both arrays using two pointers
+    while (i < a.size() && j < b.size()) {
+        if (a[i] < b[j]) {
+            i++;
+        }
+        else if (a[i] == b[j]) {
+            i++;
+            j++;
+        }
+        else {
+            // If element in b is not found in a
+            return false;
+        }
+    }
+
+    // If we have traversed all elements in b, it is a
+    // subset
+    return (j == b.size());
+    }
+};
