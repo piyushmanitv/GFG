@@ -1,0 +1,33 @@
+Perfect Sum Problem
+
+
+
+Given an array arr of non-negative integers and an integer 
+target, the task is to count all subsets of the array whose 
+sum is equal to the given target.
+
+
+
+
+
+class Solution {
+  public:
+    int perfectSum(vector<int>& arr, int target) {
+        // code here
+        int n = arr.size();
+        vector<vector<int>> dp(n, vector<int>(target+1, 0));
+        for(int j = 0; j < n; j++)
+            dp[j][0] = 1;
+        if (arr[0] <= target) 
+            dp[0][arr[0]] += 1;
+        
+        for(int i = 1; i < n; i++){
+            for(int j = 0; j <= target; j++){
+                dp[i][j] = dp[i-1][j];
+            	if(j >= arr[i])
+            		dp[i][j] += dp[i-1][j-arr[i]];
+            }
+        }
+        return dp[n-1][target];
+    }
+};
