@@ -1,0 +1,24 @@
+Largest Element in Array
+
+
+Given an array arr[]. The task is to find the largest element and return it.
+
+
+
+
+class Solution {
+ public:
+    int largest(vector<int>& arr) {
+        if (arr.empty()) {
+            return -1; 
+        }
+
+        int ans = arr[0]; 
+
+        for (int x : arr) {
+            ans = max(ans, x);  
+        }
+
+        return ans;
+    }
+}; 
