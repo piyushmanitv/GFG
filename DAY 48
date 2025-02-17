@@ -1,0 +1,22 @@
+k largest elements
+
+
+Given an array arr[] of positive integers and an integer k, 
+Your task is to return k largest elements in decreasing order. 
+
+
+
+class Solution {
+  public:
+    vector<int> kLargest(vector<int>& arr, int k) {
+       vector<int>ans;
+       sort(arr.begin(),arr.end());
+       int i=arr.size()-1;
+       while(k){
+           ans.push_back(arr[i]);
+           i--;
+           k--;
+       }
+       return ans;
+    }
+};
