@@ -1,0 +1,54 @@
+Parenthesis Checker
+
+
+Given a string s, composed of different combinations of
+'(' , ')', '{', '}', '[', ']', verify the validity of the arrangement.
+An input string is valid if:
+
+         1. Open brackets must be closed by the same type of brackets.
+         2. Open brackets must be closed in the correct order.
+
+
+
+
+
+
+class Solution {
+public:
+    bool ispar(string s) {
+        if(s.length()<=1){
+            return false;
+        }
+        stack<char> stack;
+        for(int i=0;i<s.length();i++){
+            if(s[i]=='[' || s[i]=='{' || s[i]=='('){
+                stack.push(s[i]);
+            }
+            else if(stack.empty()){
+                return false;
+            }
+            else{
+                if(s[i]==')'){
+                    if(stack.top()!='('){
+                        return false;
+                    }
+                }
+                if(s[i]=='}'){
+                    if(stack.top()!='{'){
+                        return false;
+                    }
+                }
+                if(s[i]==']'){
+                    if(stack.top()!='['){
+                        return false;
+                    }
+                }
+                stack.pop();
+            }
+        }
+        if (stack.empty()){
+            return true;
+        }
+        return false;
+    }
+};
