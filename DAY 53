@@ -1,0 +1,38 @@
+Longest valid Parentheses
+
+
+Given a string s consisting of opening and closing parenthesis
+'(' and ')'. Find the length of the longest valid parenthesis substring.
+
+A parenthesis string is valid if:
+
+For every opening parenthesis, there is a closing parenthesis.
+The closing parenthesis must be after its opening parenthesis.
+
+
+
+class Solution {
+  public:
+    int maxLength(string& s) {
+        // code here
+        int n=s.size();
+        stack<int> st;
+        st.push(-1); 
+        int maxLgth = 0;
+
+    for (int i = 0; i < n; i++) {
+        if (s[i] == '(') {
+            st.push(i); 
+        } else {
+            st.pop(); 
+            if (!st.empty()) {
+                maxLgth = max(maxLgth, i - st.top());
+            } else {
+                st.push(i); 
+            }
+        }
+    }
+
+    return maxLgth;
+    }
+};
