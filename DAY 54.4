@@ -1,0 +1,53 @@
+Intersection in Y Shaped Lists
+
+
+
+
+Given the head of two singly linked lists, return the point where these two linked lists intersect.
+
+Note: It is guaranteed that the intersected node always exists.
+
+
+
+
+
+
+
+// Linked list Node
+/*
+class Node {
+public:
+    int data;
+    Node* next;
+
+    Node(int x) {
+        data = x;
+        next = NULL;
+    }
+};
+*/
+
+class Solution {
+  public:
+    // Function to find intersection point in Y shaped Linked Lists.
+    Node* intersectPoint(Node* head1, Node* head2) {
+        // Your Code Here
+        unordered_map<Node*, int>mpp;
+         Node* temp;
+         temp=head1;
+        while(temp!=NULL){
+            mpp[temp]=1;
+            temp=temp->next;
+        }
+        
+         temp=head2;
+        while(temp!=NULL){
+            if(mpp.find(temp)!=mpp.end()){
+                return temp;
+                
+            }
+            temp=temp->next;
+        }
+        return NULL;
+    }
+};
