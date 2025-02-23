@@ -1,0 +1,70 @@
+K-th element of two Arrays
+
+
+
+Given two sorted arrays a[] and b[] and an element k, the task is to 
+find the element that would be at the kth position of the combined sorted array.
+
+
+
+
+
+class Solution{
+
+public:
+    int kthElement(vector<int>& a, vector<int>& b, int k) {
+        // code here
+        int m=a.size();
+        int n=b.size();
+        
+        int cnt=0;
+        int ans=-1;
+        int i=0,j=0;
+        bool flag=false;
+        
+        while(i<m && j<n){
+            if(a[i]<=b[j]){
+                ans=a[i];
+                i++;
+                
+            }
+            else{
+                ans=b[j];
+                j++;
+                
+            }
+            cnt++;
+            if(cnt==k) {
+                flag=true;
+                break;
+            }
+        }
+        if(flag) return ans;
+        
+        while(i<m && flag==false ){
+            ans=a[i];
+            cnt++;
+            i++;
+            
+            if(cnt==k) {
+                flag=true;
+                break;
+            }
+        }
+        if(flag) return ans;
+        
+        while(j<n && flag ==false){
+            ans=b[j];
+            cnt++;
+            
+            if(cnt==k) {
+                flag=true;
+                break;
+            }
+            j++;
+        }
+        return ans;
+    }
+
+};
+
