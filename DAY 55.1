@@ -1,0 +1,58 @@
+Reverse array in groups
+
+
+
+
+Given an array arr of positive integers. Reverse every sub-array group of size k.
+
+Note: If at any instance, k is greater or equal to the array size, then reverse 
+the entire array. You shouldn't return any array, modify the given array in place.
+
+
+
+
+
+
+
+
+class Solution {
+  public:
+    void reverseInGroups(vector<int> &arr, int k) {
+        // code here
+        int l = arr.size();
+        
+        int n;//lenth of subarray
+        if(k<=l)
+        {
+            n=k;
+        }
+        else
+        {
+            n=l;
+        }
+        
+        for(int j=0; j<n*(l/n);j=j+n)
+        {
+            
+        for(int i = 0; i<n/2 ; i++)//reverse to sub array
+        {
+            int a=arr[j+i];
+            arr[j+i]=arr[n+j-1-i];
+            arr[n+j-1-i] = a;
+        }
+        }
+        
+        int m = l%n;
+        if(m!=0)
+        {
+            for(int i=0; i<m/2;i++)
+            {
+                int b = arr[(n*(l/n))+i];
+                arr[(n*(l/n))+i] = arr[l-1-i];
+                arr[l-1-i] = b;
+            }
+        }
+        
+        return;
+    }
+};
