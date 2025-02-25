@@ -1,0 +1,38 @@
+Remove Duplicates from a Sorted Linked List
+
+
+
+
+Given a singly linked list. The task is to remove duplicates (nodes with
+duplicate values) from the given list (if it exists).
+Note: Try not to use extra space. The nodes are arranged in a sorted way.
+
+
+
+
+
+/*
+struct Node {
+  int data;
+  struct Node *next;
+  Node(int x) {
+    data = x;
+    next = NULL;
+  }
+};*/
+
+class Solution {
+  public:
+    // Function to remove duplicates from sorted linked list.
+    Node* removeDuplicates(Node* head) {
+        Node* node = head;
+        while(node->next != NULL) {
+            if(node->data == (node->next)->data) 
+                node->next = node->next->next;
+            else 
+                node = node->next;
+        }
+        return head;
+        // code here
+    }
+};
