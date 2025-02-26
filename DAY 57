@@ -1,0 +1,75 @@
+Maximum of minimum for every window size
+
+
+
+  
+Given an array of integers arr[], the task is to find the maximum of the minimum values for every possible window size in the array, where the window size ranges from 1 to arr.size().
+
+More formally, for each window size k, determine the smallest element in all windows of size k, and then find the largest value among these minimums where 1<=k<=arr.size().
+
+
+
+
+
+
+
+
+
+  class Solution {
+  public:
+    vector<int> maxOfMins(vector<int>& arr) {
+        // Your code here
+        int n = arr.size();
+        vector<int>preSmall(n);
+        vector<int>nextSmall(n);
+        stack<int>st;
+        for(int i=0;i<n;i++){
+            while(!st.empty() && arr[st.top()]>=arr[i]){
+                st.pop();
+            }
+            if(st.empty()){
+                preSmall[i] = -1;
+            }
+            else{
+                preSmall[i] = st.top();
+            }
+            st.push(i);
+        }
+        while(!st.empty()){
+            st.pop();
+        }
+        for(int i=n-1;i>=0;i--){
+            while(!st.empty() && arr[st.top()]>=arr[i]){
+                st.pop();
+            }
+            if(st.empty()){
+                nextSmall[i] = n;
+            }
+            else{
+                nextSmall[i] = st.top();
+            }
+            st.push(i);
+        }
+
+        vector<pair<int,int>>maxEle;
+        for(int i=0;i<n;i++){
+            maxEle.push_back({arr[i],nextSmall[i]-preSmall[i]-1});
+        }
+        
+     
+        sort(maxEle.begin(),maxEle.end(),greater<pair<int,int>>());
+
+        vector<int>ans(n);
+        int start = 0;
+        for(int i=0;i<n;i++){
+            if(maxEle[i].second<=start){
+                continue;
+            }
+            for(int j=start;j<maxEle[i].second;j++){
+                ans[j] = maxEle[i].first;
+            }
+            start = maxEle[i].second;
+        }
+        return ans;
+    }
+};
