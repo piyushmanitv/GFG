@@ -1,0 +1,61 @@
+The Painter's Partition Problem-II
+
+
+
+
+Dilpreet wants to paint his dog's home that has n boards with different lengths. 
+The length of ith board is given by arr[i] where arr[] is an array of n integers. 
+He hired k painters for this work and each painter takes 1 unit time to paint 1 unit of the board.
+
+Return the minimum time to get this job done if all painters start together with 
+the constraint that any painter will only paint continuous boards, say boards 
+numbered [2,3,4] or only board [1] or nothing but not boards [2,4,5].
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+class Solution {
+  public:
+    int minTime(vector<int>& arr, int k) {
+        // code here
+        // return minimum time
+        int start =0,end=0,mid,ans;
+        int size = arr.size();
+        for(int i=0;i<size;i++){
+            start = max(start,arr[i]);
+            end+= arr[i] ;
+        }
+       
+        
+        while(start<=end){
+            mid = start + (end-start)/2;
+            int board =0,count=1;
+            for(int i=0;i<size;i++){
+                board+=arr[i];
+                if(board>mid){
+                    count++;
+                    board=arr[i];
+                }
+            }
+            if(count<=k){
+                ans = mid;
+                end = mid-1;
+            }
+            else
+                start = mid+1;
+        }
+        return ans;
+    }
+};
+
