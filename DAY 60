@@ -1,0 +1,69 @@
+Decode the string
+
+
+
+
+
+
+Given an encoded string s, the task is to decode it. The encoding rule is :
+
+k[encodedString], where the encodedString inside the square brackets is being
+repeated exactly k times. Note that k is guaranteed to be a positive integer.
+Note: The test cases are generated so that the length of the output string will never exceed 105 .
+
+
+
+
+
+
+
+
+
+
+class Solution {
+  public:
+    string decodedString(string &s) {
+        // code here
+        stack<string>st;
+    
+    for(auto ch : s){
+        if(ch == ']'){
+            string stringToRepeat ="";
+            while(!st.empty() && !isdigit(st.top()[0])){
+                string top = st.top();
+                stringToRepeat += top == "[" ? "" : top;
+                st.pop();
+            }
+            
+            string numericTimes = "";
+            while(!st.empty() && isdigit(st.top()[0])){
+                numericTimes += st.top();
+                st.pop();
+            }
+            
+            reverse(numericTimes.begin(),numericTimes.end());
+            int n = stoi(numericTimes);
+            
+            //final decoding 
+            string currentdecode = "";
+            while(n--){
+                currentdecode += stringToRepeat;
+                
+            }
+            st.push(currentdecode);
+        }else{
+            string temp(1,ch);
+            st.push(temp);
+            
+        }
+    }
+     string ans;
+     while(!st.empty()){
+         ans += st.top();
+         st.pop();
+     }
+reverse(ans.begin(),ans.end());
+return ans;
+    }
+};
+
