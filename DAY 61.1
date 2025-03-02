@@ -1,0 +1,55 @@
+Palindrome Linked List
+
+
+
+
+
+
+Given a head singly linked list of positive integers. The task is 
+to check if the given linked list is palindrome or not.
+
+
+
+
+
+
+/*
+struct Node {
+  int data;
+  struct Node *next;
+  Node(int x) {
+    data = x;
+    next = NULL;
+  }
+};
+*/
+
+class Solution {
+  public:
+    // Function to check whether the list is palindrome.
+    bool isPalindrome(Node *head) {
+        // Your code here
+        vector<int> test;
+        Node * temp = head;
+        while(temp != NULL)
+        {
+            test.push_back(temp->data);
+            temp = temp->next;
+        }
+        
+        int n = test.size();
+ 
+        for(int i=0,j=n-1;i<j;i++,j--)
+        {
+            if(test[i]==test[j])
+            {
+                continue;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+};
