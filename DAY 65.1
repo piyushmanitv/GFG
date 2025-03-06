@@ -1,0 +1,58 @@
+Validate an IP Address
+
+
+
+
+
+
+
+You are given a string s in the form of an IPv4 Address. Your task is to 
+validate an IPv4 Address, if it is valid return true otherwise return false.
+
+IPv4 addresses are canonically represented in dot-decimal notation, which
+consists of four decimal numbers, each ranging from 0 to 255, separated by dots, e.g., "172.16.254.1"
+
+A valid IPv4 Address is of the form x1.x2.x3.x4 where 0 <= (x1, x2, x3, x4) <= 255. 
+Thus, we can write the generalized form of an IPv4 address as (0-255).(0-255).(0-255).(0-255)
+
+Note: Here we are considering numbers only from 0 to 255 and any additional leading zeroes will be considered invalid.
+
+
+
+
+
+
+
+
+
+
+// User function Template for C++
+class Solution {
+  public:
+    int isValid(string& s) {
+        // code here
+        int seg=0, num=0;
+        bool hasdigit=false;
+        
+        for(char c:s){
+            if(isdigit(c)){
+                if(hasdigit && num==0) return false;
+                num=num*10+ (c-'0');
+                if(num>255) return false;
+                hasdigit=true;
+            }
+            else if (c=='.'){
+                if(!hasdigit) return false;
+                seg++;
+                if(seg>3) return false;
+                num=0;
+                hasdigit=false;
+            }
+            else{
+                return false;
+            }
+        }
+        return hasdigit && seg==3;
+    }
+};
+
