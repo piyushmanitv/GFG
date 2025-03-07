@@ -1,0 +1,53 @@
+Find triplets with zero sum
+
+
+
+
+
+
+Given an array arr[] of integers, determine whether it contains a triplet 
+whose sum equals zero. Return true if such a triplet exists, otherwise, return false
+
+
+
+
+
+
+
+
+
+
+
+class Solution {
+  public:
+    // Function to find triplets with zero sum.
+    bool findTriplets(vector<int> &arr) {
+        // code here
+        unordered_map<int,int> mp;
+        int n = arr.size();
+        mp[arr[0]]++;
+        mp[arr[1]]++;
+        for(int i = 2;i<n;i++)
+        {unordered_map<int,int> mp2;
+        mp2 = mp;
+            for(int j = i-1;j>=1;j--)
+            {
+                mp2[arr[j]]--;
+                if(mp2[arr[j]] == 0)
+                {
+                    mp2.erase(arr[j]);
+                }
+                if(mp2.find(-(arr[i]+arr[j]))!=mp2.end())
+                {
+                    return true;
+                }
+            }
+            mp[arr[i]]++;
+        }
+        return false;
+    }
+};
+
+
+
+
