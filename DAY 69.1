@@ -1,0 +1,39 @@
+Merge Without Extra Space
+
+
+
+
+
+Given two sorted arrays a[] and b[] of size n and m respectively, the task 
+is to merge them in sorted order without using any extra space. Modify 
+a[] so that it contains the first n elements and modify b[] so that it
+contains the last m elements.
+
+
+
+
+
+
+
+
+class Solution {
+  public:
+    void mergeArrays(vector<int>& a, vector<int>& b) {
+        // code here
+         int n = a.size();
+        int m = b.size();
+        int left=n-1;
+        int right=0;
+        while(left>=0 && right <m){
+            if(a[left]>b[right]){
+                swap(a[left],b[right]);
+                left--;
+                right++;
+            }else{
+                break;
+            }
+        }
+        sort(a.begin(), a.end());
+        sort(b.begin(),b.end());
+    }
+};
