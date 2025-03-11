@@ -1,0 +1,33 @@
+Ways to Reach the n'th Stair
+
+
+
+
+There are n stairs, a person standing at the bottom wants to 
+reach the top. The person can climb either 1 stair or 2 stairs 
+at a time. Your task is to count the number of ways, the 
+person can reach the top (order does matter).
+
+
+
+
+
+
+
+
+
+class Solution {
+  public:
+    int countWays(int n) {
+        // your code here
+        static const double sqrt5 = sqrt(5.0);
+        static const double phi   = (1.0 + sqrt5) / 2.0;
+    
+        double approx = pow(phi, n + 1) / sqrt5;
+    
+        return static_cast<int>(approx + 0.5);
+        
+    }
+};
+
+
