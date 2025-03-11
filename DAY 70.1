@@ -1,0 +1,64 @@
+Max Path Sum 2 Special Nodes
+
+
+
+
+Given a binary tree in which each node element contains a number. 
+Find the maximum possible path sum from one special node to another special node.
+
+Note: Here special node is a node that is connected to exactly one different node.
+
+
+
+
+/*
+struct Node
+{
+    int data;
+    struct Node* left;
+    struct Node* right;
+    
+    Node(int x){
+        data = x;
+        left = right = NULL;
+    }
+};
+*/
+
+class Solution {
+public:
+    bool isspecial(Node*root)
+    {
+        if(!root->left && !root->right)return true;
+        return false;
+    }
+    int helper(Node*root,int &ans)
+    {
+        if(!root)return 0;
+        if(isspecial(root))return root->data;
+        else
+        {
+            int x=helper(root->left,ans);
+            int y=helper(root->right,ans);
+            if(root->left && root->right)
+            {
+                ans=max(ans,x+y+root->data);
+                return max(x,y)+root->data;
+            }
+            if(!root->left)return y+root->data;
+            else return x+root->data;
+        }
+    }
+    int maxPathSum(Node* root)
+    {
+        int ans=INT_MIN;
+        int x=helper(root,ans);
+        if(root->left and root->right){
+            return ans;
+        }
+        return max(ans,x);
+    }
+   };
+
+
+
