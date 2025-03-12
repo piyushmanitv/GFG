@@ -1,0 +1,37 @@
+Maximum Index
+
+
+
+
+Given an array arr of positive integers. The task is to return 
+the maximum of j - i subjected to the constraint of arr[i] < arr[j] and i < j.
+
+
+
+
+
+
+
+
+
+class Solution {
+  public:
+    // arr[]: input array
+    // Function to find the maximum index difference.
+    int maxIndexDiff(vector<int>& arr) {
+        // Your code here
+        vector<pair<int,int>>p;
+        for(int i = 0; i < arr.size(); i++){
+            p.push_back({arr[i], i});
+        }
+        sort(begin(p), end(p));
+        int ans = 0;
+        int ind = p.size();
+        for(int i = 0; i < p.size(); i++){
+            ind = min(ind, p[i].second);
+            ans = max(ans, p[i].second - ind);
+        }
+        return ans;
+    }
+};
+
