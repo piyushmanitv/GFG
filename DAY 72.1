@@ -1,0 +1,25 @@
+Power of 2
+
+
+
+
+Given a non-negative integer n. The task is to check if it is a power of 2
+
+
+
+
+
+
+
+// User function Template for C++
+
+class Solution {
+  public:
+    // Function to check if given number n is a power of two.
+    bool isPowerofTwo(int n) {
+        // code here
+        double logbase = log10(n)/log10(2);
+        
+        return (logbase == (int)logbase)?1:0;
+    }
+};
