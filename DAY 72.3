@@ -1,0 +1,42 @@
+Partition Equal Subset Sum
+
+
+
+
+
+Given an array arr[], return true if it can be partitioned into 
+two subsets such that the sum of elements in both parts is the 
+ame, otherwise, false.
+Note: Each element is present in either the first subset or the 
+second subset, but not in both.
+
+
+
+
+
+
+
+
+// User function Template for C++
+
+class Solution {
+  public:
+    bool solve(vector<int>arr,int i,int sum,int tsum , vector<vector<int>>&dp){
+        if(i>arr.size()) return false;
+         if(tsum==sum) return true;
+         if(dp[i][sum]!= -1) return dp[i][sum]; 
+        bool a  = solve(arr,i+1,sum+arr[i],tsum,dp);
+        bool b = solve(arr,i+1,sum,tsum,dp);
+        return dp[i][sum] = a||b; 
+        
+    }
+    bool equalPartition(vector<int>& arr) {
+        unordered_map<int,int>map; 
+        int tsum = accumulate(arr.begin(), arr.end(), 0);
+        vector<vector<int>>dp(arr.size()+1,vector<int>(tsum+1,-1)); 
+        if(tsum%2!= 0) return false; 
+        return solve(arr,0,0,tsum/2,dp); 
+    }
+};
+
+
