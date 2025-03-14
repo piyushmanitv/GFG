@@ -1,0 +1,42 @@
+Coin Change (Count Ways)
+
+
+
+
+
+Given an integer array coins[ ] representing different denominations of currency 
+and an integer sum, find the number of ways you can make sum by using different 
+combinations from coins[ ]. 
+Note: Assume that you have an infinite supply of each type of coin. Therefore, 
+you can use any coin as many times as you want.
+Answers are guaranteed to fit into a 32-bit integer. 
+
+
+
+
+
+
+
+
+
+class Solution {
+  public:
+    int solve(int i, int n, int t, int sum, vector<int>&coins, 
+    vector<vector<int>>&dp){
+        if(t==sum) return 1;
+        if(i>=n) return 0;
+        if(dp[i][t]!=-1) return dp[i][t];
+        int take=0;
+        if(t+coins[i]<=sum) take=solve(i, n, t+coins[i], sum, coins, dp);
+        return dp[i][t]=take+solve(i+1, n, t, sum, coins, dp);
+    }
+  
+    int count(vector<int>& coins, int sum) {
+        // code here.
+        int n=coins.size();
+        vector<vector<int>>dp(n+1, vector<int>(sum+1, -1));
+        return solve(0, n, 0, sum, coins, dp);
+    }
+};
+
+
