@@ -1,0 +1,40 @@
+Valid Substring
+
+
+Given a string s consisting only of opening and closing parentheses 
+( and ), find the length of the longest valid (well-formed) parentheses substring.
+
+Note: The length of the smallest valid substring () is 2
+
+
+
+
+
+
+
+// User function template for c++
+class Solution {
+  public:
+    int findMaxLen(string& s) {
+        // code here
+        stack<int> st;
+        st.push(-1);  // Push -1 to handle the base case for the first valid parenthesis substring
+        int maxlength = 0;  // Variable to track the length of the longest valid substring
+        
+        for (int i = 0; i < s.length(); i++) {
+            if (s[i] == '(') {
+                st.push(i);  // Push the index of the '(' onto the stack
+            } else {
+                st.pop();  // Pop the index of the last opened '('
+                
+                if (st.empty()) {
+                    st.push(i);  // If the stack is empty, push the current index as a base for future calculations
+                } else {
+                    maxlength = max(maxlength, i - st.top());  // Update maxlength if a longer valid substring is found
+                }
+            }
+        }
+
+        return maxlength; 
+    }
+};
