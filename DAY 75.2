@@ -1,0 +1,87 @@
+ZigZag Tree Traversal
+
+
+
+Given a binary tree with n nodes. Find the zig-zag level order traversal of the binary tree.
+In zig zag traversal starting from the first level go from left to right for odd-numbered levels and right to left for even-numbered levels
+
+
+
+
+
+it  is a java solution
+
+
+
+
+
+//User function Template for Java
+
+/*class Node
+{
+    int data;
+    Node left,right;
+    Node(int d)
+    {
+        data=d;
+        left=right=null;
+    }
+}*/
+
+class GFG
+{
+    //Function to store the zig zag order traversal of tree in a list.
+	ArrayList<Integer> zigZagTraversal(Node root)
+	{
+	    //Add your code here.
+	    int level = 1;
+        Queue<Node>q = new LinkedList<>();
+        HashMap<Integer, Stack<Integer>>even = new HashMap<>();
+        HashMap<Integer, Queue<Integer>>odd = new HashMap<>();
+        
+        if(root!=null) q.add(root);
+        
+        while(!q.isEmpty()){
+            int size = q.size();
+            while(size>0){
+                Node node = q.remove();
+                if(level%2==1){
+                   
+                    Queue<Integer>p = odd.containsKey(level)? odd.get(level): new LinkedList<Integer>();
+      
+                    p.add(node.data);
+                    odd.put(level, p);
+                    
+                }else{
+                    Stack<Integer>p = even.containsKey(level)? even.get(level): new Stack<Integer>();
+      
+                    p.push(node.data);
+                    even.put(level, p);
+                }
+                if(node.left!=null)q.add(node.left);
+                if(node.right!=null)q.add(node.right);
+                
+                size--;
+            }
+            level++;
+        }
+        ArrayList<Integer>res = new ArrayList<>();
+        for(int i = 1; i<level; i++){
+            if(i%2==1){
+                Queue<Integer>p = odd.get(i);
+                while(!p.isEmpty()){
+                    res.add(p.remove());
+                }
+                
+            }else{
+                Stack<Integer>p  = even.get(i);
+                while(!p.isEmpty()){
+                    res.add(p.pop());
+                }
+                
+            }
+        }
+        return res;
+	}
+}
+
