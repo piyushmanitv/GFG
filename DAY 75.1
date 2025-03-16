@@ -1,0 +1,60 @@
+Allocate Minimum Pages
+
+
+
+You are given an array arr[] of integers, where each element arr[i] represents
+the number of pages in the ith book. You also have an integer k representing
+the number of students. The task is to allocate books to each student such that:
+
+Each student receives atleast one book.
+Each student is assigned a contiguous sequence of books.
+No book is assigned to more than one student.
+The objective is to minimize the maximum number of pages assigned to any student. 
+In other words, out of all possible allocations, find the arrangement where the 
+student who receives the most pages still has the smallest possible maximum.
+
+Note: Return -1 if a valid assignment is not possible, and allotment should 
+be in contiguous order (see the explanation for better understanding).
+
+
+
+
+
+
+
+
+
+//Back-end complete function Template for Java
+
+class Solution {
+    public static int findPages(int[] arr, int k) {
+        // code here
+        int n=arr.length;
+        if(k>n) return -1;
+        int min=0,max=0;
+        for(int i=0;i<n;i++){
+            min=Math.max(min,arr[i]);
+            max+=arr[i];
+        }
+        while(min<=max){
+            int mid=(min+max)/2;  
+            int student=1;
+            int sum=0;
+            for(int i=0;i<n;i++){
+                if(arr[i]+sum>mid){
+                    student++;
+                    sum=arr[i];
+                }else{
+                    sum+=arr[i];
+                }
+            }
+            if(student<=k){
+                max=mid-1;
+            }else{
+                min=mid+1;
+            }
+            
+        }
+        return min;
+    }
+};
