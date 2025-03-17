@@ -1,0 +1,66 @@
+Topological sort
+
+
+
+
+Given an adjacency list for a Directed Acyclic Graph (DAG) where adj[u] 
+contains a list of all vertices v such that there exists a directed 
+edge u -> v. Return topological sort for the given graph.
+
+Topological sorting for Directed Acyclic Graph (DAG) is a linear ordering
+of vertices such that for every directed edge u -> v, vertex u comes before
+v in the ordering.
+Note: As there are multiple Topological orders possible, you may return any
+of them. If your returned Topological sort is correct then the output will be 1 else 0.
+
+
+
+
+
+
+
+
+
+
+class Solution {
+  public:
+    // Function to return list containing vertices in Topological order.
+    vector<int> topologicalSort(vector<vector<int>>& adj) {
+        // Your code here
+        vector<int> ans;
+        int n=adj.size();
+        vector<int> indegree(n,0); //calculate indegree of every node
+        for(auto it: adj){
+            for(auto i:it){
+                indegree[i]++;
+            }
+        }
+        
+        queue<int> q;
+        for(int i=0;i<n;i++){   //push those nodes whose indegree is 0
+            if(indegree[i]==0){
+                q.push(i);
+            }
+        }
+        
+        while(!q.empty()){
+            int size=q.size();
+            for(int i=0;i<size;i++){
+                int curr=q.front();
+                q.pop();
+                
+                for(auto it: adj[curr]){ //subtract 1 from current node neighbours indegree
+                    indegree[it]--;
+                    
+                    if(indegree[it]==0){  //if indegree is 0, push it in q
+                        q.push(it);
+                    }
+                }
+                
+                ans.push_back(curr); //push the curr node in ans
+            }
+        }
+        
+        return ans;
+    }
+};
