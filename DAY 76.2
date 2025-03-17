@@ -1,0 +1,33 @@
+Stickler Thief
+
+
+
+Stickler the thief wants to loot money from the houses arranged in a line. 
+He cannot loot two consecutive houses and aims to maximize his total loot. 
+Given an array, arr[] where arr[i] represents the amount of money in
+the i-th house, find the maximum amount he can loot.
+
+
+
+
+
+
+class Solution {
+    // Function to find the maximum money the thief can get.
+    public int findMaxSum(int arr[]) {
+    int n = arr.length;
+        if (n == 0) return 0;
+        if (n == 1) return arr[0];
+
+        int loot_two_houses_back = 0;
+        int loot_one_house_back = arr[0];
+
+        for (int i = 1; i < n; ++i) {
+            int current_loot = Math.max(arr[i] + loot_two_houses_back, loot_one_house_back);
+            loot_two_houses_back = loot_one_house_back;
+            loot_one_house_back = current_loot;
+        }
+
+        return loot_one_house_back;
+    }
+}
