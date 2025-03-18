@@ -1,0 +1,75 @@
+Find the number of islands
+
+
+
+
+
+Given a grid of size n*m (n is the number of rows and m is the number
+of columns in the grid) consisting of '0's (Water) and '1's(Land). Find the number of islands.
+
+Note: An island is either surrounded by water or the boundary of a 
+grid and is formed by connecting adjacent lands horizontally or 
+vertically or diagonally i.e., in all 8 directions.
+
+
+
+
+
+
+
+
+
+
+
+
+class Solution {
+  public:
+    // Function to find the number of islands.
+    void bfs(vector<vector<int>>& vis, vector<vector<char>>& grid, int i, int j) {
+        int m = grid.size();
+        int n = grid[0].size();
+        queue<pair<int, int>> q;
+        q.push({i, j});
+        vis[i][j] = 1;
+    
+        vector<pair<int, int>> directions = {
+            {-1, 0}, {1, 0}, {0, -1}, {0, 1},  // Up, Down, Left, Right
+            {-1, -1}, {-1, 1}, {1, -1}, {1, 1} // Diagonals
+        };
+    
+        while (!q.empty()) {
+            pair<int, int> current = q.front();
+            q.pop();
+    
+            int x = current.first;
+            int y = current.second;
+    
+            for (const pair<int, int>& dir : directions) {
+                int nx = x + dir.first;
+                int ny = y + dir.second;
+                if (nx >= 0 && nx < m && ny >= 0 && ny < n && 
+                    grid[nx][ny] == '1' && vis[nx][ny] == 0) {
+                    vis[nx][ny] = 1;
+                    q.push({nx, ny});
+                }
+            }
+        }
+    }
+
+    int numIslands(vector<vector<char>>& grid) {
+        int islands = 0;
+        int m = grid.size();
+        int n = grid[0].size();
+        vector<vector<int>> vis(m, vector<int>(n, 0));
+    
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                if (grid[i][j] == '1' && vis[i][j] == 0) {
+                    bfs(vis, grid, i, j);
+                    islands++;
+                }
+            }
+        }
+        return islands;
+    }
+};
