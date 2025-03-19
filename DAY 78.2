@@ -1,0 +1,61 @@
+4 Sum - All Quadruples
+
+
+
+
+
+
+Given an array arr[] of integers and another integer target. Find 
+all unique quadruples from the given array that sums up to target.
+
+Note: All the quadruples should be internally sorted, ie for any 
+quadruple [q1, q2, q3, q4] it should be : q1 <= q2 <= q3 <= q4.
+
+
+
+
+
+
+
+
+
+
+
+// User function template for C++
+
+class Solution {
+  public:
+    // arr[] : int input array of integers
+    // target : the quadruple sum required
+    vector<vector<int> > fourSum(vector<int> &arr, int target) {
+        // Your code goes here
+        int n=arr.size();
+        vector<vector<int>> ans;
+        sort(arr.begin(), arr.end());
+        for(int i=0;i<n;i++){
+            if(i>0 && arr[i]==arr[i-1]) continue;
+            for(int j=i+1;j<n;j++){
+                if(j!=i+1 && arr[j]==arr[j-1])continue;                
+                int k=j+1;
+                int l=n-1;
+                while(k<l){
+                    int sum=arr[i]+arr[j]+arr[k]+arr[l];
+                    if(sum==target){
+                        ans.push_back({arr[i], arr[j], arr[k], arr[l]});
+                        k++;
+                        l--;
+                        while(k<l && arr[k]==arr[k-1])k++;
+                        while(k<l && arr[l]==arr[l+1])l--;
+                    }
+                    else if(sum <target){
+                        k++;
+                    }
+                    else{
+                        l--;
+                    }
+                }
+            }
+        }
+        return ans;
+    }
+};
