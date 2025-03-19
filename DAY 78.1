@@ -1,0 +1,60 @@
+Sort a linked list of 0s, 1s and 2s
+
+
+
+
+Given a linked list where nodes can contain values 0s, 1s, and 2s only. The task is to 
+segregate 0s, 1s, and 2s linked list such that all zeros segregate to the head side, 2s 
+at the end of the linked list, and 1s in the middle of 0s and 2s.
+
+
+
+
+
+
+
+
+
+
+
+
+/*
+
+  Node is defined as
+  struct Node {
+    int data;
+    struct Node *next;
+    Node(int x) {
+        data = x;
+        next = NULL;
+    }
+};
+
+*/
+class Solution {
+  public:
+    // Function to sort a linked list of 0s, 1s and 2s.
+    Node* segregate(Node* head) {
+
+        // Add code here
+        if (!head || !head->next) return head;
+
+        int count[3] = {0, 0, 0};
+        Node* temp = head;
+
+        while (temp) {
+            count[temp->data]++;
+            temp = temp->next;
+        }
+
+        temp = head;
+        for (int i = 0; i < 3; i++) {
+            while (count[i]--) {
+                temp->data = i;
+                temp = temp->next;
+            }
+        }
+
+        return head;
+    }
+};
