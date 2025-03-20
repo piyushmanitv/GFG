@@ -1,0 +1,53 @@
+Reverse Words
+
+
+
+
+
+Given a string s, reverse the string without reversing its individual words. Words are separated by spaces.
+
+Note: The string may contain leading or trailing spaces, or multiple spaces between two words. The returned 
+string should only have a single space separating the words, and no extra spaces should be included.
+
+
+
+
+
+
+
+
+
+
+
+
+
+class Solution {
+  public:
+    // Function to reverse words in a given string.
+    string reverseWords(string &s) {
+        // code here
+        reverse(s.begin(),s.end());
+        string p="";
+        string q="";
+        for(int i=0;i<s.length();i++){
+            if(s[i]!=' '){
+                p=p+s[i];
+                if(i==s.length()-1){
+                    reverse(p.begin(),p.end());
+                    q=q+" "+p;
+                }
+                continue;
+            }
+            reverse(p.begin(),p.end());
+            if(p.length()>0){
+            q=q+" "+p;
+            
+            p="";
+            }
+            
+                
+        }
+        return q.substr(1);
+    }
+};
+
