@@ -1,0 +1,42 @@
+Common in 3 Sorted Arrays
+
+
+
+
+
+You are given three arrays sorted in increasing order. Find the elements that are common in all three arrays.
+If there are no such elements return an empty array. In this case, the output will be -1.
+
+Note: can you handle the duplicates without using any additional Data Structure?
+
+
+
+
+
+
+
+
+
+class Solution {
+  public:
+    // Function to find common elements in three arrays.
+    vector<int> commonElements(vector<int> &arr1, vector<int> &arr2,
+                               vector<int> &arr3) {
+        // Code Here
+        unordered_set<int> set2(arr2.begin(), arr2.end()); // Create a set from arr2
+        unordered_set<int> set3(arr3.begin(), arr3.end()); // Create a set from arr3
+        vector<int> ans;
+    
+        // Use a set to avoid duplicates in arr1
+        unordered_set<int> seen;
+    
+        for (int num : arr1) {
+            // Check if the number is not already seen and exists in both sets
+            if (seen.find(num) == seen.end() && set2.find(num) != set2.end() && set3.find(num) != set3.end()) {
+                ans.push_back(num);
+                seen.insert(num); // Mark this number as seen
+            }
+        }
+        return ans;
+    }
+};
