@@ -1,0 +1,50 @@
+Number of occurrence
+
+
+
+
+
+
+
+
+
+Given a sorted array, arr[] and a number target, you need to find
+the number of occurrences of target in arr[].
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+class Solution {
+  public:
+    int initial(vector<int> arr, int target)
+    {
+        int i = 0;
+        int j = arr.size()-1;
+        while(i <= j)
+        {
+            int mid = i+(j-i)/2;
+            if(arr[mid] == target)return mid;
+            else if(arr[mid] < target)i = mid + 1;
+            else j = mid - 1;
+        }
+        return -1;
+    }
+    int countFreq(vector<int>& arr, int target)
+    {
+        int count = 0;
+        int pos = initial(arr,target);
+        while(arr[pos] == target)pos--;
+        while(arr[++pos] == target)count++;
+        return count;
+    }
+};
