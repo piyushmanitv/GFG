@@ -1,0 +1,50 @@
+Stickler Thief II
+
+
+
+
+
+
+
+
+
+You are given an array arr[] which represents houses arranged in a circle, where each 
+house has a certain value. A thief aims to maximize the total stolen value without robbing two adjacent houses.
+Determine the maximum amount the thief can steal.
+
+Note: Since the houses are in a circle, the first and last houses are also considered adjacent.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+class Solution {
+  public:
+    int helper(int idx, int end, vector<int>& arr, vector<int> &dp)
+    {
+        if(idx > end)
+            return 0;
+        if(dp[idx] != -1)
+            return dp[idx];
+        int Pick = arr[idx] + helper(idx+2,end,arr,dp);
+        int notPick = helper(idx+1,end,arr,dp);
+        return dp[idx]=max(Pick,notPick);
+    }
+    int maxValue(vector<int>& arr) {
+        
+        vector<int> dp(arr.size() + 1, -1);
+        vector<int> dp2(arr.size() + 1, -1);
+       
+        return max(helper(0,arr.size()-2,arr,dp), helper(1,arr.size()-1,arr,dp2));
+    }
+};
