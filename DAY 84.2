@@ -1,0 +1,57 @@
+Floyd Warshall
+
+
+
+
+
+The problem is to find the shortest distances between every pair of vertices in a given edge-weighted directed graph. 
+The graph is represented as an adjacency matrix. mat[i][j] denotes the weight of the edge 
+from i to j. If mat[i][j] = -1, it means there is no edge from i to j.
+Note: Modify the distances for every pair in place.
+
+
+
+
+
+
+
+
+
+
+
+
+// User function template for C++
+
+class Solution {
+  public:
+    void shortestDistance(vector<vector<int>>& mat) {
+        // Code here
+        int V=mat.size();
+        for(int i=0;i<V;i++){
+            for(int j=0;j<V;j++){
+                if(mat[i][j]==-1){
+                    mat[i][j]=INT_MAX;
+                }
+            }
+        }
+        
+        for(int k=0;k<V;k++){
+            for(int i=0;i<V;i++){
+               for(int j=0;j<V;j++){
+                    if (mat[i][k] != INT_MAX && mat[k][j] != INT_MAX) {
+                    mat[i][j] = min(mat[i][j], mat[i][k] + mat[k][j]);
+                }
+                }
+            }
+        }
+        
+        
+        for(int i=0;i<V;i++){
+            for(int j=0;j<V;j++){
+                if(mat[i][j]==INT_MAX){
+                    mat[i][j]=-1;
+                }
+            }
+        }
+    }
+};
