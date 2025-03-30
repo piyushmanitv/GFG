@@ -1,0 +1,75 @@
+Fixing Two swapped nodes of a BST
+
+
+
+
+
+Two of the nodes of a Binary Search Tree (BST) are swapped. Fix (or correct) the BST by swapping them back. Do not change the structure of the tree.
+Note: It is guaranteed that the given input will form BST, except for 2 nodes that will be wrong.
+
+
+
+
+
+
+
+
+
+
+
+
+
+// User function Template for C++
+/*struct Node
+{
+    int data;
+    struct Node *left, *right;
+};*/
+
+class Solution {
+  public:
+    struct Node *correctBST(struct Node *root) {
+        // code here
+         Node*first=NULL;
+      Node *second=NULL;
+      Node*prev=NULL;
+      Node*temp=root;
+      while(root){
+        if(!root->left){
+            if(prev){
+            if(prev->data>root->data){
+                if(first==NULL){
+                    first=prev;
+                }
+                second=root;
+            }
+            }
+            prev=root;
+            root=root->right;
+        }else{
+            
+            Node*curr=root->left;
+            while(curr->right && curr->right!=root){
+                curr=curr->right;
+            }
+            if(curr->right==NULL){
+                curr->right=root;
+                root=root->left;
+            }else{
+                curr->right=NULL;
+                 if(prev->data>root->data){
+                if(first==NULL){
+                    first=prev;
+                }
+                second=root;
+            }
+            prev=root;
+            root=root->right;
+            }
+        }  
+      }
+      swap(first->data,second->data);
+      return temp;
+    }
+};
+
