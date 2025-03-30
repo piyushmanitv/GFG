@@ -1,0 +1,55 @@
+AVL Tree Deletion
+
+
+
+Given an AVL tree and N values to be deleted from the tree. Write a function to delete a given value from the tree. 
+All the N values which needs to be deleted are passed one by one as input data by driver code itself, you are asked 
+to return the root of modified tree after deleting the value.
+
+
+
+
+
+
+
+
+
+
+/* Node is as follows:
+
+struct Node
+{
+	int data, height;
+	Node *left, *right;
+	Node(int x)
+	{
+		data = x;
+		height = 1;
+		left = right = NULL;
+	}
+};
+
+*/
+
+void storeNodes(Node* root, vector<int>& arr, int& key){
+    if(root == NULL) return;
+    if(root->left) storeNodes(root->left, arr, key);
+    if(root->data != key) arr.push_back(root->data);
+    if(root->right) storeNodes(root->right, arr, key);
+}
+Node* makeAVL(vector<int>& arr, int start, int end){
+    if(start > end) return NULL;
+    int mid = start + (end-start)/2;
+    Node* head = new Node(arr[mid]);
+    head->left = makeAVL(arr, start, mid-1);
+    head->right = makeAVL(arr, mid+1, end);
+    return head;
+}
+Node* deleteNode(Node* root, int data)
+{
+    vector<int> arr;
+    storeNodes(root, arr, data);
+    Node* head = makeAVL(arr, 0, arr.size()-1);
+    return head;
+}
+
