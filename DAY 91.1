@@ -1,0 +1,66 @@
+Find the String
+
+
+
+Given two integers N and K, the task is to find the string S of minimum length such that it 
+contains all possible strings of size N as a substring. The characters of the string should 
+be from integers ranging from 0 to K-1.  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//User function Template for C++
+class Solution
+{
+public:
+    string ans;
+    string t;
+    unordered_set<string> s;
+
+    void solve(int n, int k)
+    {
+        t=t.substr(1);
+        
+        for(int i=k;i>=0;i--)
+        {
+            t+=to_string(i);
+            
+            if(s.find(t)==s.end())
+            {
+                ans+=to_string(i);
+                s.insert(t);
+                return solve(n,k);
+            }
+            else
+                t.pop_back();
+        }
+    }
+
+    string findString(int n, int k) {
+        // code here
+        ans="";
+
+        for(int i=0;i<n;i++)
+        {
+            ans+='0';
+            t+='0';
+        }
+            
+        s.insert(ans);
+        
+        solve(n,k-1);
+        
+        return ans;
+    }
+};
+
