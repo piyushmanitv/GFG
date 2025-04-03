@@ -1,0 +1,80 @@
+Rotten Oranges
+
+
+
+Given a matrix mat[][] of dimension n * m where each cell in the matrix can have values 0, 1 or 2 which 
+has the following meaning:
+0 : Empty cell
+1 : Cell have fresh oranges
+2 : Cell have rotten oranges
+
+We have to determine what is the earliest time after which all the oranges are rotten. A rotten orange at 
+index (i, j) can rot other fresh orange at indexes (i-1, j), (i+1, j), (i, j-1), (i, j+1) (up, down, left 
+and right) in a unit time.
+
+Note: Your task is to return the minimum time to rot all the fresh oranges. If not possible returns -1.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+class Solution {
+  int dx[4] = {1,-1,0,0};
+    int dy[4] = {0,0,1,-1};
+  public:
+    int orangesRotting(vector<vector<int>>& mat) {
+        int n = mat.size();int m = mat[0].size();
+        int ct = 0,C = 0;
+        vector<vector<int>>vis(n,vector<int>(m,0));
+        queue<pair<int,int>>q;
+        for(int i=0;i<n;i++){
+            for(int j=0;j<m;j++){
+                if(mat[i][j] == 2){
+                    q.push({i,j});
+                    vis[i][j] = 1;
+                }
+                else if(mat[i][j] == 1){
+                    C++;
+                }
+            }
+        }
+        int ans = 0;
+        while(!q.empty()){
+            int siz = q.size();
+            bool f = false;
+            for(int i=0;i<siz;i++){
+                int x = q.front().first;
+                int y = q.front().second;
+                q.pop();
+                for(int k=0;k<4;k++){
+                    int X = x+dx[k];
+                    int Y = y+dy[k];
+                    if(X < 0 || Y < 0 || X >= n || Y >= m || vis[X][Y] ==1 || mat[X][Y]!=1){
+                        continue;
+                    }
+                    else{
+                        f = true;
+                        q.push({X,Y});
+                        vis[X][Y] = true;
+                        ct++;
+                    }
+                }
+            }
+            if(f){
+                ans++;
+            }
+        }
+        return (ct != C)?-1:ans;
+    }
+};
+
