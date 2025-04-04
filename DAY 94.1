@@ -1,0 +1,61 @@
+Minimum Cost Path
+
+
+
+Given a square grid of size N, each cell of which contains an integer cost that represents a cost to 
+traverse through that cell, we need to find a path from the top left cell to the bottom right cell by 
+which the total cost incurred is minimum.
+From the cell (i,j) we can go (i,j-1), (i, j+1), (i-1, j), (i+1, j).  
+
+
+
+
+
+
+
+
+
+
+
+
+class Solution
+{
+    public:
+    //Function to return the minimum cost to react at bottom
+	//right cell from top left cell.
+    int minimumCostPath(vector<vector<int>>& grid) 
+    {
+        // Code here
+          int n = grid.size();
+        vector<vector<int>>dist(n , vector<int>(n , 0));
+         priority_queue<pair<int,pair<int,int>>,vector<pair<int,pair<int,int>>>,comp>pq;
+         pq.push({grid[0][0] , {0,0}});
+         
+         dist[0][0] = 1;
+         
+         int delrow[] = {1,0,-1,0};
+         int delcol[] = {0,1,0,-1};
+         int val;
+         while(!pq.empty()){
+              val = pq.top().first;
+             int row = pq.top().second.first;
+             int col = pq.top().second.second;
+             if(row == n-1 && col == n-1 )  break;
+             
+             pq.pop();
+             
+             // go to neighbours 
+             for(int i = 0;i<4;i++){
+                 int nrow = row+delrow[i];
+                 int ncol = col +delcol[i] ;
+                 
+                 if(nrow>=0 && nrow<n && ncol >=0 && ncol <n 
+                    && dist[nrow][ncol] == 0){
+                        dist[nrow][ncol] = 1;
+                        pq.push({val + grid[nrow][ncol] , {nrow , ncol}});
+                    }
+             }
+         }
+        return val;
+    }
+};
