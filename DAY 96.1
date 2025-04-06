@@ -1,0 +1,42 @@
+Min distance between two given nodes of a Binary Tree
+
+
+
+
+Given a binary tree with n nodes and two node values, a and b, your task is to find the minimum 
+distance between them. The given two nodes are guaranteed to be in the binary tree and all node 
+values are unique.
+
+
+
+
+
+
+
+
+class Solution {
+public:
+    Node* findLCA(Node* root, int a, int b) {
+        if (!root || root->data == a || root->data == b)
+            return root;
+        Node* left = findLCA(root->left, a, b);
+        Node* right = findLCA(root->right, a, b);
+        if (left && right) return root;
+        return left ? left : right;
+    }
+
+    int getLevel(Node* root, int val, int level) {
+        if (!root) return -1;
+        if (root->data == val) return level;
+        int left = getLevel(root->left, val, level + 1);
+        if (left != -1) return left;
+        return getLevel(root->right, val, level + 1);
+    }
+
+    int findDist(Node* root, int a, int b) {
+        Node* lca = findLCA(root, a, b);
+        int d1 = getLevel(lca, a, 0);
+        int d2 = getLevel(lca, b, 0);
+        return d1 + d2;
+    }
+};
