@@ -1,0 +1,32 @@
+Median of 2 Sorted Arrays of Different Sizes
+
+
+
+
+Given two sorted arrays a[] and b[], find and return the median of the combined array after merging them into a single sorted array.
+
+
+
+
+
+
+
+
+class Solution {
+  public:
+    double medianOf2(vector<int>& a, vector<int>& b) {
+        // Your code goes here
+        vector<int> arr;// store the combined array
+        for(int i:a)
+        arr.push_back(i);
+        for(int i:b)
+        arr.push_back(i);
+        
+        sort(arr.begin(),arr.end());
+        int n=arr.size(); 
+        if(n%2!=0)
+        return arr[n/2];
+        else
+        return (arr[n/2]+arr[n/2-1])/2.0;
+    }
+};
