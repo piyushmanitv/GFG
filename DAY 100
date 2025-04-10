@@ -1,0 +1,51 @@
+Minimum cost to connect all houses in a city
+
+
+
+Given a 2D array houses[][], consisting of n 2D coordinates {x, y} where each coordinate represents the location of each house, the task is to find the minimum cost to connect all the houses of the city.
+
+The cost of connecting two houses is the Manhattan Distance between the two points (xi, yi) and (xj, yj) i.e., |xi – xj| + |yi – yj|, where |p| denotes the absolute value of p.
+
+
+
+
+
+
+
+
+
+
+
+class Solution {
+  public:
+    int minCost(vector<vector<int>>& houses) {
+        // code here
+         int n = houses.size();
+        
+        priority_queue<pair<int,int>, vector<pair<int,int>>, greater<pair<int,int>>> pq;
+        
+        vector<int> vis(n, 0);
+        pq.push({0, 0});
+        int sum =0; 
+        
+        while(!pq.empty()){
+            auto node = pq.top();
+            pq.pop();
+            int wt = node.first;
+            int ind = node.second;
+            if (vis[ind]) continue;
+    
+            vis[ind] = 1;
+            sum += wt;
+    
+            for (int i = 0; i < n; i++) {
+                if (!vis[i]) {
+                    int newWt = abs(houses[ind][0] - houses[i][0]) + abs(houses[ind][1] - houses[i][1]);
+                    pq.push({newWt, i});
+                }
+            }
+        }
+        
+        return sum;
+    }
+};
