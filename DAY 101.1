@@ -1,0 +1,52 @@
+Dijkstra Algorithm
+
+
+
+
+Given an undirected, weighted graph with V vertices numbered from 0 to V-1 and E edges, represented by 2d array edges[][], where edges[i]=[u, v, w] represents the edge between the nodes u and v having w edge weight.
+You have to find the shortest distance of all the vertices from the source vertex src, and return an array of integers where the ith element denotes the shortest distance between ith node and source vertex src.
+
+Note: The Graph is connected and doesn't contain any negative weight edge.
+
+
+
+
+
+
+
+
+
+
+
+import heapq
+
+class Solution:
+    def dijkstra(self, V, edges, src):
+        # Build adjacency list
+        adj = [[] for _ in range(V)]
+        for u, v, w in edges:
+            adj[u].append((v, w))
+            adj[v].append((u, w))
+        
+        # Initialize distances with infinity and source as 0
+        dist = [float('inf')] * V
+        dist[src] = 0
+        
+        # Priority queue to hold (distance, node)
+        heap = []
+        heapq.heappush(heap, (0, src))
+        
+        while heap:
+            current_dist, u = heapq.heappop(heap)
+            
+            # Skip if a shorter path already exists
+            if current_dist > dist[u]:
+                continue
+            
+            # Explore neighbors
+            for v, weight in adj[u]:
+                if dist[v] > dist[u] + weight:
+                    dist[v] = dist[u] + weight
+                    heapq.heappush(heap, (dist[v], v))
+        
+        return dist
