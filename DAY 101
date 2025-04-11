@@ -1,0 +1,94 @@
+Burning Tree
+
+
+
+Given a binary tree and a node data called target. Find the minimum time required to burn the complete binary tree if the target is set on fire. It is known that in 1 second all nodes connected to a given node get burned. That is its left child, right child, and parent.
+Note: The tree contains unique values.
+
+
+
+
+
+
+
+
+
+class Solution {
+ void fun( Node* root , int target , Node* &tempTar )
+    {
+        if( root == NULL ) return ;
+        if( root ->data == target )
+        {
+            tempTar  = root ;
+            return ;
+        }
+        
+        fun( root ->left , target  , tempTar ) ;
+        fun( root ->right , target , tempTar ) ;
+    }
+
+
+  public:
+    int minTime(Node* root, int target) {
+        
+       Node* tempTar = NULL ;
+       fun( root,  target  , tempTar ) ;
+       map< Node* , Node* > mpp ;
+       queue< Node* >q ; 
+       q.push(root) ;
+       while( !q.empty() ) 
+       {
+           Node* temp = q.front() ;
+           q.pop() ;
+           if( temp ->left )
+           {
+               q.push(temp->left) ;
+               mpp[temp->left] = temp ;
+           }
+           
+           if( temp ->right ) 
+           {
+               q.push(temp->right ) ;
+               mpp[temp->right ] = temp ;
+           }
+ 
+       }
+       
+       q.push(tempTar) ;
+        map< Node* , bool  > vis; 
+      int bur_time = 0 ;
+        vis[tempTar] = true;
+     
+      while( !q.empty() )
+      {
+          int size = q.size() ;
+          bool burnt = false;
+          for( int i = 0 ; i < size ; i++ )
+          {
+              Node* temp = q.front() ;
+              q.pop() ;
+              vis[temp] = true ;
+               
+              if( temp ->left && !vis[temp->left] )
+              {
+                  q.push(temp->left) ;
+              }
+               
+              if( temp ->right && !vis[temp->right] ) 
+              {
+                  q.push(temp->right) ;
+              }
+               
+              if( mpp[temp] && !vis[mpp[temp]] )
+              {
+                  q.push(mpp[temp] ) ;
+              }
+ 
+          }
+
+          bur_time++ ;
+      }
+ 
+      return bur_time - 1 ;
+    }
+};
