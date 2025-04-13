@@ -1,0 +1,60 @@
+Reorder List
+
+
+
+
+Given a singly linked list: A0→A1→...→An-2→An-1, reorder it to A0→An-1→A1→An-2→A2→An-3→...
+For example: Given 1->2->3->4->5 its reorder is 1->5->2->4->3
+
+
+
+
+
+
+
+
+
+class Solution {
+  public:
+    void reorderList(Node* head) {
+        // Your code here
+        int len = 0, half;
+        Node *cur = head, *sec_half = head, *nxt, *prev = NULL;
+        
+        while(cur) {
+            len++;
+            cur = cur->next;
+        }
+        if(len <= 2)
+            return;
+            
+        half = len / 2;
+        cur = head;
+        while(half > 0) {
+            cur = cur->next;
+            half--;
+        }
+        sec_half = cur->next;
+        cur->next = NULL;
+        cur = sec_half;
+        
+        while(cur != NULL) {
+            nxt = cur->next;
+            cur->next = prev;
+            prev = cur;
+            cur = nxt;
+        }
+        cur = head;
+        Node *prevnxt;
+        
+        
+        while(cur != NULL && prev != NULL) {
+            nxt = cur->next; 
+            prevnxt = prev->next; 
+            cur->next = prev; 
+           prev->next = nxt; 
+            prev = prevnxt; 
+            cur = nxt;
+        }
+    }
+};
