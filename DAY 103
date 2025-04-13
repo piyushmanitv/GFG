@@ -1,0 +1,46 @@
+Clone an Undirected Graph
+
+
+
+Given a connected undirected graph represented by adjacency list, adjList[][] with n nodes, having a distinct label from 0 to n-1, where each adj[i] represents the list of vertices connected to vertex i.
+
+Create a clone of the graph, where each node in the graph contains an integer val and an array (neighbors) of nodes, containing nodes that are adjacent to the current node.
+
+class Node {
+    val: integer
+    neighbors: List[Node]
+}
+Your task is to complete the function cloneGraph( ) which takes a starting node of the graph as input and returns the copy of the given node as a reference to the cloned graph.
+
+Note: If you return a correct copy of the given graph, then the driver code will print true; and if an incorrect copy is generated or when you return the original node, the driver code will print false.
+
+
+
+
+
+
+
+
+
+
+
+
+
+class Solution {
+  public:
+    Node* solve(Node* node, unordered_map<int, Node*>& vis) {
+        if (vis.count(node->val)) return vis[node->val];
+        
+        Node* newNode = new Node(node->val);
+        vis[node->val] = newNode;
+        
+        for (Node* nbr: node->neighbors)
+            newNode->neighbors.push_back( solve(nbr, vis) );
+        
+        return newNode;
+    }
+    Node* cloneGraph(Node* node) {
+        unordered_map<int, Node*> vis;
+        return solve(node, vis);
+    }
+};
