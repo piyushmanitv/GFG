@@ -1,0 +1,55 @@
+Palindromic Partitioning
+
+
+
+Given a string s, a partitioning of the string is a palindrome partitioning if every
+sub-string of the partition is a palindrome. Determine the fewest cuts needed for 
+palindrome partitioning of the given string.
+
+
+
+
+
+
+
+
+class Solution {
+  public:
+    int palPartition(string &s) {
+        int n = s.length();
+        vector<vector<bool>> isPal(n, vector<bool>(n, false));
+        vector<int> cuts(n, 0);
+
+        // Step 1: Precompute palindrome substrings
+        for (int i = 0; i < n; ++i) {
+            isPal[i][i] = true;
+        }
+
+        for (int len = 2; len <= n; ++len) {
+            for (int i = 0; i <= n - len; ++i) {
+                int j = i + len - 1;
+                if (s[i] == s[j]) {
+                    if (len == 2)
+                        isPal[i][j] = true;
+                    else
+                        isPal[i][j] = isPal[i + 1][j - 1];
+                }
+            }
+        }
+
+        // Step 2: DP to find minimum cuts
+        for (int i = 0; i < n; ++i) {
+            if (isPal[0][i]) {
+                cuts[i] = 0;
+            } else {
+                cuts[i] = i; // maximum cuts
+                for (int j = 1; j <= i; ++j) {
+                    if (isPal[j][i])
+                        cuts[i] = min(cuts[i], cuts[j - 1] + 1);
+                }
+            }
+        }
+
+        return cuts[n - 1];
+    }
+};
