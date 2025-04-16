@@ -1,0 +1,62 @@
+Minimum Cost Path
+
+
+
+
+Given a square grid of size N, each cell of which contains an integer cost that represents a cost to traverse through that cell, we need to find a path from the top left cell to the bottom right cell by which the total cost incurred is minimum.
+From the cell (i,j) we can go (i,j-1), (i, j+1), (i-1, j), (i+1, j).  
+
+
+
+
+
+
+
+
+
+#include <vector>
+#include <queue>
+using namespace std;
+
+class Solution {
+public:
+    int minimumCostPath(vector<vector<int>>& grid) {
+        int n = grid.size();
+        if (n == 0) return 0;
+        
+        vector<vector<int>> dist(n, vector<int>(n, INT_MAX));
+        dist[0][0] = grid[0][0];
+        
+        priority_queue<pair<int, pair<int, int>>, 
+                       vector<pair<int, pair<int, int>>>, 
+                       greater<pair<int, pair<int, int>>>> pq;
+        pq.push({dist[0][0], {0, 0}});
+        
+        vector<pair<int, int>> dirs = {{-1, 0}, {1, 0}, {0, -1}, {0, 1}};
+        
+        while (!pq.empty()) {
+            auto current = pq.top();
+            pq.pop();
+            int cost = current.first;
+            int i = current.second.first;
+            int j = current.second.second;
+            
+            if (i == n-1 && j == n-1) return cost;
+            if (cost > dist[i][j]) continue;
+            
+            for (auto dir : dirs) {
+                int ni = i + dir.first;
+                int nj = j + dir.second;
+                
+                if (ni >= 0 && ni < n && nj >= 0 && nj < n) {
+                    int new_cost = cost + grid[ni][nj];
+                    if (new_cost < dist[ni][nj]) {
+                        dist[ni][nj] = new_cost;
+                        pq.push({new_cost, {ni, nj}});
+                    }
+                }
+            }
+        }
+        return dist[n-1][n-1];
+    }
+};
