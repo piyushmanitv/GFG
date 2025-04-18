@@ -1,0 +1,69 @@
+Implement Trie
+
+
+
+
+Implement Trie class and complete insert(), search() and isPrefix() function for the following queries :
+
+Type 1 : (1, word), calls insert(word) function and insert word in the Trie
+Type 2 : (2, word), calls search(word) function and check whether word exists in Trie or not.
+Type 3 : (3, word), calls isPrefix(word) function and check whether word exists as a prefix of any string in Trie or not.
+
+
+
+
+
+
+
+
+
+
+
+
+class TrieNode {
+public:
+    TrieNode* children[26] = {nullptr};
+    bool isEnd = false;
+};
+
+class Trie {
+    TrieNode* root;
+
+public:
+    Trie() {
+        root = new TrieNode();
+    }
+
+    void insert(string &word) {
+        TrieNode* node = root;
+        for (char ch : word) {
+            int idx = ch - 'a';
+            if (!node->children[idx])
+                node->children[idx] = new TrieNode();
+            node = node->children[idx];
+        }
+        node->isEnd = true;
+    }
+
+    bool search(string &word) {
+        TrieNode* node = root;
+        for (char ch : word) {
+            int idx = ch - 'a';
+            if (!node->children[idx])
+                return false;
+            node = node->children[idx];
+        }
+        return node->isEnd;
+    }
+
+    bool isPrefix(string &word) {
+        TrieNode* node = root;
+        for (char ch : word) {
+            int idx = ch - 'a';
+            if (!node->children[idx])
+                return false;
+            node = node->children[idx];
+        }
+        return true;
+    }
+};
