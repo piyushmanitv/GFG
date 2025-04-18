@@ -1,0 +1,77 @@
+Nodes at given distance in binary tree
+
+
+
+
+Given a binary tree, a target node in the binary tree, and an integer value k, find all the nodes that are at a distance k from the given target node. No parent pointers are available.
+Note:
+
+You have to return the list in sorted order.
+The tree will not contain duplicate values.
+
+
+
+
+
+
+
+
+class Solution {
+public:
+    void markParents(Node* root, unordered_map<Node*, Node*>& parent_map, Node*& targetNode, int target) {
+        queue<Node*> q;
+        q.push(root);
+        while (!q.empty()) {
+            Node* curr = q.front(); q.pop();
+            if (curr->data == target) targetNode = curr;
+            if (curr->left) {
+                parent_map[curr->left] = curr;
+                q.push(curr->left);
+            }
+            if (curr->right) {
+                parent_map[curr->right] = curr;
+                q.push(curr->right);
+            }
+        }
+    }
+
+    vector<int> KDistanceNodes(Node* root, int target, int k) {
+        unordered_map<Node*, Node*> parent_map;
+        Node* targetNode = nullptr;
+        markParents(root, parent_map, targetNode, target);
+
+        unordered_set<Node*> visited;
+        queue<Node*> q;
+        q.push(targetNode);
+        visited.insert(targetNode);
+
+        int curr_level = 0;
+        while (!q.empty()) {
+            int size = q.size();
+            if (curr_level++ == k) break;
+            while (size--) {
+                Node* node = q.front(); q.pop();
+                if (node->left && !visited.count(node->left)) {
+                    visited.insert(node->left);
+                    q.push(node->left);
+                }
+                if (node->right && !visited.count(node->right)) {
+                    visited.insert(node->right);
+                    q.push(node->right);
+                }
+                if (parent_map[node] && !visited.count(parent_map[node])) {
+                    visited.insert(parent_map[node]);
+                    q.push(parent_map[node]);
+                }
+            }
+        }
+
+        vector<int> result;
+        while (!q.empty()) {
+            result.push_back(q.front()->data);
+            q.pop();
+        }
+        sort(result.begin(), result.end());
+        return result;
+    }
+};
