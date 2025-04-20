@@ -1,0 +1,58 @@
+Word Ladder I
+
+
+
+Given two distinct words startWord and targetWord, and a list denoting wordList of unique words of equal lengths. Find the length of the shortest transformation sequence from startWord to targetWord.
+Keep the following conditions in mind:
+
+A word can only consist of lowercase characters.
+Only one letter can be changed in each transformation.
+Each transformed word must exist in the wordList including the targetWord.
+startWord may or may not be part of the wordList
+The second part of this problem can be found here.
+
+Note: If no possible way to transform sequence from startWord to targetWord return 0
+
+
+
+
+
+
+
+class Solution {
+public:
+    int wordLadderLength(string startWord, string targetWord, vector<string>& wordList) {
+        // Code here
+        unordered_set<string> wordSet(wordList.begin(), wordList.end());
+        
+        if (wordSet.find(targetWord) == wordSet.end()) return 0;
+    
+        queue<pair<string, int>> q;
+        q.push({startWord, 1});
+    
+        while (!q.empty()) {
+            string word = q.front().first;
+            int level = q.front().second;
+            q.pop();
+    
+            if (word == targetWord) 
+                return level;
+    
+            for (int i = 0; i < word.length(); i++) {
+                char originalChar = word[i];
+    
+                for (char c = 'a'; c <= 'z'; c++) {
+                    if (c == originalChar) continue;
+    
+                    word[i] = c;
+                    if (wordSet.find(word) != wordSet.end()) {
+                        q.push({word, level + 1});
+                        wordSet.erase(word);
+                    }
+                }
+                word[i] = originalChar;
+            }
+        }
+        return 0;
+    }
+}
