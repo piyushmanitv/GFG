@@ -1,0 +1,53 @@
+Word Wrap
+
+
+
+
+Given an array arr[], where arr[i] denotes the number of characters in one word. Let k be the limit on
+the number of characters that can be put in one line (line width). Put line breaks in the 
+given sequence such that the lines are printed neatly.
+Assume that the length of each word is smaller than the line width. When line breaks are inserted
+there is a possibility that extra spaces are present in each line. The extra spaces include spaces 
+put at the end of every line except the last one. 
+
+You have to minimize the following total cost where total cost = Sum of cost of all lines, where 
+cost of line is = (Number of extra spaces in the line)2.
+
+
+
+
+
+
+
+
+class Solution {
+private: 
+    int helper(vector<int>& arr, int k,int i,int j,vector<vector<int>>& dp){
+        if(j>=arr.size()-1) return 0;
+        if(dp[i][j]!=-1) return dp[i][j];
+        int nextlen=0;
+        int cost=INT_MAX;
+        for(int p=j+1;p<arr.size();p++){
+            nextlen+=arr[p];
+            if(nextlen+p-(j+1)>k) break;
+            if(p==arr.size()-1) return 0;
+            int currcost=pow(k-(nextlen+p-(j+1)),2);
+            cost=min(cost,currcost+helper(arr,k,j+1,p,dp));
+        }
+        return dp[i][j]=cost;
+    }
+  public:
+    int solveWordWrap(vector<int>& arr, int k) {
+        int ans=INT_MAX;
+        int len=0;
+        vector<vector<int>> dp(arr.size(),vector<int>(arr.size(),-1));
+        for(int i=0;i<arr.size();i++){
+            len+=arr[i];
+            if(len+i>k) break;
+            if(i==arr.size()-1) return 0; 
+            int currcost=pow(k-(len+i),2);
+            ans=min(ans,currcost+helper(arr,k,0,i,dp));
+        }
+        return ans;
+    }
+};
