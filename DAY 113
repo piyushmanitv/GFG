@@ -1,0 +1,43 @@
+Unique Number II
+Difficulty: MediumAccuracy: 36.9%Submissions: 158K+Points: 4Average Time: 15m
+Given an array arr[] containing 2*n + 2 positive numbers, out of which 2*n numbers exist in pairs whereas the 
+other two number occur exactly once and are distinct. Find the other two numbers. Return the answer in increasing order
+
+
+
+
+
+
+
+
+class Solution {
+  public:
+    vector<int> singleNum(vector<int>& arr) {
+        // Code here.
+         sort(arr.begin(),arr.end());
+        vector<int>ans;
+        int n=arr.size();
+        int i=0;
+        while(i<n){ 
+            if(i==n-1){
+                ans.push_back(arr[i]);
+                break;
+            }
+            
+            if(arr[i]==arr[i+1]){
+                i+=2;
+            }
+            
+            else{
+                ans.push_back(arr[i]);
+                i++;
+            }
+            
+        }
+        if(ans.empty()){
+            return {0,0};
+        }
+        
+        return ans;
+    }
+};
