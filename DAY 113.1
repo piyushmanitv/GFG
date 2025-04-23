@@ -1,0 +1,63 @@
+Strongly connected component (Tarjans's Algo)
+Difficulty: HardAccuracy: 36.78%Submissions: 29K+Points: 8Average Time: 30m
+Given a Directed Graph with V vertices and E edges, Find the members of strongly connected components in the graph.
+
+Note - Sort both the individual components and array of the components.
+
+
+
+
+
+
+
+
+class Solution {
+    int timer = 0;
+    vector<int> disc, low;
+    vector<bool> inStack;
+    stack<int> st;
+    vector<vector<int>> sccs;
+
+    void dfs(int u, vector<int> adj[]) {
+        disc[u] = low[u] = timer++;
+        st.push(u);
+        inStack[u] = true;
+
+        for (int v : adj[u]) {
+            if (disc[v] == -1) {
+                dfs(v, adj);
+                low[u] = min(low[u], low[v]);
+            } else if (inStack[v]) {
+                low[u] = min(low[u], disc[v]);
+            }
+        }
+
+        if (disc[u] == low[u]) {
+            vector<int> scc;
+            while (true) {
+                int node = st.top(); st.pop();
+                inStack[node] = false;
+                scc.push_back(node);
+                if (node == u) break;
+            }
+            sort(scc.begin(), scc.end());
+            sccs.push_back(scc);
+        }
+    }
+
+public:
+    vector<vector<int>> tarjans(int V, vector<int> adj[]) {
+        disc.assign(V, -1);
+        low.assign(V, -1);
+        inStack.assign(V, false);
+
+        for (int i = 0; i < V; i++) {
+            if (disc[i] == -1) {
+                dfs(i, adj);
+            }
+        }
+
+        sort(sccs.begin(), sccs.end());
+        return sccs;
+    }
+};
