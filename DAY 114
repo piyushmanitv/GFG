@@ -1,0 +1,26 @@
+Unique Number III
+Difficulty: MediumAccuracy: 49.87%Submissions: 58K+Points: 4Average Time: 20m
+Given an array of integers arr[] where, every element appears thrice except for one which occurs once.
+Find that element which occurs once
+
+
+
+
+
+
+
+
+class Solution {
+  public:
+    int getSingle(vector<int> &arr) {
+        // code here
+        unordered_map<int,int> mpp;
+        for(int i=0;i<arr.size();i++){
+            mpp[arr[i]]++;
+        }
+        for(auto& it:mpp){
+            if(it.second == 1) return it.first;
+        }
+        return 1;
+    }
+};
