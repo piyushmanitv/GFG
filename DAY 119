@@ -1,0 +1,52 @@
+Sort a linked list of 0s, 1s and 2s
+Difficulty: MediumAccuracy: 60.75%Submissions: 241K+Points: 4Average Time: 30m
+Given the head of a linked list where nodes can contain values 0s, 1s, and 2s only. Your task is to rearrange the list so that all 0s appear at the beginning, followed by all 1s, and all 2s are placed at the end.
+
+
+
+
+
+
+
+
+/*  Node is defined as
+  struct Node {
+    int data;
+    struct Node *next;
+    Node(int x) {
+        data = x;
+        next = NULL;
+    }
+};*/
+class Solution {
+  public:
+    Node* segregate(Node* head) {
+        // code here
+        Node* zeroStart=new Node(-1);
+        Node* oneStart=new Node(-1);
+        Node* twoStart=new Node(-1);
+        
+        Node *zeroNext=zeroStart, *oneNext=oneStart, *twoNext=twoStart, *node=head;
+        
+        while(node){
+            if(node->data==0){
+                zeroNext->next=node;
+                zeroNext=node;
+            }else if(node->data==1){
+                oneNext->next=node;
+                oneNext=node;
+            }else{
+                twoNext->next=node;
+                twoNext=node;
+            }
+            node=node->next;
+        }
+        
+        twoNext->next = NULL;
+        oneNext->next=twoStart->next;
+        zeroNext->next=oneStart->next;
+        
+        
+        return zeroStart->next;
+    }
+};
