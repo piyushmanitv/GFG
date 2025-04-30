@@ -1,0 +1,50 @@
+Find length of Loop
+Difficulty: EasyAccuracy: 44.26%Submissions: 248K+Points: 2Average Time: 30m
+Given the head of a linked list, determine whether the list contains a loop. If a loop is present, return the number of nodes in the loop, otherwise return 0.
+
+Note: 'c' is the position of the node which is the next pointer of the last node of the linkedlist. If c is 0, then there is no loop.
+
+
+
+
+
+
+
+
+
+
+/*
+
+struct Node {
+    int data;
+    struct Node *next;
+    Node(int x) {
+        data = x;
+        next = NULL;
+    }
+};
+
+*/
+class Solution {
+  public:
+    // Function to find the length of a loop in the linked list.
+    int countNodesinLoop(Node *head) {
+        // Code here
+        Node* fast = head;
+       Node* slow = head;
+       while(fast!=NULL && fast->next!=NULL){
+           fast=fast->next->next;
+           slow=slow->next;
+           if(fast==slow){
+               break;
+           }
+       }
+       if(fast==NULL || fast->next==NULL) return 0;
+       int len = 1;
+       while(fast->next!=slow){
+           fast=fast->next;
+           len++;
+       }
+       return len;
+    }
+};
