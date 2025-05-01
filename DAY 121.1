@@ -1,0 +1,51 @@
+Find all Critical Connections in the Graph
+Difficulty: HardAccuracy: 50.25%Submissions: 35K+Points: 8Average Time: 30m
+A critical connection refers to an edge that, upon removal, will make it impossible for certain nodes to reach each other through any path. You are given an undirected connected graph with v vertices and e edges where each vertex is distinct and ranges from 0 to v-1, and you have to find all critical connections in the graph. It is ensured that there is at least one such edge present.
+
+Note: You can return connections in any order
+
+
+
+
+
+
+
+
+
+#include <vector>
+#include <functional>
+
+using namespace std;
+
+class Solution {
+public:
+    vector<vector<int>> criticalConnections(int v, vector<vector<int>>& edges) {
+        vector<vector<int>> adj(v);
+        for (auto& e : edges) {
+            adj[e[0]].push_back(e[1]);
+            adj[e[1]].push_back(e[0]);
+        }
+        
+        vector<vector<int>> result;
+        vector<int> dfn(v, 0), low(v, 0);
+        int time = 1;
+        
+        function<void(int, int)> dfs = [&](int u, int parent) {
+            dfn[u] = low[u] = time++;
+            for (int v : adj[u]) {
+                if (v == parent) continue;
+                if (!dfn[v]) { // Not visited
+                    dfs(v, u);
+                    low[u] = min(low[u], low[v]);
+                    if (low[v] > dfn[u])
+                        result.push_back({u, v});
+                } else {
+                    low[u] = min(low[u], dfn[v]);
+                }
+            }
+        };
+        
+        dfs(0, -1);
+        return result;
+    }
+};
