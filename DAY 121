@@ -1,0 +1,36 @@
+Pascal Triangle
+Difficulty: MediumAccuracy: 23.68%Submissions: 122K+Points: 4Average Time: 20m
+Given a positive integer n, return the nth row of pascal's triangle.
+Pascal's triangle is a triangular array of the binomial coefficients formed by summing up the elements of previous row.
+
+File:PascalTriangleAnimated2.gif
+
+
+
+
+
+
+
+
+class Solution {
+  public:
+    vector<int> nthRowOfPascalTriangle(int n) {
+        // code here
+        int MOD=1e9+7;
+        vector<int>temp;
+        vector<int>v;
+        if(n==1){
+            v.push_back(1);
+            return v;
+        }
+        temp=nthRowOfPascalTriangle(n-1);
+        
+        v.push_back(1);
+        for(int i=0;i<temp.size()-1;i++){
+            v.push_back((temp[i]+temp[i+1])%MOD);
+        }
+        
+         v.push_back(1);
+         return v;
+    }
+};
