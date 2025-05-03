@@ -1,0 +1,84 @@
+Shortest Path by Removing K walls
+Difficulty: HardAccuracy: 50.4%Submissions: 22K+Points: 8Average Time: 40m
+Given a 2-D binary matrix of size n*m, where 0 represents an empty space while 1 represents a wall you cannot walk through. You are also given an integer k.
+You can walk up, down, left, or right. Given that you can remove up to k walls, return the minimum number of steps to walk from the top left corner (0, 0) to the bottom right corner (n-1, m-1).
+Note: If there is no way to walk from the top left corner to the bottom right corner, return -1.
+
+
+
+
+
+
+
+
+
+class Solution {
+  public:
+    int shotestPath(vector<vector<int>> mat, int n, int m, int k) {
+        
+        queue<pair<pair<int,int>,int>>q;
+        vector<vector<int>>vis(n+1,vector<int>(m+1,-1));
+        q.push({{0,0},k});
+        vis[0][0]=k;
+        int ans=INT_MAX;
+        int res=0;
+        
+        while(q.empty()==false)
+        {
+           int size=q.size();
+           
+            while(size)
+           {
+               auto x=q.front();
+               q.pop();
+               
+               if(x.first.first==n-1 && x.first.second==m-1)
+               {
+                   return res;
+               }
+               
+               int rem=x.second;
+               
+               vector<int>a{0,-1,0,1};
+               vector<int>b{-1,0,1,0};
+               
+               for(int k=0;k<4;k++)
+               {
+                   int nx=x.first.first+a[k];
+                   int ny=x.first.second+b[k];
+                   
+                   if(nx>=0 && nx<n && ny>=0 && ny<m && vis[nx][ny]<rem)
+                   {
+                       
+                       if(mat[nx][ny]==0)
+                       {
+                           q.push({{nx,ny},rem});
+                           vis[nx][ny]=rem;
+                       }
+                       else if(mat[nx][ny]==1 && rem>0)
+                       {
+                           q.push({{nx,ny},rem-1});
+                           vis[nx][ny]=rem-1;
+                       }
+                       
+                       
+                   }
+                   
+                   
+                   
+               }
+               
+               
+               
+               size--;
+           }
+           
+           res++;
+            
+            
+        }
+        
+        
+        return -1;
+    }
+};
