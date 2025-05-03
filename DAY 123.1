@@ -1,0 +1,51 @@
+Shortest Path by Removing K walls
+Difficulty: HardAccuracy: 50.4%Submissions: 22K+Points: 8Average Time: 40m
+Given a 2-D binary matrix of size n*m, where 0 represents an empty space while 1 represents a wall you cannot walk through. You are also given an integer k.
+You can walk up, down, left, or right. Given that you can remove up to k walls, return the minimum number of steps to walk from the top left corner (0, 0) to the bottom right corner (n-1, m-1).
+Note: If there is no way to walk from the top left corner to the bottom right corner, return -1.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+class Solution {
+ private:
+    int minSteps(int i, int j, int k, vector<vector<int>> &mat, vector<vector<vector<int>>> &dp){
+        if ( k < 0 ) return 1e8;
+        if ( i == mat.size() - 1 && j == mat[0].size() - 1 ) return 0;
+        
+        if ( dp[i][j][k] != -1 ) return dp[i][j][k];
+        int org = mat[i][j];
+        mat[i][j] = 2;
+        
+        int dr[4] = {-1, 0, 0, 1};
+        int dc[4] = {0, -1, 1, 0};
+        
+        int ans = 1e8;
+        for ( int w = 0; w < 4; w++ ){
+            int r = i + dr[w];
+            int c = j + dc[w];
+            if ( r < 0 || c < 0 || r >= mat.size() || c >= mat[0].size() || mat[r][c] == 2 ) continue;
+            ans = min(ans, minSteps(r, c, k - mat[r][c], mat, dp) + 1);
+        }
+        mat[i][j] = org;
+        return dp[i][j][k] = ans;
+    }
+  public:
+    int shotestPath(vector<vector<int>> &mat, int n, int m, int k) {
+        vector<vector<vector<int>>> dp(n, vector<vector<int>>(m, vector<int>(k + 1, -1)));
+        int ans = minSteps(0, 0, k, mat, dp);
+        
+        if ( ans >= 1e8 ) return -1;
+        return ans;
+    }
+};
