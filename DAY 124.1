@@ -1,0 +1,48 @@
+Sandwiched_Vowels
+Difficulty: BasicAccuracy: 45.94%Submissions: 11K+Points: 1
+For a given string s comprising only lowercase English alphabets, eliminate the vowels from the string that occur between two consonants(sandwiched between two immediately adjacent consonants). Return the new string
+
+
+
+
+
+
+
+
+
+
+
+class Solution {
+
+  public:
+
+    bool isVowel(char c) {
+    return (c == 'a' || c == 'e' || c == 'i' || c == 'o' || c == 'u');
+}
+    string Sandwiched_Vowel(string &s) {
+        // Your code goes here
+        int n = s.length();
+        
+        if(n<3) return s;
+        
+        string result = "";
+        
+        result += s[0];
+        
+        for(int i = 1; i < n-1; i++)
+        {
+            if(isVowel(s[i]) && !isVowel(s[i-1]) && !isVowel(s[i+1]))
+            {
+                continue;
+            } else {
+                result += s[i];
+            }
+        }
+        
+        result += s[n-1];
+        
+        return result;
+    
+    
+    }
+};
