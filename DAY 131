@@ -1,0 +1,31 @@
+K-th Largest Sum Contiguous Subarray
+Difficulty: MediumAccuracy: 54.33%Submissions: 28K+Points: 4Average Time: 20m
+Given an array arr[] of size n, find the sum of the K-th largest sum among all contiguous subarrays. In other words, identify the K-th largest sum from all possible subarrays and return it.
+
+
+
+
+
+
+class Solution {
+  public:
+    int kthLargest(vector<int> &arr, int k) {
+        int n = arr.size() ; 
+        priority_queue<int , vector<int> , greater<int>> pq ; 
+        for(int i = 0 ; i < n ; i++){
+            int sum = 0 ; 
+            for(int j = i; j < n ;j++){
+                sum += arr[j] ; 
+                if(pq.size() < k){
+                    pq.push(sum) ; 
+                }else{
+                    if(!pq.empty() && pq.top() < sum){
+                        pq.pop() ;
+                        pq.push(sum) ;
+                    }
+                }
+            }
+        }
+        return pq.top() ;
+    }
+};
