@@ -1,0 +1,59 @@
+Meeting Rooms III
+Difficulty: HardAccuracy: 64.3%Submissions: 9K+Points: 8
+You are given an integer n representing the number of rooms numbered from 0 to n - 1. Additionally, you are given a 2D integer array meetings[][] where meetings[i] = [starti, endi] indicates that a meeting is scheduled during the half-closed time interval [starti, endi). All starti values are unique.
+
+Meeting Allocation Rules:
+
+When a meeting starts, assign it to the available room with the smallest number.
+If no rooms are free, delay the meeting until the earliest room becomes available. The delayed meeting retains its original duration.
+When a room becomes free, assign it to the delayed meeting with the earliest original start time.
+Determine the room number that hosts the most meetings. If multiple rooms have the same highest number of meetings, return the smallest room number among them.
+
+
+
+
+
+
+
+class Solution {
+  public:
+    int mostBooked(int n, vector<vector<int>> &meetings) {
+        sort(meetings.begin(), meetings.end());
+        
+        priority_queue<int, vector<int>, greater<int>> available;
+        for (int i = 0; i < n; ++i) available.push(i);
+        
+        priority_queue<pair<long long, int>, vector<pair<long long, int>>, greater<>> in_use;
+        vector<int> count(n, 0);
+        
+        for (auto &m : meetings) {
+            long long start = m[0], end = m[1];
+            while (!in_use.empty() && in_use.top().first <= start) {
+                available.push(in_use.top().second);
+                in_use.pop();
+            }
+            
+            if (!available.empty()) {
+                int room = available.top(); available.pop();
+                count[room]++;
+                in_use.push({end, room});
+            } else {
+                pair<long long, int> top = in_use.top(); in_use.pop();
+                long long next_free_time = top.first;
+                int room = top.second;
+                count[room]++;
+                long long duration = end - start;
+                in_use.push({next_free_time + duration, room});
+            }
+        }
+        
+        int max_meetings = 0, result = 0;
+        for (int i = 0; i < n; ++i) {
+            if (count[i] > max_meetings) {
+                max_meetings = count[i];
+                result = i;
+            }
+        }
+        return result;
+    }
+};
