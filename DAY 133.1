@@ -1,0 +1,51 @@
+Sorted Linked List to BST
+Difficulty: HardAccuracy: 53.24%Submissions: 27K+Points: 8
+Given a Singly Linked List which has data members sorted in ascending order. Construct a Balanced Binary Search Tree which has same data members as the given Linked List.
+Note: There might be nodes with the same value.
+
+
+
+
+
+
+/*
+struct LNode { //Linked List
+    int data;
+    struct LNode* next;
+    LNode(int x){
+        data = x;
+        next = NULL; }
+};
+struct TNode {   //Tree
+    int data;
+    struct TNode* left;
+    struct TNode* right;
+    TNode(int x){
+        data=x;
+        left=right=NULL; }
+}; */
+class Solution {
+  public:
+    TNode *sortedListToBST(LNode *head) {
+        // code here
+        if(head==NULL){
+            return NULL;
+        }
+        if(head->next==NULL){
+            return new TNode(head->data);
+        }
+        LNode *slow=head;
+        LNode *fast=head;
+        LNode *mid=slow;
+        while(fast!=NULL &&fast->next!=NULL){
+            mid=slow;
+            fast=fast->next->next;
+            slow=slow->next;
+        }
+        TNode *node=new TNode(slow->data);
+        mid->next=NULL;
+        node->left=sortedListToBST(head);
+        node->right=sortedListToBST(slow->next);
+        return node;
+    }
+};
