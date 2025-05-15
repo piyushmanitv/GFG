@@ -1,0 +1,26 @@
+Substrings with same first and last characters
+Difficulty: EasyAccuracy: 50.0%Submissions: 16K+Points: 2
+Given a string s consisting of lowercase characters, the task is to find the count of all substrings that start and end with the same character.
+
+
+
+
+
+
+
+
+class Solution {
+  public:
+    int countSubstring(string &s) {
+        // code here
+        unordered_map<char,int>mp;
+        for(auto it:s){
+            mp[it]++;
+        }
+        int sum=0;
+        for(auto it:mp){
+            sum+=(it.second)*(it.second+1)/2;
+        }
+        return sum;
+    }
+};
