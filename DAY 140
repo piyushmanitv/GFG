@@ -1,0 +1,106 @@
+Burning Tree
+Difficulty: HardAccuracy: 53.53%Submissions: 112K+Points: 8
+Given a binary tree and a target node, determine the minimum time required to burn the entire tree if the target node is set on fire. In one second, the fire spreads from a node to its left child, right child, and parent.
+Note: The tree contains unique values.
+
+
+
+
+
+
+
+
+
+
+
+/*
+class Node {
+  public:
+    int data;
+    Node *left;
+    Node *right;
+
+    Node(int val) {
+        data = val;
+        left = right = NULL;
+    }
+};
+*/
+#include <unordered_map>
+#include <unordered_set>
+#include <queue>
+
+class Solution {
+  public:
+    Node* mapParents(Node* root, unordered_map<Node*, Node*>& parentMap, int target) {
+        queue<Node*> q;
+        q.push(root);
+        Node* targetNode = nullptr;
+
+        while (!q.empty()) {
+            Node* current = q.front();
+            q.pop();
+
+            if (current->data == target) {
+                targetNode = current;
+            }
+
+            if (current->left) {
+                parentMap[current->left] = current;
+                q.push(current->left);
+            }
+            if (current->right) {
+                parentMap[current->right] = current;
+                q.push(current->right);
+            }
+        }
+
+        return targetNode;
+    }
+
+    int minTime(Node* root, int target) {
+        if (!root) return 0;
+
+        unordered_map<Node*, Node*> parentMap;
+        Node* targetNode = mapParents(root, parentMap, target);
+
+        unordered_set<Node*> visited;
+        queue<Node*> q;
+        q.push(targetNode);
+        visited.insert(targetNode);
+
+        int time = 0;
+
+        while (!q.empty()) {
+            int size = q.size();
+            bool anySpread = false;
+
+            for (int i = 0; i < size; ++i) {
+                Node* current = q.front();
+                q.pop();
+
+                if (current->left && !visited.count(current->left)) {
+                    q.push(current->left);
+                    visited.insert(current->left);
+                    anySpread = true;
+                }
+
+                if (current->right && !visited.count(current->right)) {
+                    q.push(current->right);
+                    visited.insert(current->right);
+                    anySpread = true;
+                }
+
+                if (parentMap.count(current) && !visited.count(parentMap[current])) {
+                    q.push(parentMap[current]);
+                    visited.insert(parentMap[current]);
+                    anySpread = true;
+                }
+            }
+
+            if (anySpread) time++;
+        }
+
+        return time;
+    }
+};
