@@ -1,0 +1,45 @@
+Insert in Sorted Circular Linked List
+Difficulty: MediumAccuracy: 25.56%Submissions: 124K+Points: 4Average Time: 20m
+Given a sorted circular linked list, the task is to insert a new node in this circular linked list so that it remains a sorted circular linked list.
+
+
+
+
+
+
+
+
+
+/* structure for a node
+class Node {
+ public:
+  int data;
+  Node *next;
+
+  Node(int x){
+      data = x;
+      next = NULL;
+  }
+}; */
+
+class Solution {
+  public:
+    Node* sortedInsert(Node* head, int data) {
+        Node* prev = head;
+        Node* nex = head;
+        while(prev -> next != head) prev = prev -> next;
+        if(data <= head -> data || data >= prev -> data) {
+            prev -> next = new Node(data);
+            prev -> next -> next = head;
+            if(data <= head -> data) return prev -> next;
+            return head;
+        }
+        while(nex -> data < data) {
+            prev = nex;
+            nex = nex -> next;
+        }
+        prev -> next = new Node(data);
+        prev -> next -> next = nex;
+        return head;
+    }
+};
