@@ -1,0 +1,57 @@
+Sum of nodes on the longest path
+Difficulty: MediumAccuracy: 52.39%Submissions: 115K+Points: 4
+Given a binary tree root[], you need to find the sum of the nodes on the longest path from the root to any leaf node. 
+If two or more paths have the same length, the path with the maximum sum of node values should be considered.
+
+
+
+
+
+
+
+
+
+
+
+/*
+class Node {
+  public:
+    int data;
+    Node *left;
+    Node *right;
+
+    Node(int x) {
+        data = x;
+        left = NULL;
+        right = NULL;
+    }
+}; */
+
+class Solution {
+  public:
+    void dfs(Node* node, int currSum, int currLen, int& maxLen, int& maxSum) {
+        if (!node) return;
+
+        currSum += node->data;
+        currLen++;
+
+        if (!node->left && !node->right) {
+            if (currLen > maxLen) {
+                maxLen = currLen;
+                maxSum = currSum;
+            } else if (currLen == maxLen) {
+                maxSum = max(maxSum, currSum);
+            }
+            return;
+        }
+
+        dfs(node->left, currSum, currLen, maxLen, maxSum);
+        dfs(node->right, currSum, currLen, maxLen, maxSum);
+    }
+
+    int sumOfLongRootToLeafPath(Node *root) {
+        int maxLen = 0, maxSum = 0;
+        dfs(root, 0, 0, maxLen, maxSum);
+        return maxSum;
+    }
+};
