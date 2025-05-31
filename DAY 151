@@ -1,0 +1,33 @@
+Kth element in Matrix
+Difficulty: MediumAccuracy: 61.42%Submissions: 64K+Points: 4Average Time: 35m
+Given a matrix mat[][] of size n*n, where each row and column is sorted in non-decreasing order. Find the kth smallest element in the matrix.
+
+
+
+
+
+
+
+
+
+
+class Solution {
+  public:
+    using info = tuple<int, int, int>;
+    int kthSmallest(vector<vector<int>> &matrix, int k) {
+        const int n = matrix.size();
+        priority_queue<info, vector<info>, greater<info>> pq;
+        int val, x, y;
+        for (int i = 0; i < n; i++) {
+            pq.push(make_tuple(matrix[i][0], i, 0));
+        }
+        while (k > 1) {
+            tie(val, x, y) = pq.top();
+            pq.pop();
+            
+            if(y + 1 < n) pq.push(make_tuple(matrix[x][y + 1], x, y + 1));
+            k--;
+        }
+        return get<0>(pq.top());
+    }
+};
