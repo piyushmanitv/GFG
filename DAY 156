@@ -1,0 +1,51 @@
+Count the paths
+Difficulty: MediumAccuracy: 42.71%Submissions: 38K+Points: 4Average Time: 10m
+Given a Directed Acyclic Graph (DAG) with V nodes labeled from 0 to V-1, and a list of directed edges, 
+count the total number of distinct paths from a given start node to a destination node. Each edge is 
+represented as edges[i] = [u, v], indicating a directed edge from u to v.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+class Solution {
+  public:
+    int dp[1001][1001];
+    int solve(unordered_map<int,vector<int>>&adj,int src,int dest,vector<bool>&vis){
+        if(src==dest){
+           return 1; 
+        }
+        if(dp[src][dest]!=-1) return dp[src][dest];
+        vis[src]=true;
+        int take=0;
+        for(auto it:adj[src]){
+            if(!vis[it]){
+                take+=solve(adj,it,dest,vis);
+            }
+        }
+        vis[src]=false;
+        return dp[src][dest]=take;
+        
+    }
+    int countPaths(vector<vector<int>>& edges, int V, int src, int dest) {
+        // Code here
+        memset(dp,-1,sizeof(dp));
+        unordered_map<int,vector<int>>adj;
+        for(auto it:edges){
+            int u=it[0];
+            int v=it[1];
+            adj[u].push_back(v);
+        }
+        vector<bool>vis(V,false);
+        return solve(adj,src,dest,vis);
+    }
+};
