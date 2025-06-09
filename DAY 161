@@ -1,0 +1,29 @@
+Exactly one swap
+Difficulty: MediumAccuracy: 41.0%Submissions: 8K+Points: 4
+Given a string s, return the number of distinct strings that can be obtained by exactly one swap of two different indices (i < j).
+
+
+
+
+
+
+
+
+class Solution {
+  public:
+    long long countStrings(string S){
+    int hash[26] = {0}, n = S.size();
+    long long ans = 0;
+    for(int i=0; i<n; i++){
+        hash[S[i]-'a'] += 1;
+        ans += (i+1-hash[S[i]-'a']);
+    }
+    for(int i=0; i<26; i++){
+        if(hash[i] > 1){
+            ans += 1;
+            break;
+        }
+    }
+    return ans;
+    }
+};
