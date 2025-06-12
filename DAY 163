@@ -1,0 +1,62 @@
+K closest elements
+Difficulty: MediumAccuracy: 15.96%Submissions: 79K+Points: 4Average Time: 30m
+You are given a sorted array arr[] of unique integers, an integer k, and a target value x. Return exactly k elements from the array closest to x, excluding x if it exists.
+
+An element a is closer to x than b if:
+
+
+|a - x| < |b - x|, or
+|a - x| == |b - x| and a > b (i.e., prefer the larger element if tied)
+
+
+Return the k closest elements in order of closeness.
+
+
+
+
+
+
+
+
+
+
+
+class Compare {
+public:
+    bool operator()(pair<int, int>& a, pair<int, int>& b){
+        if (a.first == b.first)
+        {
+            return a.second < b.second;
+        }
+        return a.first > b.first; 
+    }
+};
+
+class Solution {
+  public:
+  
+    vector<int> printKClosest(vector<int> arr, int k, int x) {
+        // Code here
+        int n=arr.size();
+        vector<int> res;
+        priority_queue<pair<int,int>, vector<pair<int,int>>,Compare> pq;
+        for(int i=0;i<n;i++)
+        {
+            pq.push({abs(arr[i]-x),arr[i]});
+        }
+        while(k>0)
+        {
+            if(pq.top().first==0)
+            {
+                pq.pop();
+            }
+            else
+            {
+                res.push_back(pq.top().second);
+                pq.pop();
+                k--;
+            }
+        }
+        return res;
+    }
+};
