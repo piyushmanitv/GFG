@@ -1,0 +1,59 @@
+Koko Eating Bananas
+Difficulty: MediumAccuracy: 50.27%Submissions: 21K+Points: 4Average Time: 20m
+Koko is given an array arr[], where each element represents a pile of bananas. She has exactly k hours to eat all the bananas.
+
+Each hour, Koko can choose one pile and eat up to s bananas from it.
+
+If the pile has at least s bananas, she eats exactly s bananas.
+
+If the pile has fewer than s bananas, she eats the entire pile in that hour.
+
+Koko can only eat from one pile per hour.
+
+
+Your task is to find the minimum value of s (bananas per hour) such that Koko can finish all the piles within k hours.
+
+
+
+
+
+
+
+
+
+
+
+
+class Solution {
+  public:
+  int findTotalHours(vector<int> &arr, int mid){
+      int totalHour=0;
+      int n=arr.size();
+      for(int i=0;i<n;i++){
+          totalHour+=ceil(double(arr[i])/double(mid));
+      }
+      return totalHour;
+  }
+    int kokoEat(vector<int>& arr, int k) {
+        // Code here
+        int maxHour=-1;
+        for(auto it: arr){
+            if(it > maxHour){
+                maxHour=it;
+            }
+        }
+        int low=1;
+        int high=maxHour;
+        while(low<=high){
+            int mid=(low+high)/2;
+            int totalH=findTotalHours(arr,mid);
+            if(totalH <= k){
+                high=mid-1;
+            }
+            else{
+                low=mid+1;
+            }
+        }
+        return low;
+    }
+};
