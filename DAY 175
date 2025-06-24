@@ -1,0 +1,52 @@
+Lexicographically Largest String After Deleting K Characters
+Difficulty: MediumAccuracy: 66.25%Submissions: 1K+Points: 4Average Time: 15m
+Given a string s consisting of lowercase English letters and an integer k, your task is to remove exactly 
+k characters from the string. The resulting string must be the largest possible in lexicographical  order, 
+while maintain the relative order of the remaining characters.
+
+
+
+
+
+
+
+
+
+
+
+class Solution {
+  public:
+    string maxSubseq(string& s, int k) {
+        // code here
+        stack<char> st;
+        int n = s.size();
+        int count = k;
+        
+        for(auto i : s){
+            if(st.empty()){
+                st.push(i);
+            }else{
+                while(!st.empty() && count>0 && st.top() < i){
+                    st.pop();
+                    count--;
+                }
+                st.push(i);
+            }
+        }
+        
+        while(st.size() > n-k){
+            st.pop();
+        }
+        
+        string ans = "";
+        
+        while(!st.empty()){
+            ans.push_back(st.top());
+            st.pop();
+        }
+        
+        reverse(ans.begin(),ans.end());
+        
+        return ans;
+    }
+};
