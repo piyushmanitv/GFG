@@ -1,0 +1,39 @@
+Game with String
+Difficulty: MediumAccuracy: 53.96%Submissions: 61K+Points: 4Average Time: 15m
+Given a string s consisting of lowercase alphabets and an integer k, your task is to find the minimum possible value of the string after removing exactly k characters.
+
+The value of the string is defined as the sum of the squares of the frequencies of each distinct character present in the string.
+
+
+
+
+
+
+
+
+
+
+
+class Solution {
+  public:
+    int minValue(string &s, int k) {
+        vector<int> freq(26, 0);
+        priority_queue<int> pq;
+        for(int ch : s) freq[ch - 'a']++;
+        for(int i = 0 ; i < 26 ; i++)
+            if(freq[i] != 0)
+                pq.push(freq[i]);
+        while(k--) {
+            int mx = pq.top();
+            pq.pop();
+            if(mx > 0) mx--;
+            if(mx > 0) pq.push(mx);
+        }
+        int sum = 0;
+        while(!pq.empty()) {
+            sum += (pq.top() * pq.top());
+            pq.pop();
+        }
+        return sum;
+    }
+};
