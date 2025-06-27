@@ -1,0 +1,68 @@
+Mobile numeric keypad
+Difficulty: MediumAccuracy: 32.6%Submissions: 62K+Points: 4Average Time: 30m
+There is a standard numeric keypad on a mobile phone. You can press the current button or any button that is directly above, below, to the left, or to the right of it. For example, if you press 5, then pressing 2, 4, 6, or 8 is allowed. However, diagonal movements and pressing the bottom row corner buttons (* and #) are not allowed.
+
+
+Given an integer n, determine how many unique sequences of length n can be formed by pressing buttons on the keypad, starting from any digit.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+class Solution {
+  public:
+  int f(int i,int j,int n,vector<vector<int>>&grid,vector<vector<vector<int>>>&dp){
+      if(i<0 || j<0 || i>3 || j>=3 || grid[i][j]==-1) return 0;
+      
+      
+      if(n<=0) return 1;
+      
+      
+      
+      if(dp[i][j][n]!=-1) return dp[i][j][n];
+      
+      
+      
+      int op1=f(i,j-1,n-1,grid,dp);
+      int op2=f(i-1,j,n-1,grid,dp);
+      int op3=f(i,j+1,n-1,grid,dp);
+      int op4=f(i+1,j,n-1,grid,dp);
+      int op5=f(i,j,n-1,grid,dp);
+      
+      return dp[i][j][n]=op1+op2+op3+op4+op5;
+      
+      
+  }
+    int getCount(int n) {
+        // code here
+        vector<vector<int>>grid(4,vector<int>(3));
+        for(int i=0;i<3;i++){
+            for(int j=0;j<3;j++){
+                grid[i][j]=(3*i)+j+1;
+            }
+        }
+        grid[3][0]=-1;
+        grid[3][1]=0;
+        grid[3][2]=-1;
+        
+        int ans=0;
+        
+        for(int i=0;i<4;i++){
+            for(int j=0;j<3;j++){
+                vector<vector<vector<int>>>dp(4,vector<vector<int>>(3,vector<int>(n,-1)));
+                if(grid[i][j]!=-1) ans+=f(i,j,n-1,grid,dp);
+            }
+        }
+        
+        return ans;
+    }
+};
