@@ -1,0 +1,50 @@
+Split Array Largest Sum
+Difficulty: HardAccuracy: 58.9%Submissions: 51K+Points: 8
+Given an array arr[] and an integer k, divide the array into k contiguous 
+subarrays such that the maximum sum among these subarrays is minimized. 
+Find this minimum possible maximum sum.
+
+
+
+
+
+
+
+
+
+
+class Solution {
+  public:
+    bool check(vector<int>&arr,int k,int limit){
+        int n=arr.size();
+        int temp=1;
+        int curr=arr[0];
+        for(int i=1;i<n;i++){
+            curr+=arr[i];
+            if(curr>limit){
+                temp++;
+                curr=arr[i];
+            }
+        }
+        return k>=temp;
+    }
+    int splitArray(vector<int>& arr, int k) {
+        //minimum possible maximum sum.
+        int n=arr.size();
+        int low=*max_element(arr.begin(),arr.end());
+        int high=accumulate(arr.begin(),arr.end(),0);
+        int mid;
+        int ans=-1;
+        while(low<=high){
+            mid=low+(high-low)/2;
+            if(check(arr,k,mid)){
+                ans=mid;
+                high=mid-1;
+            }
+            else{
+                low=mid+1;
+            }
+        }
+        return ans;
+    }
+};
