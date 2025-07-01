@@ -1,0 +1,44 @@
+Substrings of length k with k-1 distinct elements
+Difficulty: MediumAccuracy: 57.85%Submissions: 28K+Points: 4Average Time: 15m
+Given a string s consisting only lowercase alphabets and an integer k. Find the count of all substrings of length k which have exactly k-1 distinct characters.
+
+
+
+
+
+
+
+
+
+
+
+class Solution {
+  public:
+    int substrCount(string &s, int k) {
+        
+        unordered_map<char,int> map;
+        int n = s.length();
+        int i = 0;
+        int j = 0;
+        int count = 0;
+        
+        while(j < n){
+            map[s[j]]++;
+            
+            if(j-i+1 == k){
+                if(map.size() == k-1){
+                    count++;
+                }
+                map[s[i]]--;
+                if(map[s[i]] == 0){
+                    map.erase(s[i]);
+                }
+                i++;
+            }
+            j++;
+        }
+        
+        return count;
+        
+    }
+};
