@@ -1,0 +1,57 @@
+Longest subarray with Atmost two distinct integers
+Difficulty: MediumAccuracy: 47.98%Submissions: 112K+Points: 4Average Time: 30m
+Given an array arr[] consisting of positive integers, your task is to find the length of the longest subarray that contains at most two distinct integers.
+
+
+
+
+
+
+
+
+
+
+
+
+
+class Solution {
+  public:
+    int totalElements(vector<int> &arr) {
+        // code here
+        int n = arr.size();
+        int num1 = arr[0], num2 = -1;
+        int cnt1 = 0, cnt2 = 0;
+        int i = 0, j = 0;
+        int ans = 0;
+        
+        while(j < n){
+            if(arr[j] == num1 || arr[j] == num2) {
+                if(num1 == arr[j]) cnt1++;
+                else if(num2 == arr[j]) cnt2++;
+            }
+            else if(num2 == -1) {
+                num2 = arr[j];
+                cnt2++;
+            }
+            else{
+                while(i < j && cnt1 > 0 && cnt2 > 0){
+                    cnt1 -= (num1 == arr[i]);
+                    cnt2 -= (num2 == arr[i]);
+                    i++;
+                }
+                
+                if(cnt1 == 0){
+                    num1 = num2;
+                    cnt1 = cnt2;
+                }
+                num2 = arr[j];
+                cnt2 = 1;
+            }
+            
+            ans = max(ans, j-i+1);
+            j++;
+        }
+        
+        return ans;
+    }
+};
