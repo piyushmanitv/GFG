@@ -1,0 +1,41 @@
+Next element with greater frequency
+Difficulty: MediumAccuracy: 66.87%Submissions: 9K+Points: 4
+Given an array arr[] of integers, for each element, find the closest (distance wise) to its right that has a higher frequency than the current element.
+If no such element exists, return -1 for that position.
+
+
+
+
+
+
+
+
+
+
+
+class Solution {
+  public:
+    vector<int> findGreater(vector<int>& arr) {
+        // code here
+        int n = arr.size();
+        vector<int> ans(n, -1);
+        
+        unordered_map<int, int> freq;
+        for(auto z: arr){
+          freq[z]++;
+        }
+        
+        stack<int> st;
+        for(int i=n-1;i>=0;i--){
+            while(!st.empty() && freq[st.top()]<= freq[arr[i]]){
+                st.pop();
+            }
+            ans[i]= st.empty()? -1: st.top();
+            st.push(arr[i]);
+        }
+        
+        
+        
+        return ans;
+    }
+};
