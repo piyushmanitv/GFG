@@ -1,0 +1,28 @@
+Trail of ones
+Difficulty: MediumAccuracy: 51.16%Submissions: 36K+Points: 4
+Given an integer n, the task is to count the number of binary strings of length n that contains at least one pair of consecutive 1's.
+Note: A binary string is a sequence made up of only 0's and 1's.
+
+
+
+
+
+
+
+class Solution {
+  public:
+    int countConsec(int n) {
+        // code here
+        if(n<2) return 0;
+        int a=2;
+        int b=3;
+        
+        for(int i=3;i<=n;i++){
+            int temp=a+b;
+            a=b;
+            b=temp;
+        }
+        int total = 1 << n;
+        return total-b;
+    }
+};
