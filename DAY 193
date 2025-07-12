@@ -1,0 +1,40 @@
+Gold Mine Problem
+Difficulty: MediumAccuracy: 29.73%Submissions: 126K+Points: 4
+Given a gold mine called mat[][]. Each field in this mine contains a positive integer which is the amount of gold in tons. Initially, the miner can start from any row in the first column. From a given cell, the miner can move -
+
+to the cell diagonally up towards the right
+to the right
+to the cell diagonally down towards the right
+Find out the maximum amount of gold that he can collect until he can no longer move.
+
+
+
+
+
+
+
+
+
+class Solution {
+  public:
+  int solve(int i,int j,int m,int n,vector<vector<int>>&mat,vector<vector<int>>&dp){
+      if(i>=m || j==n||i<0)return 0;
+      if(dp[i][j]!=-1)return dp[i][j];
+      int sum=0;
+      sum=max(sum,mat[i][j]+solve(i,j+1,m,n,mat,dp));
+      sum=max(sum,mat[i][j]+solve(i-1,j+1,m,n,mat,dp));
+      sum=max(sum,mat[i][j]+solve(i+1,j+1,m,n,mat,dp));
+      return dp[i][j]=sum;
+  }
+    int maxGold(vector<vector<int>>& mat) {
+        // code here
+        int m=mat.size();
+        int n=mat[0].size();
+        vector<vector<int>>dp(m+1,vector<int>(n+1,-1));
+        int maxSum=0;
+        for(int i=0;i<m;i++){
+            maxSum=max(maxSum,solve(i,0,m,n,mat,dp));
+        }
+        return maxSum;
+    }
+};
