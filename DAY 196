@@ -1,0 +1,29 @@
+Divisible by 13
+Difficulty: MediumAccuracy: 54.4%Submissions: 4K+Points: 4
+Given a number represented as a string s (which may be very large), check whether it is divisible by 13 or not.
+
+
+
+
+
+
+class Solution {
+  public:
+    bool divby13(string &s) {
+        // code here
+        int k=0;
+        int ans=0;
+        reverse(s.begin(),s.end());
+        for(int i=0;i<s.length();i+=3)
+        {
+            int l=i+3<s.length()?3:s.length()-i;
+            string h=s.substr(i,l);
+            reverse(h.begin(),h.end());
+            int u=stoi(h);
+            if(k%2==0)ans+=u;
+            else ans-=u;
+            k++;
+        }
+        return (abs(ans)%13==0);
+    }
+};
