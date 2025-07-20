@@ -1,0 +1,41 @@
+Count Numbers Containing Specific Digits
+Difficulty: MediumAccuracy: 69.08%Submissions: 1K+Points: 4Average Time: 25m
+You are given an integer n representing the number of digits in a number, and an array arr[] containing 
+digits from 0 to 9. Your have to count how many n-digit positive integers can be formed such that at
+least one digit from the array arr[] appears in the number.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+class Solution {
+  public:
+    int countValid(int n, vector<int>& arr) {
+        // code here
+        long total = 9*(long) pow(10, n-1);
+        
+        unordered_map<int, bool> um;
+        for(auto z: arr){
+            um[z]=true;
+        }
+        
+        int noInclude = 10 - um.size();
+        long noIncTotal;
+        if(um.find(0)==um.end())
+            noIncTotal = (long)(noInclude-1)*(long) pow(noInclude, n-1);
+        else
+            noIncTotal = (long)(noInclude)*(long) pow(noInclude, n-1);
+        long ans  =  total - noIncTotal;
+        
+        return int(ans);
+    }
+};
