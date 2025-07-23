@@ -1,0 +1,26 @@
+Sum of Subarrays
+Difficulty: MediumAccuracy: 23.85%Submissions: 38K+Points: 4
+Given an array arr[], find the sum of all the subarrays of the given array.
+
+Note: It is guaranteed that the total sum will fit within a 32-bit integer range.
+
+
+
+
+
+
+
+
+
+
+class Solution {
+  public:
+    int subarraySum(vector<int>& arr) {
+        // code here
+        long long ans=0,mod=1e9+7,n=arr.size();
+        for(long long i=0;i<arr.size();i++){
+            ans+=arr[i]*(i+1)*(n-i);
+        }
+        return ans;
+    }
+};
