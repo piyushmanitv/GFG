@@ -1,0 +1,41 @@
+Max Circular Subarray Sum
+Difficulty: HardAccuracy: 29.37%Submissions: 168K+Points: 8Average Time: 25m
+You are given a circular array arr[] of integers, find the maximum possible sum of a non-empty subarray. In a circular array, the subarray 
+can start at the end and wrap around to the beginning. Return the maximum non-empty subarray sum, considering both non-wrapping and wrapping cases.
+
+
+
+
+
+
+
+
+
+
+
+class Solution {
+  public:
+    int maxCircularSum(vector<int> &arr) {
+        // code here
+        int total = 0;
+       int mnsum = 0;
+       int mxsum = 0;
+       int mn = INT_MAX;
+       int mx = INT_MIN;
+       
+       for(int i = 0;i<arr.size();i++){
+           total += arr[i];
+           
+           mnsum += arr[i];
+           mn = min(mn,mnsum);
+           if(mnsum>=0) mnsum = 0;
+           
+           mxsum += arr[i];
+           mx = max(mx,mxsum);
+           if(mxsum<0) mxsum = 0;
+       }
+       
+       if(total-mn==0) return mx;
+       else return max(total - mn,mx);
+    }
+};
