@@ -1,0 +1,34 @@
+Make Matrix Beautiful
+Difficulty: MediumAccuracy: 64.75%Submissions: 64K+Points: 4Average Time: 20m
+A beautiful matrix is defined as a square matrix in which the sum of elements in every row and every column is equal. Given a square matrix mat[][], your task is to determine the minimum number of operations required to make the matrix beautiful.
+In one operation, you are allowed to increment the value of any single cell by 1.
+
+
+
+
+
+
+
+
+
+
+class Solution {
+  public:
+    int balanceSums(vector<vector<int>>& mat) {
+        // code here
+        int maxi = INT_MIN, n = mat.size();
+        for (int i = 0; i < n; i++){
+            maxi = max(maxi, accumulate(mat[i].begin(), mat[i].end(), 0));
+        }
+        int tot = 0;
+        for (int j = 0; j < n; j++){
+            int sum = 0;
+            for (int i = 0; i < n; i++){
+                sum += mat[i][j];
+                tot += mat[i][j];
+            }
+            maxi = max(maxi, sum);
+        }
+        return n*maxi-tot;
+    }
+};
