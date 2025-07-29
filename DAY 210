@@ -1,0 +1,46 @@
+ASCII Range Sum
+Difficulty: MediumAccuracy: 67.15%Submissions: 2K+Points: 4
+Given a string s consisting of lowercase English letters, for every character whose first and last 
+occurrences are at different positions, calculate the sum of ASCII values of characters strictly between its first and last occurrence.
+Return all such non-zero sums (order does not matter).
+
+
+
+
+
+
+
+
+
+
+
+
+class Solution {
+  public:
+    vector<int> asciirange(string& s) {
+        // code here
+        int n = s.size();
+        vector<int> preSum(n,0);
+        preSum[0] = s[0];
+        unordered_map<char,vector<int>> mp;
+        vector<int> ans;
+        
+        for(int i = 0; i < n; i++){
+            mp[s[i]].push_back(i);
+            if(i > 0) preSum[i] += preSum[i-1] + s[i];
+        }
+        
+        for(auto &ele:mp){
+            int startInd = ele.second[0];
+            int endInd = ele.second.back();
+            int sum = 0;
+             for(int i = startInd + 1; i < endInd; i++){
+                 sum += s[i];
+             }          
+            if(sum > 0)
+            ans.push_back(sum);
+        }
+        
+        return ans;
+    }
+};
