@@ -1,0 +1,44 @@
+Powerful Integer
+Difficulty: MediumAccuracy: 51.91%Submissions: 29K+Points: 4
+You are given a 2D integer array intervals[][] of length n, where each intervals[i] = [start, end] represents a closed interval (i.e., all integers from start to end, inclusive). You are also given an integer k. An integer is called Powerful if it appears in at least k intervals. Find the maximum Powerful Integer.
+
+Note: If no integer occurs at least k times return -1.
+
+
+
+
+
+
+
+
+
+
+
+class Solution {
+  public:
+    int powerfulInteger(vector<vector<int>>& intervals, int k) {
+        // code here
+        int n=intervals.size();
+        int maxi=-1e9;
+        
+        for(auto &it:intervals){
+            maxi=max(maxi, it[1]);
+        }
+        
+        vector<int>diff(maxi+3, 0);
+        
+        for(auto &it:intervals){
+            diff[it[0]]++;
+            diff[it[1]+1]--;
+        }
+        
+        int ans=-1;
+        
+        for(int i=1; i<maxi+1; i++){
+            diff[i]+=diff[i-1];
+            if(diff[i]>=k) ans=i;
+        }
+        
+        return ans;
+    }
+};
