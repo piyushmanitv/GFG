@@ -1,0 +1,39 @@
+Difference Check
+Difficulty: MediumAccuracy: 69.71%Submissions: 1K+Points: 4
+Given an array arr[] of time strings in 24-hour clock format "HH:MM:SS", return the minimum difference in seconds between any two time strings in the arr[].
+The clock wraps around at midnight, so the time difference between "23:59:59" and "00:00:00" is 1 second
+
+
+
+
+
+
+
+class Solution {
+  public:
+    int minDifference(vector<string> &arr) {
+        vector<int> seconds;
+        
+        for(const string& time : arr) {
+            int h = stoi(time.substr(0, 2));
+            int m = stoi(time.substr(3, 2));
+            int s = stoi(time.substr(6, 2));
+            
+            int totalSeconds = h * 3600 + m * 60 + s;
+            seconds.push_back(totalSeconds);
+        }
+        
+        sort(seconds.begin(), seconds.end());
+        
+        int minDiff = INT_MAX;
+        
+        for(int i = 1; i < seconds.size(); i++) {
+            minDiff = min(minDiff, seconds[i] - seconds[i-1]);
+        }
+        
+        int wrapAroundDiff = (seconds[0] + 24 * 3600) - seconds.back();
+        minDiff = min(minDiff, wrapAroundDiff);
+        
+        return minDiff;
+    }
+};
