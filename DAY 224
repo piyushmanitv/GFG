@@ -1,0 +1,40 @@
+Shop in Candy Store
+Difficulty: MediumAccuracy: 45.43%Submissions: 86K+Points: 4
+In a candy store, there are different types of candies available and prices[i] represent the price of  ith types of candies. You are now provided with an attractive offer.
+For every candy you buy from the store, you can get up to k other different candies for free. Find the minimum and maximum amount of money needed to buy all the candies.
+Note: In both cases, you must take the maximum number of free candies possible during each purchase.
+
+
+
+
+
+
+
+class Solution {
+  public:
+    vector<int> minMaxCandy(vector<int>& prices, int k) {
+        int n= prices.size();
+         sort(prices.begin(),prices.end());
+        int i=0;
+        int j =n-1;
+        
+        int mini = 0;
+        int maxi = 0;
+        
+        while (i<=j){
+             
+              mini+=prices[i];
+              j-=k;
+              i++;
+              
+        }
+        i=0;
+        j=n-1;
+        while (i<=j){
+              maxi+=prices[j];
+              j--;
+              i+=k;
+        }
+        return {mini,maxi};
+    }
+};
