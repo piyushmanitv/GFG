@@ -1,0 +1,34 @@
+Tywin's War Strategy
+Difficulty: EasyAccuracy: 44.52%Submissions: 9K+Points: 2
+You are given an array arr[] of size n, where arr[i] represents the number of soldiers in the i-th troop. You are also given an integer k.
+A troop is considered "lucky" if its number of soldiers is a multiple of k. Find the minimum total number of soldiers to add across all 
+troops so that at least ⌈n / 2⌉ troops become lucky.
+
+
+
+
+
+class Solution {
+  public:
+    int minSoldiers(vector<int>& arr, int k) {
+        // code here
+        int n=arr.size();
+        priority_queue<int,vector<int>,greater<int>>pq;
+        int count=0;
+        for(auto it:arr){
+            if(it%k)
+            pq.push(k-(it%k));
+            else{
+                count++;
+            }
+        }
+        int sum=0;
+        int val=(n+1)/2;
+        while(count<val){
+            sum+=pq.top();
+            pq.pop();
+            count++;
+        }
+        return sum;
+    }
+};
