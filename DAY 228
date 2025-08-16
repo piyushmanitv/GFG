@@ -1,0 +1,32 @@
+Form the Largest Number
+Difficulty: MediumAccuracy: 37.82%Submissions: 177K+Points: 4
+Given an array of integers arr[] representing non-negative integers, arrange them so that after concatenating all of them in order, 
+it results in the largest possible number. Since the result may be very large, return it as a string.
+
+
+
+
+
+
+
+class Solution {
+  public:
+    string findLargest(vector<int> &arr) {
+    vector<string> nums;
+        for (int num : arr) {
+            nums.push_back(to_string(num));
+        }
+        sort(nums.begin(), nums.end(), [](const string& a, const string& b) {
+            return a + b > b + a; 
+        });
+        if (nums[0] == "0") {
+            return "0";
+        }
+        string result = "";
+        for (const string& num : nums) {
+            result += num;
+        }
+        
+        return result;
+    }
+};
