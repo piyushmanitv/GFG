@@ -1,0 +1,36 @@
+Sort by Absolute Difference
+Difficulty: MediumAccuracy: 27.77%Submissions: 49K+Points: 4Average Time: 5m
+You are given a number x and array arr[]. Your task is to rearrange the elements of the array according to the absolute difference with x, i.e., an element having minimum difference comes first, and so on.
+Note: If two or more elements are at equal distances arrange them in the same sequence as in the given array.
+
+
+
+
+
+
+
+
+
+
+class Solution {
+  public:
+    void rearrange(vector<int> &arr, int x) {
+        // code here
+        vector<int> temp(arr.begin(),arr.end());
+        vector<pair<int, int>> ans;
+        for(int i=0; i<arr.size(); i++){
+            ans.push_back(make_pair(abs(x-arr[i]), i));
+        }
+        sort(ans.begin(), ans.end(), [x](pair<int, int> &a, pair<int, int> &b){
+            if(a.first==b.first){
+                return a.second<b.second;
+            }
+            else{
+                return a.first<b.first;
+            }
+        });
+        for(int i=0; i<arr.size(); i++){
+            arr[i]= temp[ans[i].second];
+        }
+    }
+};
