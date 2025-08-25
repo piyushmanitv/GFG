@@ -1,0 +1,49 @@
+Maximize median after doing k addition operation
+Difficulty: MediumAccuracy: 39.0%Submissions: 2K+Points: 4Average Time: 20m
+Given an array arr[] consisting of positive integers and an integer k. You are allowed to perform at most k operations, where in each operation, you can increment any one element of the array by 1.
+
+Determine the maximum possible median of the array that can be achieved after performing at most k such operations.
+
+
+
+
+
+
+
+
+
+
+
+class Solution {
+  public:
+    int maximizeMedian(vector<int>& arr, int k) {
+        // code here
+        sort(arr.begin(), arr.end());
+        int n = arr.size();
+        priority_queue<int, vector<int>, greater<int>> pq;
+        if(n%2 == 0)
+            pq.push(arr[n/2 - 1]);
+        
+        for(int i = n/2; i < n; i++)
+        {
+            pq.push(arr[i]);    
+        }
+        
+        while(k)
+        {
+            int top = pq.top();
+            pq.pop();
+            pq.push(top+1);
+            k--;
+        }
+        
+        if(n%2 == 0)
+        {
+            int top = pq.top();
+            pq.pop();
+            return (top + pq.top())/2;
+        }
+        else
+            return pq.top();
+    }
+};
