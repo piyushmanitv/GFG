@@ -1,0 +1,80 @@
+Smallest window containing all characters
+Difficulty: HardAccuracy: 30.19%Submissions: 182K+Points: 8Average Time: 30m
+Given two strings s and p. Find the smallest substring in s consisting of all the characters (including duplicates) of the string p. Return empty string in case no such substring is present.
+If there are multiple such substring of the same length found, return the one with the least starting index.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+class Solution {
+  public:
+    // Function to find the smallest window in the string s1 consisting
+    // of all the characters of string s2.
+    string smallestWindow(string &s1, string &s2) {
+        // Your code here
+        int count1[26] = {0};
+        int count2[26] = {0};
+        
+        for(int i = 0; i < s2.length(); i++)
+        {
+            char ch = s2[i] - 'a';
+            count2[ch]++;
+        }
+        
+        int start = 0;
+        
+        int start_index = -1;
+        
+        int min_len = INT_MAX;
+        
+        int cnt = 0;
+        
+        for(int i = 0; i < s1.length(); i++)
+        {
+            char ch = s1[i] - 'a';
+            count1[ch]++;
+            
+            if(count2[ch] != 0 && count1[ch] <= count2[ch])
+            {
+                cnt++;
+            }
+            
+            if(cnt == s2.length())
+            {
+                while(count1[s1[start] - 'a'] > count2[s1[start] - 'a'] || count2[s1[start] - 'a'] == 0)
+                {
+                    if(count1[s1[start] - 'a'] > count2[s1[start] - 'a'])
+                        count1[s1[start] - 'a']--;
+                        
+                    start++;
+                }
+                
+                int length = i - start + 1;
+                
+                if(length < min_len)
+                {
+                    min_len = length;
+                    start_index = start;
+                }
+            }
+            
+        }
+        
+        if(start_index == -1)
+            return "";
+            
+        return s1.substr(start_index, min_len);
+    }
+};
