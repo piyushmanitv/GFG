@@ -1,0 +1,52 @@
+Linked List Group Reverse
+Difficulty: HardAccuracy: 57.08%Submissions: 258K+Points: 8Average Time: 30m
+You are given the head of a Singly linked list. You have to reverse every k node in the linked list and return the head of the modified list.
+Note: If the number of nodes is not a multiple of k then the left-out nodes at the end, should be considered as a group and must be reversed.
+
+
+
+
+
+
+
+
+
+
+/*
+  Node is defined as
+    struct node
+    {
+        int data;
+        struct Node* next;
+
+        Node(int x){
+            data = x;
+            next = NULL;
+        }
+
+    }*head;
+*/
+
+class Solution {
+  public:
+    struct Node* reverseKGroup(struct Node* head, int k){
+        if(!head || k <= 1) return head;
+        
+        
+        Node *curr = head;
+        Node *prev = nullptr, *next = nullptr;
+        int count = 0;
+        
+        while(curr && count < k) {
+            next = curr->next;
+            curr->next = prev;
+            prev = curr;
+            curr = next;
+            count++;
+        }
+        if(next){
+            head->next = reverseKGroup(next, k);
+        }
+        return prev;
+    }
+};
