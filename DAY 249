@@ -1,0 +1,43 @@
+Find length of Loop
+Difficulty: MediumAccuracy: 44.26%Submissions: 278K+Points: 4Average Time: 30m
+Given the head of a linked list, determine whether the list contains a loop. If a loop is present, return the number of nodes in the loop, otherwise return 0.
+
+Note: Internally, pos(1 based index) is used to denote the position of the node that tail's next pointer is connected to. If pos = 0, it means the last node 
+points to null, indicating there is no loop. Note that pos is not passed as a parameter.
+
+
+
+
+/*
+
+struct Node {
+    int data;
+    struct Node *next;
+    Node(int x) {
+        data = x;
+        next = NULL;
+    }
+};
+
+*/
+class Solution {
+  public:
+    int lengthOfLoop(Node *head) {
+        // code here
+        int index = 1, ans = 0;
+        unordered_map<Node*, int> map;
+        Node *temp = head;
+        
+        while (temp) {
+            if (map.count(temp)) {
+                ans = index - map[temp];
+                break;
+            } else {
+                map[temp] = index;
+                index++;
+            }
+            temp = temp->next;
+        }
+        return ans;
+    }
+};
