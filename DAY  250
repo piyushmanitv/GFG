@@ -1,0 +1,62 @@
+Merge K sorted linked lists
+Difficulty: MediumAccuracy: 57.01%Submissions: 114K+Points: 4Average Time: 60m
+Given an array arr[] of n sorted linked lists of different sizes. Your task is to
+merge all these lists into a single sorted linked list and return the head of the merged list.
+
+
+
+
+
+
+
+
+/*Linked list Node structure
+
+struct Node
+{
+    int data;
+    Node* next;
+
+    Node(int x){
+        data = x;
+        next = NULL;
+    }
+/*THE SOLUTION IS FOR LINKED LIST*/
+
+
+};
+*/
+class Solution {
+  public:
+    struct Compare{
+        bool operator()(Node* a, Node* b){
+            return a->data > b->data;
+        }
+    };
+
+    Node* mergeKLists(vector<Node*>& arr) {
+        // Your code here
+        priority_queue<Node*, vector<Node*>, Compare>minHeap;
+        
+        for(Node* list : arr){
+            if(list) minHeap.push(list);
+        }
+        
+        Node* dummy = new Node(0);
+        Node* tail = dummy;
+        
+        while(!minHeap.empty()){
+            Node* curr = minHeap.top(); 
+            minHeap.pop();
+            
+            tail->next = curr;
+            tail = curr;
+            
+            if(curr->next){
+                minHeap.push(curr->next);
+            }
+        }
+        
+        return dummy->next;
+    }
+};
