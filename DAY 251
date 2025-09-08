@@ -1,0 +1,47 @@
+Merge Sort for Linked List
+Difficulty: MediumAccuracy: 74.76%Submissions: 80K+Points: 4Average Time: 30m
+You are given the head of a linked list. You have to sort the given linked list using Merge Sort.
+
+
+
+
+
+
+
+/*
+class Node {
+public:
+    int data;
+    Node* next;
+
+    Node(int x){
+        data = x;
+        next = NULL;
+    }
+};
+*/
+class Solution {
+  public:
+    Node* mergeSort(Node* head) {
+    Node* temp = head;
+    int c = 0;
+    while (temp != nullptr) {
+        c++;
+        temp = temp->next;
+    }
+    vector<int> arr(c);
+    temp = head;
+    for (int i = 0; i < c; i++) {
+        arr[i] = temp->data;
+        temp = temp->next;
+    }
+    sort(arr.begin(), arr.end());
+    temp = head;
+    int j = 0;
+    while (temp != nullptr) {
+        temp->data = arr[j++];
+        temp = temp->next;
+    }
+    return head;
+    }
+};
