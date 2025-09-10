@@ -1,0 +1,41 @@
+Largest number in one swap
+Difficulty: EasyAccuracy: 32.65%Submissions: 5K+Points: 2
+Given a string s, return the lexicographically largest string that can be obtained by swapping at most one pair of characters in s.
+
+
+
+
+
+
+
+
+
+
+
+
+class Solution {
+  public:
+    string largestSwap(string &s) {
+        // code here
+        int n=s.length();
+        for (int i = 0; i < n - 1; i++) {
+            int maxDigit = s[i];
+            int maxIdx = -1;
+            
+            for (int j = n - 1; j > i; j--) {
+                if (s[j] > maxDigit) {
+                    maxDigit = s[j];
+                    maxIdx = j;
+                }
+            }
+            
+            if (maxIdx != -1) {
+                swap(s[i], s[maxIdx]);
+                return s;
+            }
+        }
+        
+        return s;
+        
+    }
+};
