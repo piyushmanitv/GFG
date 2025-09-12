@@ -1,0 +1,43 @@
+Minimize the Heights II
+Difficulty: MediumAccuracy: 15.06%Submissions: 747K+Points: 4Average Time: 25m
+Given an array arr[] denoting heights of n towers and a positive integer k.
+
+For each tower, you must perform exactly one of the following operations exactly once.
+
+Increase the height of the tower by k
+Decrease the height of the tower by k
+Find out the minimum possible difference between the height of the shortest and tallest towers after you have modified each tower.
+
+You can find a slight modification of the problem here.
+Note: It is compulsory to increase or decrease the height by k for each tower. After the operation, the resultant array should not contain any negative integers.
+
+
+
+
+
+
+
+
+
+
+
+// User function template for C++
+
+class Solution {
+  public:
+    int getMinDiff(vector<int> &arr, int k) {
+        // code here
+        int n = arr.size();
+        sort(arr.begin(), arr.end());
+        int res = arr.back() - arr[0];
+        
+        for(int i = 1; i < n; ++i){
+            if(arr[i] - k < 0) continue;
+            int minH = min(arr[0] + k, arr[i] - k);
+            int maxH = max(arr[i - 1] + k, arr.back() - k);
+            res = min(res, maxH - minH);
+        }
+        return res;
+    }
+};
+
