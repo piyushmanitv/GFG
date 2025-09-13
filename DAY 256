@@ -1,0 +1,57 @@
+Minimum Cost to cut a board into squares
+Difficulty: MediumAccuracy: 60.83%Submissions: 24K+Points: 4
+Given a board of dimensions n × m that needs to be cut into n*m squares. The cost of making a cut along a horizontal or vertical edge is provided in two arrays:
+
+x[]: Cutting costs along the vertical edges (length-wise).
+y[]: Cutting costs along the horizontal edges (width-wise).
+Find the minimum total cost required to cut the board into squares optimally.
+
+
+
+
+
+
+
+
+
+class Solution {
+  public:
+    int minCost(int n, int m, vector<int>& x, vector<int>& y) {
+        //  code here
+     long long totalCost = 0;
+        int horizontal_pieces = 1;
+        int vertical_pieces = 1;
+ 
+        sort(x.begin(), x.end(), std::greater<int>());
+        sort(y.begin(), y.end(), std::greater<int>());
+
+        int i = 0;  
+        int j = 0;  
+
+        while (i < x.size() && j < y.size()) {
+            if (x[i] >= y[j]) {
+                totalCost += x[i] * horizontal_pieces;
+                vertical_pieces++;
+                i++;
+            }
+            else {
+                totalCost += y[j] * vertical_pieces;
+                horizontal_pieces++;
+                j++;
+            }
+        }
+        while(i<x.size())
+        {
+            totalCost += x[i] * horizontal_pieces;
+                vertical_pieces++;
+                i++;
+        }
+        while(j<y.size())
+        {
+            totalCost += y[j] * vertical_pieces;
+                horizontal_pieces++;
+                j++;
+        }
+        return (totalCost);
+    }
+};
