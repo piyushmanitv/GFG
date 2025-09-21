@@ -1,0 +1,87 @@
+Max rectangle
+Difficulty: HardAccuracy: 36.43%Submissions: 119K+Points: 8Average Time: 35m
+You are given a 2D binary matrix mat[ ][ ], where each cell contains either 0 or 1. Your task is to find the maximum area of a rectangle that can be formed using only 1's within the matrix.
+
+
+
+
+
+
+
+
+
+class Solution {
+private:
+    
+    vector<int> nextsmaller(vector<int> &arr){
+        stack<int> s;
+        s.push(-1);
+        vector<int> next(arr.size());
+        
+        for(int i=arr.size()-1;i>=0;i--){
+            while(s.top()!=-1 && arr[s.top()]>=arr[i]){
+                s.pop();
+            }
+            next[i] = s.top();
+            s.push(i);
+        }
+        
+        return next;
+    }
+    
+    vector<int> prevsmaller(vector<int> &arr){
+        stack<int> s;
+        s.push(-1);
+        vector<int> prev(arr.size());
+        
+        for(int i=0;i<arr.size();i++){
+            while(s.top()!=-1 && arr[s.top()]>=arr[i]){
+                s.pop();
+            }
+            prev[i] = s.top();
+            s.push(i);
+        }
+        
+        return prev;
+    }
+    
+    int getMaxArea(vector<int> &arr) {
+        vector<int> prev;
+        vector<int> next;
+        next = nextsmaller(arr);
+        prev = prevsmaller(arr);
+        int area = INT_MIN;
+        
+        for(int i=0;i<arr.size();i++){
+            int height = arr[i];
+            if(next[i]==-1){
+                next[i] = arr.size();
+            }
+            int width = next[i]-prev[i]-1;
+            area = max(area,height*width);
+        }
+        
+        return area;
+    }
+    
+  public:
+    // Function to calculate the maximum area of a rectangle
+    // in the given matrix.
+    int maxArea(vector<vector<int>> &mat) {
+       int area = getMaxArea(mat[0]);
+       
+       for(int i=1;i<mat.size();i++){
+           for(int j=0;j<mat[i].size();j++){
+                if(mat[i][j]!=0){
+                    mat[i][j] = mat[i][j] + mat[i-1][j];
+                }
+                else{
+                    mat[i][j] = 0;
+                }
+           }
+            area = max(area,getMaxArea(mat[i]));
+       }
+       
+       return area;
+    }
+};
