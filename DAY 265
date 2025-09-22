@@ -1,0 +1,56 @@
+Max of min for every window size
+Difficulty: HardAccuracy: 42.9%Submissions: 74K+Points: 8Average Time: 45m
+You are given an integer array arr[], the task is to find the maximum of minimum values for every window size k where 1≤ k ≤ arr.size().
+
+For each window size k, consider all contiguous subarrays of length k, determine the minimum element in each subarray, and then take the maximum among all these minimums.
+
+Return the results as an array, where the element at index i represents the answer for window size i+1.
+
+
+
+
+
+
+
+
+class Solution {
+  public:
+    vector<int> MaxRange(vector<int> &arr){
+        int n = arr.size();
+        vector<int> range(n);
+        stack<int> st;
+        
+        for(int i = 0;i<=n;i++){
+            while(!st.empty() and (i == n or arr[i]<arr[st.top()])){
+                int idx = st.top();
+                st.pop();
+                
+                int l = st.empty()?-1:st.top();
+                int r = i;
+                range[idx] = r-l-1;
+            }
+            st.push(i);
+        }
+        
+        return range;
+    }
+    vector<int> MaxArray(vector<int> &arr, vector<int> &range){
+        int n = arr.size();
+        vector<int> maxarr(n,0);
+        for(int i = 0;i<n;i++){
+            maxarr[range[i]-1] = max(maxarr[range[i]-1], arr[i]);
+        }
+        return maxarr;
+    }
+    vector<int> maxOfMins(vector<int>& arr) {
+        int n = arr.size();
+        vector<int> range =  MaxRange(arr);
+        vector<int> maxarr = MaxArray(arr, range);
+        
+        for(int i = n-2;i>=0;i--){
+            maxarr[i] = max(maxarr[i], maxarr[i+1]);
+        }
+        
+        return maxarr;
+    }
+};
