@@ -1,0 +1,26 @@
+Queue Reversal
+Difficulty: EasyAccuracy: 77.98%Submissions: 150K+Points: 2
+Given a queue q containing integer elements, your task is to reverse the queue.
+
+
+
+
+
+
+
+
+
+
+class Solution {
+  public:
+    void reverseQueue(queue<int> &q) {
+        // code here
+        if(q.empty()){
+            return ;
+        }
+        int x=q.front();
+        q.pop();
+        reverseQueue(q);
+        q.push(x);
+    }
+};
