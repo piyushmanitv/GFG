@@ -1,0 +1,65 @@
+Design MinMax Queue
+Difficulty: MediumAccuracy: 77.76%Submissions: 5K+Points: 4
+Design a SpecialQueue data structure that functions like a normal queue but with additional support for retrieving the minimum and maximum element efficiently.
+The SpecialQueue must support the following operations:
+
+enqueue(x): Insert an element x at the rear of the queue.
+dequeue(): Remove the element from the front of the queue.
+getFront(): Return the front element without removing.
+getMin(): Return the minimum element in the queue in O(1) time.
+getMax(): Return the maximum element in the queue in O(1) time.
+There will be a sequence of queries queries[][]. The queries are represented in numeric form:
+
+1 x : Call enqueue(x)
+2:  Call dequeue()
+3: Call getFront()
+4: Call getMin()
+5: Call getMax()
+The driver code will process the queries, call the corresponding functions, and print the outputs of getFront(), getMin(), getMax() operations.
+You only need to implement the above five functions.
+
+Note: It is guaranteed that all the queries are valid.
+
+
+
+
+
+
+
+
+
+
+class SpecialQueue {
+  private:
+  queue<int> q;
+  deque<int> mindq;
+  deque<int> maxdq;
+  
+  public:
+    void enqueue(int x) {
+        q.push(x);
+        while(!mindq.empty() and mindq.back()>x)mindq.pop_back();
+        mindq.push_back(x);
+        
+        while(!maxdq.empty() and maxdq.back()<x)maxdq.pop_back();
+        maxdq.push_back(x);
+    }
+
+    void dequeue() {
+        if(mindq.front() == q.front())mindq.pop_front();
+        if(maxdq.front() == q.front())maxdq.pop_front();
+        q.pop(); 
+    }
+
+    int getFront() {
+        return q.front();
+    }
+
+    int getMin() {
+        return mindq.front();
+    }
+
+    int getMax() {
+        return maxdq.front();
+    }
+};
