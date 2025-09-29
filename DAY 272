@@ -1,0 +1,38 @@
+Maximum subarray sum 2
+Difficulty: HardAccuracy: 63.44%Submissions: 1K+Points: 8
+You are given an array arr[] of integers and two integers a and b, You have to find the maximum possible sum of a contiguous subarray whose length is at least a and at most b.
+
+
+
+
+
+
+
+class Solution {
+  public:
+    long long maxSubarrSum(vector<int>& arr, int a, int b) { 
+        int n = arr.size();
+
+        vector<long long> prefix(n + 1, 0);
+        for (int i = 1; i <= n; i++) {
+            prefix[i] = prefix[i - 1] + arr[i - 1];
+        }
+
+        deque<int> dq;
+        long long ans = LLONG_MIN;
+
+        for (int r = a; r <= n; r++) {
+            int l = r - a;
+            while (!dq.empty() && prefix[dq.back()] >= prefix[l])
+                dq.pop_back();
+            dq.push_back(l);
+
+            while (!dq.empty() && dq.front() < r - b)
+                dq.pop_front();
+
+            ans = max(ans, prefix[r] - prefix[dq.front()]);
+        }
+
+        return ans;
+    }
+};
