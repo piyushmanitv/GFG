@@ -1,0 +1,40 @@
+Generate all binary strings
+Difficulty: MediumAccuracy: 63.9%Submissions: 35K+Points: 4Average Time: 20m
+Given an integer n. You need to generate all the binary strings of n characters representing bits.
+
+Note: Return the strings in  ascending order.
+
+
+
+
+
+
+
+
+
+
+class Solution {
+  public:
+    vector<string> binstr(int n) {
+        // code here
+        vector<string>answer;
+        deque<string>dq;
+        
+        dq.push_back("0");
+        dq.push_back("1");
+        
+        while(!dq.empty()){
+            string str = dq.front();
+            dq.pop_front();
+            
+            if(str.length() == n)
+                answer.push_back(str);
+            
+            else{
+                dq.push_back(str + "0");
+                dq.push_back(str + "1");
+            }
+        }
+    return answer;
+    }
+};
