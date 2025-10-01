@@ -1,0 +1,24 @@
+All Unique Permutations of an array
+Difficulty: MediumAccuracy: 52.85%Submissions: 46K+Points: 4Average Time: 15m
+Given an array arr[] that may contain duplicates. Find all possible distinct permutations of the array in sorted order.
+Note: A sequence A is greater than sequence B if there is an index i for which Aj = Bj for all j<i and Ai > Bi.
+
+
+
+
+
+
+
+
+
+class Solution {
+  public:
+    vector<vector<int>> uniquePerms(vector<int>& arr) {
+        // code here
+        vector<vector<int>>ans;
+        sort(arr.begin(), arr.end());
+        ans.push_back(arr);
+        while(next_permutation(arr.begin() , arr.end())) ans.push_back(arr);
+        return ans;
+    }
+};
