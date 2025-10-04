@@ -1,0 +1,59 @@
+Expression Add Operators
+Difficulty: HardAccuracy: 61.49%Submissions: 23K+Points: 8Average Time: 40m
+Given a string s that contains only digits (0-9) and an integer target, return all possible strings by inserting the binary operator ' + ', ' - ', and/or ' * ' between the digits of s such that the resultant expression evaluates to the target value.
+
+Note:
+
+Operands in the returned expressions should not contain leading zeros. For example, 2 + 03 is not allowed whereas 20 + 3 is fine.
+It is allowed to not insert any of the operators.
+Driver code will print the final list of strings in lexicographically smallest order.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+class Solution {
+public:
+    vector<string> findExpr(string &s, int target) {
+        vector<string> result;
+        string expr;
+        dfs(s, target, 0, 0, 0, expr, result);
+        sort(result.begin(), result.end()); 
+        return result;
+    }
+private:
+    void dfs(const string &s, long long target, int pos,
+             long long value, long long last, string expr,
+             vector<string> &result) {
+                    if (pos == s.size()) {
+                        if (value == target) {
+                            result.push_back(expr);
+                    }
+            return;
+        }
+        for (int i = pos; i < (int)s.size(); i++) {
+            string numStr = s.substr(pos, i - pos + 1);
+            if (numStr.size() > 1 && numStr[0] == '0') break;
+            long long num = stoll(numStr);
+            if (pos == 0) {
+                dfs(s, target, i + 1, num, num, numStr, result);
+            } else {
+                dfs(s, target, i + 1, value + num, num, expr + "+" + numStr, result);
+                dfs(s, target, i + 1, value - num, -num, expr + "-" + numStr, result);
+                dfs(s, target, i + 1, value - last + last * num, last * num, expr + "*" + numStr, result);
+            }
+
+        }
+
+    }
+
+};
