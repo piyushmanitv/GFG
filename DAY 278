@@ -1,0 +1,71 @@
+Rat in a Maze
+Difficulty: MediumAccuracy: 35.75%Submissions: 377K+Points: 4Average Time: 25m
+Consider a rat placed at position (0, 0) in an n x n square matrix maze[][]. The rat's goal is to reach the destination at position (n-1, n-1). The rat can move in four possible directions: 'U'(up), 'D'(down), 'L' (left), 'R' (right).
+
+The matrix contains only two possible values:
+
+0: A blocked cell through which the rat cannot travel.
+1: A free cell that the rat can pass through.
+Your task is to find all possible paths the rat can take to reach the destination, starting from (0, 0) and ending at (n-1, n-1), under the condition that the rat cannot revisit any cell along the same path. Furthermore, the rat can only move to adjacent cells that are within the bounds of the matrix and not blocked.
+If no path exists, return an empty list.
+
+Note: Return the final result vector in lexicographically smallest order.
+
+
+
+
+
+
+
+
+
+
+class Solution {
+  public:
+    vector<string> res;
+    
+    void findPaths(vector<vector<int>> maze, int n,
+        string path,vector<vector<bool>> visited,int row,int col, 
+        char c)
+        {
+            if(row<0 || col<0 || row==n || col==n 
+                || visited[row][col])
+            {
+                return;
+            }
+            visited[row][col] = 1;
+            
+            if(maze[row][col] == 1)
+            {
+                path = path+c;
+                if(row==n-1 && col==n-1)
+                {
+                    res.push_back(path);
+                    return;
+                }
+                findPaths(maze, n, path, visited, row+1, col , 'D');
+                findPaths(maze, n, path, visited, row, col-1 , 'L');
+                findPaths(maze, n, path, visited, row, col+1 , 'R');
+                findPaths(maze, n, path, visited, row-1, col , 'U');
+            }
+        };
+        
+        
+    vector<string> ratInMaze(vector<vector<int>>& maze) {
+        // code here
+        
+        int n = maze.size();
+        if(maze[0][0] == 0 || maze[n-1][n-1] == 0)
+        {
+            return res;
+        }
+        
+        vector<vector<bool>> visited(n, vector<bool>(n,0));
+        visited[0][0] = 1;
+        string path = "";
+        findPaths(maze, n, path, visited, 1, 0 , 'D');
+        findPaths(maze, n, path, visited, 0, 1 , 'R');
+
+        return res;
+    }
+};
