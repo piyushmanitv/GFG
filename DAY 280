@@ -1,0 +1,56 @@
+Bottom View of Binary Tree
+Difficulty: MediumAccuracy: 54.18%Submissions: 326K+Points: 4Average Time: 45m
+You are given the root of a binary tree, and your task is to return its bottom view. The bottom view of a binary tree is the set of nodes visible when the tree is viewed from the bottom.
+
+Note: If there are multiple bottom-most nodes for a horizontal distance from the root, then the latter one in the level order traversal is considered.
+
+
+
+
+
+
+  
+//Function to return a list containing the bottom view of the given tree.
+
+class Solution {
+  public:
+    void traversal(Node *root, vector<int>& ans){
+        queue<pair<Node*, int>> q; 
+        map<int, int> mp;    
+        
+        q.push({root,0});
+        mp[0]=root->data;
+        
+        
+        while(!q.empty()){
+            int n=q.size();
+            
+            for(int i=0;i<n;i++){
+                Node* temp=q.front().first;
+                int d=q.front().second;
+                if(temp->left){
+                    q.push({temp->left, d-1});
+                    mp[d-1]=temp->left->data;
+                }
+                
+                if(temp->right){
+                    q.push({temp->right, d+1});
+                    mp[d+1]=temp->right->data;
+                }
+                
+                q.pop();
+            }
+        }
+        
+        for(auto i:mp){
+            ans.push_back(i.second);
+        }
+        
+    }
+  
+    vector <int> bottomView(Node *root) {
+        vector<int> ans;
+        traversal(root, ans);
+        return ans;
+    }
+};
