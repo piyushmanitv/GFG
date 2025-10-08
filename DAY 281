@@ -1,0 +1,56 @@
+Construct Tree from Preorder & Postorder
+Difficulty: MediumAccuracy: 84.23%Submissions: 4K+Points: 4
+Given two arrays pre[] and post[] that represent the preorder and postorder traversals of a full binary tree. Your task is to construct the binary tree and return its root.
+
+Note:  Full Binary Tree is a binary tree where every node has either 0 or 2 children. The preorder and postorder traversals contain unique values, and every value present in the preorder 
+traversal is also found in the postorder traversal.
+
+
+
+
+
+
+/*
+class Node {
+public:
+    int data;
+    Node *left;
+    Node *right;
+
+    Node(int x) {
+        data = x;
+        left = NULL;
+        right = NULL;
+    }
+};
+*/
+
+class Solution {
+  public:
+    int find(int x,int s, int e, vector<int> &post){
+        for(int i = s;i<=e;i++){
+            if(post[i]==x) return i;
+        }
+        return -1;
+    }
+    Node* solve(vector<int> &pre, vector<int> &post, int &preIdx, int s, int e){
+        if(preIdx>pre.size() || s>e) return NULL;
+        
+        Node* root = new Node(pre[preIdx++]);
+        
+        if (s == e || preIdx >= pre.size())
+            return root;
+
+        int i = find(pre[preIdx], s, e, post);
+        if (i != -1) {
+            root->left = solve(pre, post, preIdx, s, i);
+            root->right = solve(pre, post, preIdx, i + 1, e - 1);
+        }
+        return root;
+    }
+    Node *constructTree(vector<int> &pre, vector<int> &post) {
+        int preIdx = 0;
+        
+         return solve(pre, post, preIdx, 0, post.size() - 1);
+    }
+};
