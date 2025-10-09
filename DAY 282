@@ -1,0 +1,46 @@
+Postorder Traversal
+Difficulty: EasyAccuracy: 74.96%Submissions: 134K+Points: 2Average Time: 15m
+Given the root of a Binary Tree, your task is to return its Postorder Traversal.
+
+Note: A postorder traversal first visits the left child (including its entire subtree), then visits the right child (including its entire subtree), and finally visits the node itself.
+
+
+
+
+
+
+
+
+
+
+/*
+class Node {
+  public:
+    int data;
+    Node* left;
+    Node* right;
+
+    Node(int val) {
+        data = val;
+        left = NULL;
+        right = NULL;
+    }
+};
+*/
+
+class Solution {
+  public:
+  void solve(vector<int>&ans,Node*root){
+      if(root==NULL){
+          return;
+      }
+      solve(ans,root->left);
+      solve(ans,root->right);
+      ans.push_back(root->data);
+    }
+    vector<int> postOrder(Node* root) {
+        vector<int>ans;
+        solve(ans,root);
+        return ans;
+    }
+};
