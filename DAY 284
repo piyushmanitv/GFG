@@ -1,0 +1,45 @@
+Maximum path sum
+Difficulty: MediumAccuracy: 42.92%Submissions: 110K+Points: 4Average Time: 45m
+Given the root of a binary tree, your task is to find the maximum path sum. The path may start and end at any node in the tree.
+
+
+
+
+
+
+
+
+
+// User Fuction template for C++
+/*
+// Tree Node
+class Node {
+public:
+    int data;
+    Node *left;
+    Node *right;
+
+    Node(int val) {
+        data = val;
+        left = right = NULL;
+    }
+};
+*/
+class Solution {
+    int maxPathSumUtil(Node* root, int& res){
+        if(!root) return 0;
+        int left = max(0, maxPathSumUtil(root->left, res));
+        int right = max(0, maxPathSumUtil(root->right, res));
+        res = max(res, root->data + left + right);
+        return root->data + max(left, right);
+    }
+    
+public:
+    // Function to return maximum path sum from any node in a tree.
+    int findMaxSum(Node *root) {
+        // code here
+        int res = INT_MIN;
+        maxPathSumUtil(root, res);
+        return res;
+    }
+};
