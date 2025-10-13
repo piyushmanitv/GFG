@@ -1,0 +1,41 @@
+Maximum Non-Adjacent Nodes Sum
+Difficulty: MediumAccuracy: 55.35%Submissions: 97K+Points: 4Average Time: 45m
+Given the root of a binary tree with integer values. Your task is to select a subset of nodes such that the sum of their values is maximized, 
+with the condition that no two selected nodes are directly connected that is, if a node is included in the subset, neither its parent nor its children can be included.
+
+
+
+
+
+
+// User function Template for C++
+
+// Node Structure
+/*
+struct Node
+{
+    int data;
+    Node* left;
+    Node* right;
+};
+*/
+
+class Solution {
+  public:
+    pair<int, int> solve(Node* root) {
+        if (!root) return {0, 0};
+        
+        auto left = solve(root->left);
+        auto right = solve(root->right);
+        
+        int include = root->data + left.second + right.second;
+        int exclude = max(left.first, left.second) + max(right.first, right.second);
+        
+        return {include, exclude};
+    }
+    
+    int getMaxSum(Node *root) {
+        auto ans = solve(root);
+        return max(ans.first, ans.second);
+    }
+};
