@@ -1,0 +1,47 @@
+Sum of Nodes in BST Range
+Difficulty: MediumAccuracy: 83.01%Submissions: 10K+Points: 4
+Given the root of a Binary Search Tree and two integers l and r, the task is to find the sum of all nodes that lie between l and r, including both l and r
+
+
+
+
+
+
+
+
+/*
+class Node {
+  public:
+    int data;
+    Node* left;
+    Node* right;
+
+    // Constructor to initialize a new node
+    Node(int val) {
+        data = val;
+        left = NULL;
+        right = NULL;
+    }
+};
+*/
+
+class Solution {
+  public:
+    int solve(int &ans,Node*root,int l,int r)
+    {
+        if(root==NULL)
+          return 0;
+        solve(ans,root->left,l,r);
+        if(root->data>=l && root->data<=r)
+        {
+            ans+=root->data;
+        }
+        solve(ans,root->right,l,r);
+        return ans;
+    }
+    int nodeSum(Node* root, int l, int r) {
+        // code here
+        int ans=0;
+        return solve(ans,root,l,r);
+    }
+};
