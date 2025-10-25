@@ -1,0 +1,37 @@
+Minimum Steps to Halve Sum
+Difficulty: MediumAccuracy: 60.23%Submissions: 9K+Points: 4
+Given an array arr[], find the minimum number of operations required to make the sum of its elements less than or equal to half of 
+the original sum. In one operation, you may replace any element with half of its value (with floating-point precision).
+
+
+
+
+
+
+
+
+
+class Solution {
+  public:
+    int minOperations(vector<int>& arr) {
+        // code here
+        priority_queue<double> pq;
+        double sum = 0;
+        for (int it : arr) {
+            pq.push(it);
+            sum += it;
+        }
+        double req = sum / 2.0;
+        int cnt = 0;
+        while (sum > req) {
+            double top = pq.top();
+            pq.pop();
+            sum -= top;
+            top /= 2.0;
+            sum += top;
+            pq.push(top);
+            cnt++;
+        }
+        return cnt;
+    }
+};
