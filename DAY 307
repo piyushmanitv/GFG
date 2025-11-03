@@ -1,0 +1,45 @@
+Safe States
+Difficulty: MediumAccuracy: 55.52%Submissions: 73K+Points: 4Average Time: 20m
+Given a directed graph with V vertices numbered from 0 to V-1 and E directed edges, represented as a 2D array edges[][], where each element edges[i] = [u, v] represents a directed edge from vertex u to vertex v. Return all Safe Nodes of the graph.
+A vertex with no outgoing edges is called a terminal node. A vertex is considered safe if every path starting from it eventually reaches a terminal node.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+class Solution {
+  public:
+    vector<int> safeNodes(int V, vector<vector<int>>& edges) {
+        // Code here
+        vector<int>ans;
+        vector<vector<int>>adj(V);
+        vector<int>indegree(V, 0);
+        queue<int>q;
+        for(auto it : edges){
+            adj[it[1]].push_back(it[0]);
+            indegree[it[0]]++;
+        }
+        for(int i = 0;i<V;i++){
+            if(!indegree[i])q.push(i);
+        }
+        while(q.size()){
+            auto elem = q.front();
+            q.pop();
+            ans.push_back(elem);
+            for(auto it : adj[elem]){
+                indegree[it]--;
+                if(!indegree[it])q.push(it);
+            }
+        }
+        return ans;
+    }
+};
