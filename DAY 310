@@ -1,0 +1,55 @@
+Ways To Tile A Floor
+Difficulty: MediumAccuracy: 32.31%Submissions: 53K+Points: 4
+Given a floor of dimensions 2 x n and tiles of dimensions 2 x 1, the task is to find the number of ways the floor can be tiled. A tile can either be placed horizontally i.e as a 1 x 2 tile or vertically i.e as 2 x 1 tile. 
+
+Note: Two tiling arrangements are considered different if the placement of at least one tile differsWays To Tile A Floor
+Difficulty: MediumAccuracy: 32.31%Submissions: 53K+Points: 4
+Given a floor of dimensions 2 x n and tiles of dimensions 2 x 1, the task is to find the number of ways the floor can be tiled. A tile can either be placed horizontally i.e as a 1 x 2 tile or vertically i.e as 2 x 1 tile. 
+
+Note: Two tiling arrangements are considered different if the placement of at least one tile differs
+
+
+
+
+class Solution {
+public:
+    int f(int n, vector<int> &dp) {
+        if (n == 0) return 1;
+        if (n == 1) return 1;
+
+        if (dp[n] != -1) return dp[n];
+
+        dp[n] = f(n - 1, dp) + f(n - 2, dp);
+        return dp[n];
+    }
+
+    int numberOfWays(int n) {
+        vector<int> dp(n + 1, -1);
+        return f(n, dp);
+    }
+};class Solution {
+public:
+    int f(int n, vector<int> &dp) {
+        if (n == 0) return 1;
+        if (n == 1) return 1;
+
+        if (dp[n] != -1) return dp[n];
+
+        dp[n] = f(n - 1, dp) + f(n - 2, dp);
+        return dp[n];
+    }
+
+    int numberOfWays(int n) {
+        vector<int> dp(n + 1, -1);
+        return f(n, dp);
+    }
+};
+
+
+
+
+
+
+
+
+
