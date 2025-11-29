@@ -1,0 +1,50 @@
+Count of distinct substrings
+Difficulty: MediumAccuracy: 40.21%Submissions: 28K+Points: 4
+Given a string s consisting of lowercase English characters, determine the total number of distinct non-empty substrings present in the string. A substring is defined as a contiguous block of characters within the string.
+
+Two substrings are considered distinct if their contents differ, even if they originate from different positions in the string.
+
+Note: The empty substring is not counted.
+
+
+
+
+
+
+
+
+
+
+
+
+
+class Solution {
+public:
+    struct TrieNode {
+        TrieNode* child[26];
+        TrieNode() {
+            for (int i = 0; i < 26; i++)
+                child[i] = NULL;
+        }
+    };
+
+    int countSubs(string s) {
+        TrieNode* root = new TrieNode();
+        int count = 0;
+
+        for (int i = 0; i < s.length(); i++) {
+            TrieNode* node = root;
+
+            for (int j = i; j < s.length(); j++) {
+                int idx = s[j] - 'a';
+
+                if (node->child[idx] == NULL) {
+                    node->child[idx] = new TrieNode();
+                    count++;
+                }
+                node = node->child[idx];
+            }
+        }
+        return count;
+    }
+};
