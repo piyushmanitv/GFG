@@ -1,0 +1,47 @@
+Optimal binary search tree
+Difficulty: HardAccuracy: 50.02%Submissions: 13K+Points: 8
+You are given a set of distinct keys in sorted order, which is represent by keys[]. Each key ki represents a data record that is accessed during a seach operation. For all the keys, you are also given a frequency array freq[], which denotes how many times key ki is searched for.
+The cost of accessing a key in a binary search tree is calculated by multiplying its access frequency by the level at which it appears in the tree. Therefore different arrangements of keys in the BST gives different total search costs.
+
+Your task is to calculate the minimum total search cost required to construct a binary search tree containing all the keys.
+
+Note: Consider the root of the BST is at level 1.
+
+
+
+
+
+
+
+
+
+
+
+class Solution {
+public:
+    int dp[101][101];
+    int recur(int l,int r,vector<pair<int,int>>&arr){
+        if(l==r)
+            return arr[l].second;
+        if(l>r)
+            return 0;
+        if(dp[l][r]!=-1)
+            return dp[l][r];
+        int ans=INT_MAX,total_freq=0;
+        for(int i=l;i<=r;i++){
+            int cans=recur(l,i-1,arr)+recur(i+1,r,arr);
+            ans=min(ans,cans);
+            total_freq+=arr[i].second;
+        }
+        return dp[l][r]=ans+total_freq;
+    }
+    int minCost(vector<int> &keys, vector<int> &freq) {
+        // code here
+        int n=keys.size();
+        vector<pair<int,int>> arr(n);
+        for(int i=0;i<n;i++)
+            arr[i]={keys[i],freq[i]};
+        memset(dp,-1,sizeof(dp));
+        return recur(0,n-1,arr);
+    }
+};
