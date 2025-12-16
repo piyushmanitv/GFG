@@ -1,0 +1,49 @@
+Strings Rotations of Each Other
+Difficulty: MediumAccuracy: 43.83%Submissions: 328K+Points: 4Average Time: 15m
+You are given two strings s1 and s2, of equal lengths. The task is to check if s2 is a rotated version of the string s1.
+
+Note: A string is a rotation of another if it can be formed by moving characters from the start to the end (or vice versa) without rearranging them.
+
+
+
+
+
+
+
+
+
+
+
+
+class Solution {
+  public:
+    // Function to check if two strings are rotations of each other or not.
+    bool kmp(string &txt,string &pat){
+        string str = pat + "#" + txt;
+        int n = str.size();
+        vector<int> lps(n,0);
+        for(int i=1;i<n;i++){
+            int x = lps[i-1];
+            while(str[x]!=str[i]){
+                if(x==0){
+                    x=-1;
+                    break;
+                }
+                x=lps[x-1];
+            }
+            lps[i]=x+1;
+        }
+        for(auto x:lps){
+            if(x==pat.size()){
+                return true;
+            }
+        }
+        return false;
+    }
+    // Function to check if two strings are rotations of each other or not.
+    bool areRotations(string &s1, string &s2) {
+        // Your code here
+        string str = s1+s1;
+        return kmp(str,s2);
+    }
+};
