@@ -1,0 +1,28 @@
+Search insert position of K in a sorted array
+Difficulty: EasyAccuracy: 38.99%Submissions: 90K+Points: 2
+Given a sorted array arr[] (0-index based) of distinct integers and an integer k, find the index of k if it is present in the arr[].
+If not, return the index where k should be inserted to maintain the sorted order.
+
+
+
+
+
+
+
+
+
+class Solution {
+  public:
+    int searchInsertK(vector<int> &arr, int k) {
+        // code here
+        int n=arr.size(), low=0, high=n-1;
+        
+        while(low<=high){
+            int mid=(low+high)/2;
+            if(arr[mid]==k) return mid;
+            else if(arr[mid]<k) low=mid+1;
+            else high=mid-1;
+        }
+        return low;
+    }
+};
