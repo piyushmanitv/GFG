@@ -1,0 +1,30 @@
+Elements in range [a, b]
+Difficulty: MediumAccuracy: 62.59%Submissions: 1K+Points: 4
+Given an unsorted array arr[] and a 2D array queries[][] of size q, where each query is in the form of [a, b]. For each query, count how many elements in arr[] lie within the range [a, b], i.e., elements satisfying a ≤ x ≤ b.
+
+Return the results for all queries as a list of integers, where each integer corresponds to the count of elements in the respective query range.
+
+
+
+
+
+
+
+
+
+class Solution {
+  public:
+    vector<int> cntInRange(vector<int> &arr, vector<vector<int>> &queries) {
+        // code here
+         sort(arr.begin(), arr.end());
+        vector<int> ans;
+        for (auto q : queries)
+        {
+            int l = q[0], r = q[1];
+            int i1 = lower_bound(arr.begin(), arr.end(), l) - arr.begin();
+            int i2 = upper_bound(arr.begin(), arr.end(), r) - arr.begin();
+            ans.push_back(i2 - i1);
+        }
+        return ans;
+    }
+};
