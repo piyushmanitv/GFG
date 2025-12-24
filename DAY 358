@@ -1,0 +1,48 @@
+Count elements less than or equal to k in a sorted rotated array
+Difficulty: MediumAccuracy: 66.94%Submissions: 3K+Points: 4Average Time: 15m
+Given a sorted array arr[] containing distinct positive integers that has been rotated at some unknown pivot, and a value x. Your task is to count the number of elements in the array that are less than or equal to x.
+
+
+
+
+
+
+
+
+
+
+
+
+class Solution {
+    public:
+    int getPivotIdx(vector<int>&arr){
+        int n=arr.size();
+        int s=0,e=n-1;
+        while(s<=e){
+            int mid=s+(e-s)/2;
+            if(mid+1<n&&arr[mid]>arr[mid+1])return mid;
+            else if(mid-1>=0&&arr[mid-1]>arr[mid])return mid-1;
+            else if(arr[mid]<arr[s])e=mid-1;
+            else s=mid+1;
+        }
+        return -1;
+    }
+    int Binary_Search(int s,int e,vector<int>& arr, int x){
+        int result=-1,start=s;
+        while(s<=e){
+            int mid=s+(e-s)/2;
+            if(arr[mid]<=x){
+                result=mid;
+                s=mid+1;
+            }else e=mid-1;
+        }
+        return result==-1?0:result-start+1;
+    }
+    int countLessEqual(vector<int>& arr, int x) {
+        int n=arr.size();
+        int pivotIdx=getPivotIdx(arr);
+        int leftCount=Binary_Search(0,pivotIdx,arr,x);
+        int rightCount=Binary_Search(pivotIdx+1,n-1,arr,x);
+        return leftCount+rightCount;
+    }
+};
