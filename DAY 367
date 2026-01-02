@@ -1,0 +1,43 @@
+Sort 0s, 1s and 2s
+Difficulty: MediumAccuracy: 50.58%Submissions: 831K+Points: 4Average Time: 10m
+Given an array arr[] containing only 0s, 1s, and 2s. Sort the array in ascending order.
+Note: You need to solve this problem without utilizing the built-in sort function.Sort 0s, 1s and 2s
+Difficulty: MediumAccuracy: 50.58%Submissions: 831K+Points: 4Average Time: 10m
+Given an array arr[] containing only 0s, 1s, and 2s. Sort the array in ascending order.
+Note: You need to solve this problem without utilizing the built-in sort function.
+
+
+
+
+
+
+
+
+
+
+class Solution {
+public:
+    void sort012(vector<int>& arr) {
+        // code here
+         int count1 = 0;
+        int count2 = 0;
+        int count0 = 0;
+        int index;
+        for(index = 0; index < arr.size(); index++)
+        {
+            if(arr[index] == 0)
+                count0++;
+            else if(arr[index] == 1)
+                count1++;
+            else
+                count2++;
+        }
+        for(index = 0; index < count0; index++)
+            arr[index] = 0;
+        for( int j = 0 ; j < count1; j++)
+            arr[index++] = 1;
+        for(int j = 0; j < count2; j++)
+            arr[index++] = 2;
+        return;
+    }
+};
