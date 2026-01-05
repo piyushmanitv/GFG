@@ -1,0 +1,30 @@
+Max Sum Subarray of size K
+Difficulty: EasyAccuracy: 49.6%Submissions: 234K+Points: 2
+Given an array of integers arr[]  and a number k. Return the maximum sum of a subarray of size k.
+
+Note: A subarray is a contiguous part of any given array.
+
+
+
+
+
+
+
+
+
+class Solution {
+public:
+    int maxSubarraySum(vector<int>& arr, int k) {
+        int n = arr.size();
+        int sum = 0;
+        for (int i = 0; i < k; i++) {
+            sum += arr[i];
+        }
+        int maxSum = sum;
+        for (int i = k; i < n; i++) {
+            sum = sum + arr[i] - arr[i - k];
+            maxSum = max(maxSum, sum);
+        }
+        return maxSum;
+    }
+};
