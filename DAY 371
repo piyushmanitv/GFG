@@ -1,0 +1,35 @@
+Max Xor Subarray of size K
+Difficulty: MediumAccuracy: 70.76%Submissions: 4K+Points: 4Average Time: 15m
+Given an array of integers arr[]  and a number k. Return the maximum xor of a subarray of size k.
+
+Note: A subarray is a contiguous part of any given array.
+
+
+
+
+
+
+
+
+
+
+
+class Solution {
+  public:
+    int maxSubarrayXOR(vector<int>& arr, int k) {
+        // code here
+         int s=0,e=0;
+        int sum=0,mx=INT_MIN;
+        while(e<arr.size())
+        {
+             sum^=arr[e];
+             if(e-s+1==k)
+             {
+                 mx=max(mx,sum);
+                 sum^=arr[s++];
+             }
+             e++;
+        }
+        return mx;
+    }
+};
