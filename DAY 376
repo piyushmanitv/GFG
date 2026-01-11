@@ -1,0 +1,68 @@
+Minimum Window Subsequence
+Difficulty: MediumAccuracy: 49.43%Submissions: 17K+Points: 4Average Time: 45m
+You are given two strings, s1 and s2. Your task is to find the smallest substring in s1 such that s2 appears as a subsequence within that substring.
+
+The characters of s2 must appear in the same sequence within the substring of s1.
+If there are multiple valid substrings of the same minimum length, return the one that appears first in s1.
+If no such substring exists, return an empty string.
+Note: Both the strings contain only lowercase english letters.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+class Solution {
+  public:
+    Solution(){}
+    virtual string minWindow(string &s1, string &s2){
+      int n=s1.size(), m=s2.size();
+      string ans="";
+      int minL = INT_MAX;
+      
+      for(int i=0; i<n; i++){
+        if(s1[i] == s2[0]){
+          int j=i, k=0;
+          
+          while(j<n && k<m){
+            if(s1[j] == s2[k]) k++;
+            if(k==m)
+              break;
+            j++;  
+          }
+          
+          //found
+          if(k==m){
+            int ji=j;
+            k--;
+            while(ji>=i && k>=0){
+              if(s1[ji] == s2[k]) k--;
+              if(k<0)
+                break;
+              ji--;    
+            }
+            
+            int curL = j-ji+1;
+            if(minL > curL){
+              minL = curL;
+              ans = s1.substr(ji, curL);
+            }
+            
+          }
+          
+          
+        }      
+      }
+      
+      return ans;
+    }
+    virtual ~Solution(){}
+};
