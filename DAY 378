@@ -1,0 +1,43 @@
+Bus Ticket Change
+Difficulty: EasyAccuracy: 52.02%Submissions: 52K+Points: 2Average Time: 30m
+You are given an array arr[] representing passengers in a queue. Each bus ticket costs 5 coins, and arr[i] denotes the note a passenger uses to 
+pay (which can be 5, 10, or 20). You must serve the passengers in the given order and always provide the correct change so that each passenger effectively 
+pays exactly 5 coins. Your task is to determine whether it is possible to serve all passengers in the queue without ever running out of change.
+
+
+
+
+
+
+
+class Solution {
+  public:
+    bool canServe(vector<int> &arr) {
+        // code here
+        int fives = 0, tens = 0;
+        for(auto it : arr){
+            if(it == 5){
+                fives++;
+                continue;
+            }
+            if(it == 10){
+                if(!fives)return false;
+                tens++;
+                fives--;
+                continue;
+            }
+            if(!tens && !fives)return false;
+            if(tens && fives){
+                tens--;
+                fives--;
+                continue;
+            }
+            if(fives >= 3){
+                fives-=3;
+                continue;
+            }
+            return false;
+        }
+        return true;
+    }
+};
