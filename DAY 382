@@ -1,0 +1,39 @@
+Expression contains redundant bracket or not
+Difficulty: MediumAccuracy: 48.71%Submissions: 35K+Points: 4
+Given a string of balanced expression s, check if it contains a redundant parenthesis or not. A set of parenthesis are redundant if the same sub-expression is surrounded by unnecessary or multiple brackets.
+Note: Expression may contain + , - , *, and / operators. Given expression is valid and there are no white spaces present.
+
+
+
+
+
+
+
+
+
+  class Solution {
+  public:
+    bool isOperator(char c){
+        if(c == '+' or c == '-' or c == '*' or c == '/')return true;
+        return false;
+    }
+    bool checkRedundancy(string &s) {
+        stack<char> st;
+        for(char &c: s){
+            if(c == '(' or isOperator(c)){
+                st.push(c);
+            }
+            else if(c == ')'){
+                if(st.empty())return true;
+                if(!isOperator(st.top())){
+                    return true;
+                }
+                while(isOperator(st.top()))st.pop();
+                if(st.empty())return true;
+                if(st.top() != '(')return true;
+                st.pop();
+            }
+        }
+        return false;
+    }
+};
