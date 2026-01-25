@@ -1,0 +1,36 @@
+Number of Valid Parentheses
+Difficulty: MediumAccuracy: 77.07%Submissions: 1K+Points: 4Average Time: 30m
+You are given a number n, your task is to find the number of all the valid parentheses expressions of that length using only "(" and ")" brackets.
+
+An input string of parentheses is valid if :
+
+Open brackets must be closed in correct order.
+Every close bracket has a corresponding open bracket.
+For example - "()()" or "(())" are valid while ")()(" or "))((" are invalid parentheses expressions.
+
+
+
+
+
+
+
+
+
+
+
+class Solution {
+  public:
+    virtual int fun(int n, int sum){
+      if(sum<0) return 0;
+      if(n==0){
+        if(sum==0) return 1;
+        return 0;
+      }
+      
+      return fun(n-1, sum+1) + fun(n-1, sum-1);
+    }
+   
+    virtual int findWays(int n){
+      return (n&1)? 0: fun(n, 0);
+    }
+};
