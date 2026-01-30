@@ -1,0 +1,40 @@
+Interleave the First Half of the Queue with Second Half
+Difficulty: MediumAccuracy: 62.41%Submissions: 24K+Points: 4Average Time: 20m
+Given a queue q[] of even size. Your task is to rearrange the queue by interleaving its first half with the second half.
+
+Interleaving is the process of mixing two sequences by alternating their elements while preserving their relative order.
+In other words, Interleaving means place the first element from the first half and then first element from the 2nd half and 
+again second element from the first half and then second element from the 2nd half and so on....
+
+
+
+
+
+
+
+
+class Solution {
+  public:
+    void rearrangeQueue(queue<int> &q) {
+        // code here
+        queue<int> q1 , q2;
+        int n = q.size();
+        
+        for(int i=0;i<(n+1)/2;i++){
+            q1.push(q.front());
+            q.pop();
+        }
+        
+        while(!q.empty()){
+            q2.push(q.front());
+            q.pop();
+        }
+        
+        while(!q1.empty() && !q2.empty()){
+            q.push(q1.front());
+            q.push(q2.front());
+            q1.pop();
+            q2.pop();
+        }
+    }
+};
