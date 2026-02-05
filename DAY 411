@@ -1,0 +1,33 @@
+Maximize Number of 1's
+Difficulty: MediumAccuracy: 39.46%Submissions: 80K+Points: 4Average Time: 20m
+Given a binary array arr[] containing only 0s and 1s and an integer k, you are allowed to flip at most k 0s to 1s. 
+Find the maximum number of consecutive 1's that can be obtained in the array after performing the operation at most k times.
+
+
+
+
+
+
+
+
+
+class Solution {
+  public:
+    int maxOnes(vector<int>& arr, int k) {
+        // code here
+        int left = 0, right = 0, zeros = 0, maxLen = 0;
+        
+        while(right < arr.size()){
+            if(arr[right] == 0) zeros++;
+            
+            while(zeros > k){
+                if(arr[left] == 0) zeros--;
+                left++;
+            }
+            
+            maxLen = max(maxLen, right - left + 1);
+            right++;
+        }
+        return maxLen;
+    }
+};
