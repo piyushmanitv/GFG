@@ -1,0 +1,37 @@
+Maximum Product Subarray
+Difficulty: MediumAccuracy: 18.09%Submissions: 497K+Points: 4
+Given an array arr[] that contains positive and negative integers (may contain 0 as well). Find the maximum product that we can get in a subarray of arr[].
+
+Note: It is guaranteed that the answer fits in a 32-bit integer.
+
+
+
+
+
+
+
+
+
+
+#include<vector>
+#include<algorithm>
+class Solution {
+  public:
+    int maxProduct(vector<int> &arr) {
+        // Your Code Here
+        if(arr.empty()) return 0;
+        
+        int current_max = arr[0];
+        int current_min = arr[0];
+        int max_product = arr[0];
+        
+        for(int i = 1; i <  arr.size() ; i++){
+            int temp_current_max = max({arr[i], current_max * arr[i], current_min * arr[i]});
+            current_min = min({arr[i], current_max * arr[i], current_min * arr[i]});
+            current_max = temp_current_max;
+            
+            max_product = max(max_product, current_max);
+        }
+        return max_product;
+    }
+};
