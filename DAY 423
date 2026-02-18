@@ -1,0 +1,35 @@
+Maximum number of overlapping Intervals
+Difficulty: HardAccuracy: 49.41%Submissions: 24K+Points: 8
+You are given an array of intervals arr[][], where each interval is represented by two integers [start, end] (inclusive). Return the maximum number of intervals that overlap at any point in time.
+
+
+
+
+
+
+
+
+
+
+class Solution {
+  public:
+    int overlapInt(vector<vector<int>> &arr) {
+        // code here
+        int maxi=INT_MIN;
+        for(vector<int> v:arr){
+            if(maxi<v[1])maxi=v[1];
+        }
+        vector<int>mp(maxi+1,0);
+        for (auto &interval : arr) {
+            mp[interval[0]-1]++;      
+            mp[interval[1]]--;  
+        }
+    
+        int ans = 0, count = 0;
+        for (auto p : mp) {
+            count += p;
+            ans = max(ans, count);
+        }
+        return ans;
+    }
+};
