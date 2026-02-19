@@ -1,0 +1,34 @@
+Missing Element in Range
+Difficulty: MediumAccuracy: 61.1%Submissions: 4K+Points: 4Average Time: 20m
+Given an array arr[] of distinct integers and a range [low, high], find all the numbers within the range that are not present in the array. return the missing numbers in sorted order.
+
+
+
+
+
+
+
+
+class Solution {
+  public:
+    vector<int> missinRange(vector<int>& arr, int low, int high) {
+        // code here
+        int n = arr.size(), i = 0;
+        vector<int>res;
+        
+        sort(arr.begin(), arr.end());
+        
+        while(low <= high && i <= n-1)
+        {
+            if(arr[i]<low) i++;
+            else if(arr[i] == low) {
+                i++; low++;
+            }else if(arr[i] > low) {
+                res.push_back(low);
+                low++;
+            }
+        }
+        while(low <= high) res.push_back(low++);
+        return res;
+    }
+};
