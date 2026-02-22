@@ -1,0 +1,35 @@
+Count Subarrays with given XOR
+Difficulty: MediumAccuracy: 58.86%Submissions: 75K+Points: 4
+Given an array of integers arr[] and a number k, count the number of subarrays having XOR of their elements as k.
+
+Note: It is guranteed that the total count will fit within a 32-bit integer.
+
+
+
+
+
+
+
+
+class Solution {
+  public:
+    long subarrayXor(vector<int> &arr, int k) {
+        // code here
+        unordered_map<int, int> freq;
+        int xor_val = 0;
+        long count = 0;
+        
+        for(int num : arr){
+            xor_val ^= num;
+            
+            if(xor_val == k) count++;
+            
+            int required = xor_val ^ k;
+            if(freq.find(required) != freq.end()){
+                count += freq[required];
+            }
+            freq[xor_val]++;
+        }
+        return count;
+    }
+};
