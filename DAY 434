@@ -1,0 +1,43 @@
+Find the closest pair from two arrays
+Difficulty: EasyAccuracy: 18.01%Submissions: 69K+Points: 2
+Given two sorted arrays arr1[] and arr2[] of size n and m and a number x, find the pair whose sum is closest to x and the pair has an element from each array. In the case of multiple closest pairs return any one of them.
+
+Note : In the driver code, the absolute difference between the sum of the closest pair and x is printed.
+
+
+
+
+
+
+
+
+
+class Solution {
+  public:
+    virtual vector<int> findClosestPair(vector<int> &arr1, vector<int> &arr2, int x) {
+      int n=arr1.size(), m=arr2.size();
+      int s=0, e=m-1;
+      int dif=INT_MAX;
+      vector<int> ans(2);
+      
+      while(s<n && e>=0){
+        int csum=arr1[s]+arr2[e];
+        int cdif=abs(csum-x);
+        
+        if(dif>cdif){
+          dif=cdif;
+          ans[0]=arr1[s];
+          ans[1]=arr2[e];          
+        }
+        
+        
+        if(csum==x) return {arr1[s], arr2[e]};
+        
+        if(csum<x) s++;
+        else e--;
+        
+      }
+      
+      return ans;
+    }
+};
