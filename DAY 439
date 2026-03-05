@@ -1,0 +1,33 @@
+1758. Minimum Changes To Make Alternating Binary String
+
+You are given a string s consisting only of the characters '0' and '1'. In one operation, you can change any '0' to '1' or vice versa.
+
+The string is called alternating if no two adjacent characters are equal. For example, the string "010" is alternating, while the string "0100" is not.
+
+Return the minimum number of operations needed to make s alternating.
+
+
+
+
+
+
+
+
+
+class Solution {
+public:
+    int minOperations(string s) {
+        int res = 0;
+        int curr1 = 0;
+        for(int i = 0; i<s.size(); i++){
+            if(i%2==0 && s[i]!='0')curr1++;
+            if(i%2!=0 && s[i]!='1')curr1++;
+        }
+        int curr2 = 0;
+        for(int i = 0; i<s.size(); i++){
+            if(i%2==0 && s[i]!='1')curr2++;
+            if(i%2!=0 && s[i]!='0')curr2++;
+        }
+        return min(curr1, curr2);
+    }
+};
