@@ -1,0 +1,40 @@
+Subarrays with First Element Minimum
+Difficulty: MediumAccuracy: 64.85%Submissions: 8K+Points: 4
+You are given an integer array arr[ ]. Your task is to count the number of subarrays where the first element is the minimum element of that subarray.
+
+Note: A subarray is valid if its first element is not greater than any other element in that subarray.
+
+
+
+
+
+
+
+
+
+class Solution {
+  public:
+    int countSubarrays(vector<int> &arr) {
+        // code here
+        int n=arr.size();
+
+        stack<pair<int, int>>st;
+
+        int ans=1;
+
+        st.push({arr[n-1], 1});
+
+        for(int i=n-2; i>=0; i--){
+            int cnt=1;
+            while(!st.empty() && arr[i]<=st.top().first){
+                cnt+=st.top().second;
+                st.pop();
+            }
+            st.push({arr[i], cnt});
+            ans+=cnt;
+        }
+
+        return ans;
+        
+    }
+};
