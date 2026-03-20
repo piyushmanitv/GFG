@@ -1,0 +1,45 @@
+Predecessor and Successor
+Difficulty: MediumAccuracy: 47.36%Submissions: 183K+Points: 4
+You are given the root of a BST and an integer key. You need to find the inorder predecessor and successor of the given key. If either predecessor or successor is not found, then set it to NULL.
+
+Note: In an inorder traversal the number just smaller than the target is the predecessor and the number just greater than the target is the successor. /* BST Node
+
+
+
+
+
+
+
+
+
+class Node {
+   public:
+    int data;
+    Node *left;
+    Node *right;
+
+    Node(int x){
+        data = x;
+        left = NULL;
+        right = NULL;
+    }
+};
+*/
+
+class Solution {
+  public:
+    Node *pred = NULL, *succ = NULL;
+    
+    void fun(Node* root, int key) {
+        if(!root) return;
+        fun(root->left, key);
+        if(root->data < key) pred = root;
+        if(root->data > key && !succ) succ = root;
+        fun(root->right, key);
+    }
+    
+    vector<Node*> findPreSuc(Node* root, int key) {
+        fun(root, key);
+        return {pred, succ};
+    }
+};
