@@ -1,0 +1,66 @@
+Rotten Oranges
+Difficulty: MediumAccuracy: 46.02%Submissions: 200K+Points: 4Average Time: 20m
+Given a matrix mat[][], where each cell in the matrix can have values 0, 1 or 2 which has the following meaning:
+0 : Empty cell
+1 : Cell have fresh oranges
+2 : Cell have rotten oranges
+
+Your task is to determine the minimum time required so that all the oranges become rotten. A rotten orange at index (i, j) can rot other fresh orange at indexes (i-1, j), (i+1, j), (i, j-1), (i, j+1) (up, down, left and right) in a unit time.
+
+Note: If it is impossible to rot every orange then simply return -1.
+
+
+
+
+
+
+
+
+
+
+
+class Solution {
+  public:
+    int dx[4]={-1, 1, 0, 0};
+    int dy[4]={0, 0, -1, 1};
+    
+    virtual int orangesRot(vector<vector<int>>& mat) {
+      vector<vector<int>> v=mat;
+      int n=v.size(), m=v[0].size();
+      
+      queue<pair<int, pair<int, int>>> q;
+      for(int i=0; i<n; i++){
+        for(int j=0; j<m; j++){
+          if(mat[i][j]==2) q.push({0, {i, j}});      
+        }  
+      }
+      
+      int ans=0;
+      
+      while(!q.empty()){
+        auto [t, c]=q.front(); q.pop();
+        ans=max(t, ans);
+        
+        auto [x, y]=c;
+        for(int k=0; k<4; k++){
+          int nx=x+dx[k];
+          int ny=y+dy[k];
+          
+          if(nx>=0 && ny>=0 && nx<n && ny<m && v[nx][ny]==1){
+            q.push({t+1, {nx, ny}});
+            v[nx][ny]=2;
+          }
+          
+        }
+      }
+      
+      for(int i=0; i<n; i++){
+        for(int j=0; j<m; j++){
+          if(v[i][j]==1) return -1;    
+        }  
+      }
+      
+      
+      return ans;
+    }
+};
