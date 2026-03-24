@@ -1,0 +1,47 @@
+Course Schedule I
+Difficulty: MediumAccuracy: 79.05%Submissions: 4K+Points: 4
+You are given n courses, labeled from 0 to n - 1 and a 2d array prerequisites[][] where prerequisites[i] = [x, y] indicates that we need to take course y first if we want to take course x.
+
+Find if it is possible to complete all tasks. Return true if all tasks can be completed, or false if it is impossible.
+
+
+
+
+
+
+class Solution {
+  public:
+    bool canFinish(int n, vector<vector<int>>& prerequisites) {
+        // Code here
+        vector<int>adj[n];
+        vector<int>ind(n, 0);
+        for(auto &it:prerequisites){
+            int u=it[0];
+            int v=it[1];
+            adj[v].push_back(u);
+            ind[u]++;
+        }
+        
+        queue<int>q;
+        
+        for(int i=0; i<n; i++){
+            if(ind[i]==0) q.push(i);
+        }
+        
+        vector<int>tmp;
+        
+        while(!q.empty()){
+            int node=q.front();
+            q.pop();
+            
+            tmp.push_back(node);
+            
+            for(auto &ngbr:adj[node]){
+                ind[ngbr]--;
+                if(ind[ngbr]==0) q.push(ngbr);
+            }
+        }
+        
+        return tmp.size()==n?true:false;
+    }
+};
