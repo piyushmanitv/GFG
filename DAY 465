@@ -1,0 +1,46 @@
+Buy Stock with Transaction Fee
+Difficulty: MediumAccuracy: 57.75%Submissions: 11K+Points: 4Average Time: 20m
+You are given an array arr[], in which arr[i] is the price of a given stock on the ith day and an integer k represents a transaction fee. 
+Find the maximum profit you can achieve. You may complete as many transactions as you like, but you need to pay the transaction fee for each transaction.
+
+Note: You may not engage in multiple transactions simultaneously (i.e., you must sell the stock before you buy again).
+
+
+
+
+
+
+
+
+
+class Solution {
+  public:
+    
+    int solve(int i, bool buy, vector<int>& arr, int& k, vector<vector<int>>& dp) {
+        
+        if (i >= arr.size()) {
+            return 0;
+        }
+        
+        if (dp[i][buy] != -1) {
+            return dp[i][buy];
+        }
+        int profit = solve(i+1, buy, arr, k, dp);
+        
+        if (buy) {
+            int ans = -arr[i] - k + solve(i+1, false, arr, k, dp);
+            profit = max(profit, ans);
+        } else {
+            int ans = arr[i] + solve(i+1, true, arr, k, dp);
+            profit = max(profit, ans);
+        }
+        
+        return dp[i][buy] = profit;
+    }
+    int maxProfit(vector<int>& arr, int k) {
+        // Code here
+        int n = arr.size();
+        vector<vector<int>> dp(n+1, vector<int>(2, -1));
+        return solve(0, true, arr, k, dp);
+    }
+};
