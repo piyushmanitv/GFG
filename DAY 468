@@ -1,0 +1,35 @@
+Print Diagonally
+Difficulty: EasyAccuracy: 66.11%Submissions: 43K+Points: 2Average Time: 10m
+Give a n * n square matrix mat[][], return all the elements of its anti-diagonals from top to bottom.
+
+
+
+
+
+
+
+
+
+
+
+class Solution {
+  public:
+    vector<int> diagView(vector<vector<int>> mat) {
+        int n = mat.size();
+        vector<int> ans;
+        
+        // total diagonals = 2*n - 1
+        for (int i = 0; i < 2 * n - 1; i++) {
+            int row = (i < n) ? 0 : i - n + 1;
+            int col = (i < n) ? i : n - 1;
+            
+            while (row < n && col >= 0) {
+                ans.push_back(mat[row][col]);
+                row++;
+                col--;
+            }
+        }
+        
+        return ans;
+    }
+};
