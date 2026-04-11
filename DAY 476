@@ -1,0 +1,28 @@
+Count increasing Subarrays
+Difficulty: EasyAccuracy: 53.02%Submissions: 13K+Points: 2
+Given an array arr[] of integers, count the number of subarrays in arr[] which are strictly increasing with size greater or equal to 2. A subarray is a contiguous part of array. A subarray is strictly increasing if each element is greater then it's previous element if it exists.
+  
+  
+  
+  
+  
+  class Solution {
+  public:
+    int countIncreasing(vector<int>& arr) {
+        // code here.
+        int len = 1;
+        int n = arr.size();
+        int ans = 0;
+        for(int i=1;i<n;i++)
+        {
+            if(arr[i] > arr[i-1])
+            {
+                ans += len;
+                len++;
+            }
+            else
+                len = 1;
+        }
+        return ans;
+    }
+};
