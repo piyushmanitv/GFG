@@ -1,0 +1,27 @@
+URLify a given string
+Difficulty: BasicAccuracy: 76.04%Submissions: 6K+Points: 1
+Given a string s, replace all the spaces in the string with '%20'.
+
+
+
+
+
+
+class Solution {
+  public:
+    string URLify(string &s) {
+        string result = "";
+        
+        for(char ch : s) {
+            
+            if(ch == ' ') {
+                result += "%20";
+            }
+            else {
+                result += ch;
+            }
+        }
+        
+        return result;
+    }
+};
