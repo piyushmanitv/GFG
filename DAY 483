@@ -1,0 +1,30 @@
+Flip to Maximize 1s
+Difficulty: MediumAccuracy: 23.15%Submissions: 64K+Points: 4
+Given an array arr[] consisting of 0’s and 1’s. A flip operation involves changing all 0's to 1's and all 1's to 0's within a contiguous subarray. Formally, select a range (l, r) in the array arr[], such that (0 ≤ l ≤ r < n) holds and flip the elements in this range.
+
+Return the maximum number of 1's you can get in the array after doing at most 1 flip operation.
+
+
+
+
+
+
+
+
+
+
+
+class Solution {
+  public:
+    int maxOnes(vector<int>& arr) {
+        // code here
+        int curr =0,one =0, ans = 0;
+        for(auto i: arr){
+            if(curr <0)curr =0;
+            if(i ==0)curr++;
+            else {curr--;one++;}
+            ans = max(ans , curr);
+        }
+        return ans + one;
+    }
+};
