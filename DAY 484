@@ -1,0 +1,21 @@
+Check for Power
+Difficulty: BasicAccuracy: 34.59%Submissions: 65K+Points: 1
+Given two positive integers x and y, determine if y is a power of x. If y is a power of x, return true. Otherwise, return false.
+
+
+
+
+
+
+
+
+
+
+class Solution {
+  public:
+    bool isPower(int x, int y) {
+        
+      float a = float(log2(y)/log2(x));
+      return pow(x,a)==y;
+      }
+};
