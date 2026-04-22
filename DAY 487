@@ -1,0 +1,43 @@
+Mean of range in array
+Difficulty: EasyAccuracy: 50.54%Submissions: 12K+Points: 2
+Given an integer array arr[] and a 2D array queries[][]. Each query queries[i] = [l, r] represents a subarray ranging from index l to r (inclusive). For every query, compute the mean (average) of the elements in the specified range, and return the floor value of that mean.
+
+Return an array where each element corresponds to the result of a query.
+
+
+
+
+
+
+
+
+
+class Solution {
+  public:
+    vector<int> findMean(vector<int> &arr, vector<vector<int>> &queries) {
+        // code here
+        int sum=0;
+        unordered_map<int, int> mp;
+        for(int i=0; i<arr.size(); i++){
+            sum= sum+ arr[i];
+            mp[i]= sum;
+        }
+        vector<int> ans;
+        for(int i=0; i<queries.size(); i++){
+            int first=  queries[i][0];
+            int second= queries[i][1];
+            int num_q= (second-first)+1;
+            int get_ans=0;
+            if(first==0){
+                 get_ans= mp[second] / num_q;
+                
+            }
+            else{
+                
+                get_ans= (mp[second]- mp[first-1]) / num_q;
+            }
+            ans.push_back(get_ans);
+        }
+        return ans;
+    }
+};
