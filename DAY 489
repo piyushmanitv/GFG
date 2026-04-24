@@ -1,0 +1,36 @@
+Buildings with Sunlight
+Difficulty: EasyAccuracy: 40.46%Submissions: 41K+Points: 2
+Given the array arr[] of heights of certain buildings that lie adjacent to each other, Sunlight starts falling from the left side of the buildings. If there is a building of a certain height, all the buildings to the right side of it having lesser heights cannot see the sun.
+
+Find the total number of buildings that receive sunlight.
+
+
+
+
+
+
+
+
+
+
+
+
+class Solution {
+  public:
+    int visibleBuildings(vector<int>& arr) {
+        // code here
+        int maxi = 0;
+        int count = 0;
+        
+        for (int x : arr) {
+            
+            if (x >= maxi) {
+                count++;
+            }
+            
+            maxi = max(maxi, x);
+        }
+        
+        return count;
+    }
+};
