@@ -1,0 +1,30 @@
+Common in 3 Sorted Arrays
+Difficulty: EasyAccuracy: 22.16%Submissions: 447K+Points: 2
+Given three sorted arrays in non-decreasing order, return all common elements in non-decreasing order across these arrays. If there are no such elements return an empty array.
+
+
+
+
+
+
+
+class Solution {
+  public:
+    vector<int> commonElements(vector<int> &arr1, vector<int> &arr2,
+                               vector<int> &arr3) {
+        // Code Here
+        unordered_set<int> set2(arr2.begin(), arr2.end()); 
+        unordered_set<int> set3(arr3.begin(), arr3.end()); 
+        vector<int> ans;
+    
+        unordered_set<int> seen;
+    
+        for (int num : arr1) {
+            if (seen.find(num) == seen.end() && set2.find(num) != set2.end() && set3.find(num) != set3.end()) {
+                ans.push_back(num);
+                seen.insert(num);
+            }
+        }
+        return ans;
+    }
+};
