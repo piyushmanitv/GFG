@@ -1,0 +1,42 @@
+
+Smallest window containing 0, 1 and 2
+Difficulty: EasyAccuracy: 49.73%Submissions: 67K+Points: 2
+Given a string s consisting only of the characters '0', '1' and '2', determine the length of the smallest substring that contains all three characters at least once.
+
+If no such substring exists, return -1.
+
+
+
+
+
+
+
+
+class Solution {
+public:
+    int smallestSubstring(const string& s) {
+        int last[3] = {-1, -1, -1};
+        int min_len = 1e9;
+        
+        const int n = s.length();
+        const char* ptr = s.data();
+        
+        for (int i = 0; i < n; ++i) {
+            last[ptr[i] - '0'] = i;
+            
+            int mn = last[0];
+            if (last[1] < mn) mn = last[1];
+            if (last[2] < mn) mn = last[2];
+            
+            if (mn != -1) {
+                int len = i - mn + 1;
+                if (len < min_len) {
+                    min_len = len;
+                    if (min_len == 3) return 3; 
+                }
+            }
+        }
+        
+        return min_len == 1e9 ? -1 : min_len;
+    }
+};
