@@ -1,0 +1,36 @@
+Longest Repeating Character Replacement
+Difficulty: MediumAccuracy: 50.04%Submissions: 17K+Points: 4Average Time: 30m
+Given a string s of length n consisting of uppercase English letters and an integer k, you are allowed to perform at most k operations.  In each operation, you can change any character of the string to any other uppercase English letter.
+
+Determine the length of the longest substring that can be transformed into a string with all identical characters after performing at most k such operations.
+
+
+
+
+
+
+
+
+
+class Solution {
+  public:
+    int longestSubstr(string& s, int k) {
+        vector<int> freq(26, 0);
+        int left = 0, maxFreq = 0, maxLen = 0;
+
+        for (int right = 0; right < s.size(); right++) {
+            freq[s[right] - 'A']++;
+
+            maxFreq = max(maxFreq, freq[s[right] - 'A']);
+
+            while ((right - left + 1) - maxFreq > k) {
+                freq[s[left] - 'A']--;
+                left++;
+            }
+
+            maxLen = max(maxLen, right - left + 1);
+        }
+
+        return maxLen;
+    }
+};
