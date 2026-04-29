@@ -1,0 +1,44 @@
+Min Swaps to Group 1s
+Difficulty: MediumAccuracy: 40.3%Submissions: 20K+Points: 4
+You are given a binary array arr[] consisting only of 0s and 1s. Determine the minimum number of swaps required to group all the 1s together in a contiguous subarray.
+
+A swap operation allows you to choose any two indices i and j and exchange their values (i.e., swap(arr[i], arr[j])).
+
+If the array contains no 1s, return -1.
+
+
+
+
+
+
+
+
+
+class Solution {
+public:
+    int minSwaps(vector<int>& arr) {
+        int count[2] = {0};
+        int cnt1 = 0;
+        for(int i = 0;i<arr.size();i++){
+            if(arr[i] == 1){
+                cnt1++;
+            }
+        }
+        if(cnt1 == 0){
+            return -1;
+        }
+        int mini = INT_MAX;
+        int j = 0;
+        for(int i = 0;i<arr.size();i++){
+            count[arr[i]]++;
+            if(cnt1 - count[1] == count[0]){
+                mini = min(mini,count[0]);
+                while(cnt1 - count[1] == count[0]){
+                    count[arr[j]]--;
+                    j++;
+                }
+            }
+        }
+        return mini;
+    }
+};       
