@@ -1,0 +1,37 @@
+Check if an Array is Max Heap
+Difficulty: EasyAccuracy: 30.97%Submissions: 93K+Points: 2
+Given an array arr[], determine whether it represents the level-order traversal of a valid max heap. Return true if it does; otherwise, return false.
+
+
+
+
+
+
+
+
+
+
+class Solution {
+public:
+    bool isMaxHeap(vector<int> &arr) {
+        int n = arr.size();
+        int a = n/2;
+        bool bl = false;
+        for(int i = a-1;i>=0;i--){
+            int x = (2*i)+1;
+            int y = (2*i)+2;
+            if(x < n){
+                if(arr[i] < arr[x]){
+                    return false;
+                }
+            }
+            if(y < n){
+                if(arr[i] < arr[y]){
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+};
+
