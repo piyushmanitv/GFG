@@ -1,0 +1,33 @@
+Kth Largest in a Stream
+Difficulty: MediumAccuracy: 31.59%Submissions: 95K+Points: 4Average Time: 20m
+Given an input stream arr[] of n integers. Find the Kth largest element (not Kth largest unique element) after insertion of each element in the stream and if the Kth largest element doesn't exist, the answer will be -1 for that insertion. 
+
+Return a list of size n, where each element represents the Kth largest value after the corresponding insertion.
+
+
+
+
+
+
+
+
+
+
+
+class Solution {
+  public:
+    vector<int> kthLargest(vector<int>& arr, int k) {
+        // code here
+        int n=arr.size();
+        priority_queue<int, vector<int>, greater<int>>pq;
+        vector<int>ans;
+        for(int i=0; i<n; i++){
+            pq.push(arr[i]);
+            while(pq.size()>k){
+                pq.pop();
+            }
+            ans.push_back(pq.size()==k?pq.top():-1);
+        }
+        return ans;
+    }
+};
