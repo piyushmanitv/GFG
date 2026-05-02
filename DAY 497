@@ -1,0 +1,24 @@
+Position of the Set Bit
+Difficulty: BasicAccuracy: 49.62%Submissions: 81K+Points: 1
+Given an integer n, determine position of the only set bit (1) in its binary representation. The position is counted starting from 1 at the least significant bit (LSB).
+
+If n contains exactly one set bit, return its position.
+If n contains no set bits or more than one set bit, return -1.
+
+
+
+
+
+
+
+
+  class Solution {
+  public:
+    int findPosition(int n) {
+        // code here
+        if(n &(n-1)){
+            return -1;
+        }
+        return __builtin_popcount(n-1)+1;
+    }
+};
