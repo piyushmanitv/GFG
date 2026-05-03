@@ -1,0 +1,27 @@
+Sort by Set Bit Count
+Difficulty: EasyAccuracy: 36.7%Submissions: 62K+Points: 2Average Time: 20m
+Given an array arr[] of integers, sort the array (in descending order) according to count of set bits in binary representation of array elements. 
+
+Note: For integers having same number of set bits in their binary representation, sort according to their position in the original array i.e., a stable sort.
+
+
+
+
+
+
+
+
+
+class Solution {
+  public:
+    vector<int> sortBySetBitCount(vector<int>& arr) {
+        vector<vector<int>>bits(33) ;
+        for(int i : arr) bits[__builtin_popcount(i)].push_back(i) ; 
+        
+        vector<int>ans ;
+        for(int b = 32 ; b >= 0 ; b --) for(int i : bits[b]) ans.push_back(i) ;
+        
+        return ans ;
+    }
+};
+
