@@ -1,0 +1,34 @@
+Palindrome Binary
+Difficulty: EasyAccuracy: 49.1%Submissions: 21K+Points: 2
+Given an integer n, determine whether its binary representation forms a palindrome. Return true if the binary representation of n is a palindrome; otherwise, return false.
+
+Note: A binary representation is considered a palindrome if it reads the same forward and backward.
+
+
+
+
+
+
+
+
+
+class Solution {
+  public:
+    bool isBinaryPalindrome(int n) {
+        // code here
+        string s = bitset<32>(n).to_string();
+        
+        // remove leading zeros
+        int i = 0;
+        while (i < s.length() && s[i] == '0') i++;
+        
+        string trimmed = s.substr(i);  // correct
+        
+        // reverse string
+        string rev = trimmed;
+        reverse(rev.begin(), rev.end());
+        
+        return trimmed == rev;
+        
+    }
+};
