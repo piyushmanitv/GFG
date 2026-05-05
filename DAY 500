@@ -1,0 +1,29 @@
+Sum of XOR of all pairs
+Difficulty: MediumAccuracy: 45.14%Submissions: 58K+Points: 4
+Given an integer array arr[] of size n, compute the sum of the bitwise XOR for all distinct pairs of elements. That is, consider every pair of indices (i, j) such that 0 ≤ i < j < n, and calculate the total sum of (arr[i] XOR arr[j]) over all such pairs.
+
+
+
+
+
+
+
+
+
+class Solution {
+  public:
+    virtual long long sumXOR(vector<int> &arr){
+      long long ans=0LL;
+      for(int i=0; i<32; i++){
+        int c1=0, c0=0;
+        for(int x: arr){
+          if(x&(1<<i)) c1++;
+          else c0++;
+        }
+        
+        ans+=(1LL*c1*c0*(1<<i));
+      }
+      
+      return ans;
+    }
+};
