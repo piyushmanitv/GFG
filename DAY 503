@@ -1,0 +1,85 @@
+Remove Invalid Parentheses
+Difficulty: HardAccuracy: 43.53%Submissions: 13K+Points: 8Average Time: 40m
+Given a string s consisting of lowercase letters and parentheses '(' and ')'.
+
+A string is considered valid if:
+
+Every opening parenthesis '(' has a corresponding closing parenthesis ')'.
+Parentheses are properly nested.
+Remove the minimum number of invalid parentheses from s so that the resulting string becomes valid.  Return all the possible distinct valid strings in lexicographically sorted order.
+
+
+
+
+
+
+
+
+
+class Solution {
+public:
+    
+    bool check(string &t) {
+        int bal = 0;
+        
+        for(char c : t) {
+            if(c == '('){
+                bal++;
+            }
+            else if(c == ')'){
+                bal--;
+                if(bal < 0){
+                    return false;
+                }
+            }
+        }
+        
+        return bal == 0;
+    }
+    
+    vector<string> validParenthesis(string &s) {
+        
+        unordered_set<string> vis;
+        queue<string> q;
+        vector<string> ans;
+        
+        q.push(s);
+        vis.insert(s);
+        
+        bool found = false;
+        
+        while(!q.empty()){
+            
+            string cur = q.front();
+            q.pop();
+            
+            if(check(cur)) {
+                ans.push_back(cur);
+                found = true;
+            }
+            
+            if(found){
+                continue;
+            }
+            
+            for(int i = 0; i < cur.size(); i++) {
+                
+                if(cur[i] != '(' && cur[i] != ')'){
+                    continue;
+                }
+                
+                string nxt = cur.substr(0, i) + cur.substr(i + 1);
+                
+                if(!vis.count(nxt)) {
+                    vis.insert(nxt);
+                    q.push(nxt);
+                }
+            }
+        }
+        
+        sort(ans.begin(), ans.end());
+        ans.erase(unique(ans.begin(), ans.end()), ans.end());
+        
+        return ans;
+    }
+};
