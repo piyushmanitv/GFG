@@ -1,0 +1,77 @@
+Palindrome Pairs
+Difficulty: HardAccuracy: 31.71%Submissions: 22K+Points: 8
+Given an array arr[] consisting of n strings. Determine whether there exists a pair of indices (i, j) such that i ≠ j and the concatenation arr[i] + arr[j] forms a palindrome.
+
+Return true if such a pair exists; otherwise, return false.
+
+Note: A string is considered a palindrome if it reads the same forward and backward.
+
+
+
+
+
+
+
+
+
+class Solution {
+  public:
+    
+    bool isPalindrome(string &s, int left, int right) {
+        
+        while(left < right) {
+            
+            if(s[left] != s[right]) {
+                return false;
+            }
+            
+            left++;
+            right--;
+        }
+        
+        return true;
+    }
+    
+    bool palindromePair(vector<string>& arr) {
+        
+        unordered_map<string, int> mp;
+        
+        for(int i = 0; i < arr.size(); i++) {
+            mp[arr[i]] = i;
+        }
+        
+        for(int i = 0; i < arr.size(); i++) {
+            
+            string word = arr[i];
+            int n = word.length();
+            
+            for(int j = 0; j <= n; j++) {
+                
+                string left = word.substr(0, j);
+                string right = word.substr(j);
+                
+                if(isPalindrome(word, 0, j - 1)) {
+                    
+                    string revRight = right;
+                    reverse(revRight.begin(), revRight.end());
+                    
+                    if(mp.count(revRight) && mp[revRight] != i) {
+                        return true;
+                    }
+                }
+                
+                if(j != n && isPalindrome(word, j, n - 1)) {
+                    
+                    string revLeft = left;
+                    reverse(revLeft.begin(), revLeft.end());
+                    
+                    if(mp.count(revLeft) && mp[revLeft] != i) {
+                        return true;
+                    }
+                }
+            }
+        }
+        
+        return false;
+    }
+};
