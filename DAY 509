@@ -1,0 +1,63 @@
+Mother Vertex
+Difficulty: MediumAccuracy: 47.64%Submissions: 93K+Points: 4Average Time: 15m
+Given a directed graph with V vertices labeled from 0 to V-1 and a list of edges edges[][], where each edge is represented as [u, v] indicating a directed edge from vertex u to vertex v, find a Mother Vertex of the graph.
+
+A Mother Vertex is a vertex from which all other vertices can be reached.
+
+If multiple such vertices exist, return the one with the smallest value.
+If no such vertex exists, return -1.
+
+
+
+
+
+
+
+
+
+class Solution {
+  public:
+    
+    void dfs(int node, vector<vector<int>>& adj, vector<int>& visited) {
+        visited[node] = 1;
+        
+        for (int neighbor : adj[node]) {
+            if (!visited[neighbor]) {
+                dfs(neighbor, adj, visited);
+            }
+        }
+    }
+
+    int findMotherVertex(int V, vector<vector<int>>& edges) {
+        
+        vector<vector<int>> adj(V);
+        
+        for (auto &edge : edges) {
+            adj[edge[0]].push_back(edge[1]);
+        }
+
+        vector<int> visited(V, 0);
+        
+        int candidate = -1;
+
+        for (int i = 0; i < V; i++) {
+            if (!visited[i]) {
+                dfs(i, adj, visited);
+                
+                candidate = i;
+            }
+        }
+
+        fill(visited.begin(), visited.end(), 0);
+
+        dfs(candidate, adj, visited);
+
+        for (int i = 0; i < V; i++) {
+            if (!visited[i]) {
+                return -1;
+            }
+        }
+
+        return candidate;
+    }
+};
