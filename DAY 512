@@ -1,0 +1,25 @@
+Not a subset sum
+Difficulty: MediumAccuracy: 45.92%Submissions: 86K+Points: 4
+Given a array arr[] of positive integers, find the smallest positive integer such that it cannot be represented as the sum of elements of any subset of the given array set.
+
+
+
+
+
+
+
+class Solution {
+  public:
+    virtual int findSmallest(vector<int> &arr){
+      long long ans=1LL;
+      sort(arr.begin(), arr.end());
+      
+      for(int x: arr){
+        if((1LL*x) > ans) return ans;
+        ans+=(1LL*x);
+      }
+      
+      return (int)(ans);
+      
+    }
+};
