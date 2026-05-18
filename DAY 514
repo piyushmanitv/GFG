@@ -1,0 +1,25 @@
+Maximum Sum Problem
+Difficulty: EasyAccuracy: 57.09%Submissions: 61K+Points: 2
+Given a number n, find its maximum sum value with 3 recursive breaks described below.
+
+Break into three parts n/2, n/3, and n/4 (consider only the integer part or floor value).
+Each number obtained in this process can be divided further recursively. 
+At every step,  we can take the max of current value of n or the max value obtained with recursive process.
+It is possible that we don't divide the number at all and choose it as final answer.
+
+
+
+
+
+
+
+class Solution {
+    public:
+    int maxSum(int n) {
+        // code here.
+        if ((n/2 + n/3 + n/4) <= n)
+            return n;
+        
+        return(maxSum(n/2) + maxSum(n/3) + maxSum(n/4));
+    }
+};
