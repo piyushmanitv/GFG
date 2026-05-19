@@ -1,0 +1,48 @@
+Minimum Multiplications to reach End
+Difficulty: MediumAccuracy: 48.94%Submissions: 203K+Points: 4Average Time: 20m
+Given two integers, start and end, along with an array of integers arr[]. In one operation, you can multiply the current value by any element from arr[], and then take the result modulo 1000 to obtain a new value.
+
+Find the minimum steps in which end can be achieved starting from start. If it is not possible to reach end, then return -1
+
+
+
+
+
+
+
+
+
+
+class Solution {
+  public:
+    int minSteps(vector<int>& arr, int start, int end) {
+        // code here
+        const int MOD = 1000;
+        vector<int> dist(MOD,-1);
+        queue<int> q;
+        
+        q.push(start);
+        dist[start] = 0;
+        
+        while(!q.empty())
+        {
+            int node = q.front();
+            q.pop();
+            
+            if(node == end)
+                return dist[end];
+                
+            for(int a : arr)
+            {
+                int x = (node*a)%MOD;
+                
+                if(dist[x] ==  -1)
+                {
+                    dist[x] =  dist[node] + 1;
+                    q.push(x);
+                }
+            }
+        }
+        return -1;
+    }
+};
