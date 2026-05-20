@@ -1,0 +1,41 @@
+Product Pair
+Difficulty: MediumAccuracy: 17.34%Submissions: 90K+Points: 4
+Given an integer array arr[] and an integer target, determine whether there exists a pair of elements in the array whose product is equal to target.
+
+Return true if such a pair exists; otherwise, return false.
+
+
+
+
+
+
+
+
+
+class Solution {
+  public:
+    bool isProduct(vector<int>& arr, long long target) {
+        // code here
+        int n=arr.size();
+        unordered_set<long long>st;
+        
+        for(int i=0;i<n;i++){
+            if(arr[i]==0){
+                if(target==0 && st.find(0)!=st.end()){
+                    return true;
+                }
+            }
+            else{
+                if(target%arr[i]==0){
+                  long long num=target/arr[i];
+                  
+                  if(st.find(num)!=st.end()){
+                     return true;
+                  }
+                }
+            }
+           st.insert(arr[i]);
+        }
+        return false;
+    }
+};
