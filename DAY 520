@@ -1,0 +1,28 @@
+Last Coin in a Game of Alternates
+Difficulty: BasicAccuracy: 68.75%Submissions: 77K+Points: 1
+Given an array integer arr[] , representing the values of coins arranged in a row.
+
+Two players play a game by picking coins alternately.
+At each turn, a player can pick a coin from either the beginning or the end of the array. Both players follow a greedy strategy, i.e., they always pick the coin with the maximum value among the two available ends.
+The game continues until only one coin remains.
+Find the value of the last remaining coin.
+
+
+
+
+
+
+
+
+
+class Solution {
+  public:
+    int coin(vector<int>& arr) {
+        int left=0, right=arr.size()-1;
+        while(right>left){
+            if(arr[left]>arr[right]) left++;
+            else right--;
+        }
+        return arr[left];
+    }
+};
