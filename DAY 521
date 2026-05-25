@@ -1,0 +1,22 @@
+Elements in the Range
+Difficulty: BasicAccuracy: 37.28%Submissions: 81K+Points: 1
+Given an array arr[] containing distinct positive integers, and two integers start and end defining a range. Determine if the array contains all elements within inclusive range [start, end].
+
+Note: If the array contains all elements in the given range return true otherwise return false.
+
+
+
+
+
+
+
+class Solution {
+  public:
+    bool checkElements(int s, int e, vector<int>& a) {
+        int cnt = 0;
+        for(auto& i: a) {
+            if(i >= s and i <= e) cnt++;
+        }
+        return cnt == e - s + 1;
+    }
+};
