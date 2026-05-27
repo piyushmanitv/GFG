@@ -1,0 +1,54 @@
+Wifi Range
+Difficulty: EasyAccuracy: 51.63%Submissions: 41K+Points: 2
+There are n rooms in a straight line in Geekland State University's hostel. You are given a binary string s of length n, where s[i] = '1' means there is a WiFi router in the i-th room, and s[i] = '0' means there is no WiFi in that room.
+
+Each WiFi router has a range of x, meaning it can cover up to x rooms to its left and x rooms to its right.
+
+Given x and s, determine whether all rooms are covered by at least one WiFi router. Return true if all rooms are covered; otherwise, return false.class Solution {
+
+
+
+
+
+
+
+
+
+
+
+
+  public:
+    
+    bool wifiRange(string s, int x) {
+        
+        int n = s.size();
+        vector<int> diff(n + 1, 0);
+
+        for(int i = 0; i < n; i++) {
+
+            if(s[i] == '1') {
+
+                int l = max(0, i - x);
+                int r = min(n - 1, i + x);
+
+                diff[l]++;
+
+                if(r + 1 < n)
+                    diff[r + 1]--;
+            }
+        }
+
+        int cover = 0;
+
+        for(int i = 0; i < n; i++) {
+
+            cover += diff[i];
+
+            if(cover <= 0)
+                return false;
+        }
+
+        return true;
+    }
+};
+
