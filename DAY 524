@@ -1,0 +1,47 @@
+Vertical Sum
+Difficulty: MediumAccuracy: 64.76%Submissions: 56K+Points: 4Average Time: 20m
+Given a binary tree having n nodes, find the vertical sum of the nodes that are in the same vertical line. Return all sums through different vertical lines starting from the left-most vertical line to the right-most vertical line.
+
+
+
+
+
+
+
+
+
+
+
+
+/* Structure of binary tree node
+class Node{
+public:
+    int data;
+    Node* left, right;
+    Node(int item)
+    {
+        data = item;
+        left = nullptr;
+        right = nullptr;
+    }
+}
+*/
+class Solution {
+  public:
+    void dfs(Node* root,map<int,int>&mp,int x){
+        if(root==NULL) return;
+        mp[x]+=root->data;
+        dfs(root->left,mp,x-1);
+        dfs(root->right,mp,x+1);
+    }
+    vector<int> verticalSum(Node* root) {
+        map<int,int>mp;
+        vector<int>ans;
+        dfs(root,mp,0);
+        for(auto x: mp){
+            ans.push_back(x.second);
+        }
+        return ans;
+    }
+};
+
