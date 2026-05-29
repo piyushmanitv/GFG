@@ -1,0 +1,41 @@
+Count Sorted Digit Groupings
+Difficulty: MediumAccuracy: 59.38%Submissions: 39K+Points: 4
+Given a string s consisting of digits, you can split it into contiguous substrings (sub-groups). For example, the string "112" can be split as: ["1","1","2"], ["11","2"], ["1","12"], and ["112"].
+
+A grouping is considered valid if the sums of digits of the sub-groups form a non-decreasing sequence from left to right.
+
+Determine the total number of such valid groupings for the given string.
+
+
+
+
+
+
+
+
+
+
+class Solution {
+	public:
+	int validGroups(string &s) {
+		int n = s.size(), mxSum = 9*n;
+		vector<vector<int>> dp(n + 1, vector<int>(mxSum + 1));
+		for (int i = 0; i <= mxSum; i++) {
+			dp[n][i] = 1;
+		}
+		
+		for (int i = n - 1; i >= 0; i--) {
+			for (int prevSum = 0; prevSum <= mxSum; prevSum++) {
+				int currSum = 0;
+				for (int j = i; j<n; j++) {
+					currSum += (s[j]-'0');
+					if (currSum >= prevSum) {
+						dp[i][prevSum] += dp[j + 1][currSum];
+					}
+				}
+			}
+		}
+		
+		return dp[0][0];
+	}
+};
