@@ -1,0 +1,22 @@
+Express as Consecutive Number Sum
+Difficulty: EasyAccuracy: 49.03%Submissions: 4K+Points: 2
+Given a number n, find whether n can be expressed as sum of two or more consecutive positive numbers.class Solution {
+
+
+
+
+
+
+
+
+  
+  public:
+    bool isSumOfConsecutive(int n) {
+        // code here
+        if((n&(n-1))==0){
+            return false;
+        }else{
+            return true;
+        }
+    }
+};
