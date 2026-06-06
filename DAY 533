@@ -1,0 +1,66 @@
+Non-Attacking Black and White Knights
+Difficulty: MediumAccuracy: 51.2%Submissions: 32K+Points: 4
+Given two integers n and m representing the dimensions of a chessboard, find the number of ways to place one black knight and one white knight on the chessboard such that they cannot attack each other.
+
+Note:
+
+The knights have to be placed on different squares.
+A knight can move two squares horizontally and one square vertically (L shaped), or two squares vertically and one square horizontally (L shaped).
+The knights attack each other if one can reach the other in one move.
+
+
+
+
+
+
+
+
+  class Solution {
+  public:
+    int numOfWays(int n, int m) {
+        vector<vector<int>>mat(n,vector<int>(m,0));
+        int cnt=0;
+        for(int i=0;i<n;i++)
+        {
+            for(int j=0;j<m;j++)
+            {
+                int x=0;
+                if(i-2>=0 && i-2<n && j-1>=0 && j-1<m)
+                {
+                    x++;
+                }
+                if(i-2>=0 && i-2<n && j+1>=0 && j+1<m)
+                {
+                    x++;
+                }
+                if(i+2>=0 && i+2<n && j-1>=0 && j-1<m)
+                {
+                    x++;
+                }
+                if(i+2>=0 && i+2<n && j+1>=0 && j+1<m)
+                {
+                    x++;
+                }
+                if(j-2>=0 && j-2<m && i-1>=0 && i-1<n)
+                {
+                    x++;
+                }
+                if(j-2>=0 && j-2<m && i+1>=0 && i+1<n)
+                {
+                    x++;
+                }
+                if(j+2>=0 && j+2<m && i-1>=0 && i-1<n)
+                {
+                    x++;
+                }
+                if(j+2>=0 && j+2<m && i+1>=0 && i+1<n)
+                {
+                    x++;
+                }
+                cnt=cnt+((n*m)-x);
+            }
+        }
+        return cnt-(n*m);
+        
+    }
+};
