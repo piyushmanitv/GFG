@@ -1,0 +1,35 @@
+Check Repeated Substring with K Replacements
+Difficulty: MediumAccuracy: 53.15%Submissions: 42K+Points: 4
+Given a string s and an integer k, check if it is possible to convert s to a string that is repetition of a substring with k characters else returns false.
+In order to convert we can replace one substring of length k with any k characters.
+
+
+
+
+
+
+
+
+
+class Solution {
+  public:
+    bool kSubstr(string &s, int k) {
+       unordered_map<string,int> mp;
+       int j=0;
+       for(int i=0;i<s.size();i=i+k){
+          int temp=k;
+          string str="";
+          while(temp--){
+             str+=s[j++]; 
+          }
+          mp[str]++;
+       }
+       int n=s.size();
+       for(auto it:mp){
+         if(it.second==n/k || it.second==n/k-1){
+             return true;
+         }  
+       }
+       return false;
+    }
+};
