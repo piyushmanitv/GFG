@@ -1,0 +1,43 @@
+Construct List using XOR Queries
+Difficulty: MediumAccuracy: 50.86%Submissions: 42K+Points: 4Average Time: 20m
+There is an array that initially contains only a single value, 0. 
+
+Given a list of queries queries[][] of size q, where each query is of one of the following types:
+
+0 x: Insert x into the array.
+1 x: Replace every element a in the array with a ^ x, where ^ denotes the bitwise XOR operator.
+Return the array in sorted order after performing all the queries.
+
+
+
+
+
+
+
+
+
+class Solution {
+  public:
+    vector<int> constructList(vector<vector<int>> &queries) {
+        
+        int xr = 0;
+        
+        vector<int> ans;
+        
+        for(int i = (int)queries.size() - 1; i >= 0; i--) {
+            
+            if(queries[i][0] == 1) {
+                xr ^= queries[i][1];
+            }
+            else {
+                ans.push_back(queries[i][1] ^ xr);
+            }
+        }
+        
+        ans.push_back(xr);
+        
+        sort(ans.begin(), ans.end());
+        
+        return ans;
+    }
+};
