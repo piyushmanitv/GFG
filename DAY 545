@@ -1,0 +1,68 @@
+Coverage of all Zeros in a Binary Matrix
+Difficulty: EasyAccuracy: 55.68%Submissions: 31K+Points: 2Average Time: 10m
+Given a binary matrix mat[][] containing only 0s and 1s, find the total coverage of all 0's. The coverage of a particular 0 cell is defined by checking 1's in its four directions (left, right, up, and down). For each direction, if there is at least one 1 anywhere between the 0 and the boundary of the matrix, the coverage increases by one.
+
+Return the sum of the coverage values for all 0 cells in the matrix.
+
+
+
+
+
+
+
+
+class Solution {
+  public:
+    int findCoverage(vector<vector<int>>& mat) {
+        // code here
+        int n = mat.size();
+        int m = mat[0].size();
+        
+        vector<vector<pair<int,int>>> lr(n, vector<pair<int,int>>(m));
+        
+        for(int i=0; i<n; i++){
+            int count1 = 0;
+            for(int j=0; j<m; j++){
+                lr[i][j].first = count1;
+                if(mat[i][j] == 1) count1++;
+            }
+            
+            count1 = 0;
+            for(int j=m-1; j>=0; j--){
+                lr[i][j].second = count1;
+                if(mat[i][j] == 1) count1++;
+            }
+        }
+        
+        vector<vector<pair<int,int>>> ud(n, vector<pair<int,int>>(m));
+        
+        for(int j=0; j<m; j++){
+            int count1 = 0;
+            for(int i=0; i<n; i++){
+                ud[i][j].first = count1;
+                if(mat[i][j] == 1) count1++;
+            }
+            
+            count1 = 0;
+            for(int i=n-1; i>=0; i--){
+                ud[i][j].second = count1;
+                if(mat[i][j] == 1) count1++;
+            }
+        }
+        
+        int ans = 0;
+        
+        for(int i=0; i<n; i++){
+            for(int j=0; j<m; j++){
+                if(mat[i][j] == 0){
+                    if(lr[i][j].first >= 1 ) ans++;
+                    if(lr[i][j].second >=1) ans++;
+                    if(ud[i][j].first >= 1) ans++;
+                    if(ud[i][j].second >= 1) ans++;
+                }
+            }
+        }
+        
+        return ans;
+    }
+};
