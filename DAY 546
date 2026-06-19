@@ -1,0 +1,49 @@
+Equalize All Prefix Sums
+Difficulty: MediumAccuracy: 69.73%Submissions: 26K+Points: 4
+Given a sorted array arr[]. For each i(0 ≤ i ≤ n-1), make all the elements of the array from index 0 to i equal, using the minimum number of operations.
+
+In one operation you either increase or decrease the array element by 1. Return an array that contains the minimum number of operations for each i, to accomplish the above task.
+
+Note:  
+
+For each index i, consider the original array without applying modifications made for previous indices.
+Try to solve the problem using O(1) extra space (excluding the resultant array).
+
+
+
+
+
+
+
+
+
+class Solution {
+  public:
+    vector<int> optimalArray(vector<int> &arr) {
+        int n = arr.size();
+
+        vector<long long> pref(n);
+        pref[0] = arr[0];
+
+        for (int i = 1; i < n; i++) {
+            pref[i] = pref[i - 1] + arr[i];
+        }
+
+        vector<int> ans(n);
+
+        for (int i = 0; i < n; i++) {
+            int m = i / 2;
+
+            long long leftCost =
+                1LL * arr[m] * (m + 1) - pref[m];
+
+            long long rightCost =
+                (pref[i] - pref[m]) -
+                1LL * arr[m] * (i - m);
+
+            ans[i] = (int)(leftCost + rightCost);
+        }
+
+        return ans;
+    }
+};
