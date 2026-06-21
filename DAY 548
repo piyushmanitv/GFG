@@ -1,0 +1,34 @@
+Last Digit of a^b
+Difficulty: MediumAccuracy: 23.8%Submissions: 108K+Points: 4
+Given two integers a and b in the form of strings. Return the last digit of ab.
+
+
+
+
+
+
+
+
+class Solution {
+  public:
+    int getLastDigit(string& a, string& b) {
+        if(b == "0")return 1;
+        int ld = (a.back() - '0');
+        int nb;
+        if(b.size()>=2){
+            nb = (b[b.size()-2]-'0')*10 + (b.back()-'0');
+        }
+        else{
+            nb = (b.back() - '0');
+        }
+        if(ld == 0 or ld == 1 or ld == 5 or ld == 6)return ld;
+        if(ld == 2 or ld == 3 or ld == 7 or ld == 8){
+            int p = (nb - 1 + 4)%4 + 1;
+            return int(pow(ld, p))%10;
+        } 
+        if(ld == 4 or ld == 9){
+            int p = (nb - 1 + 2)%2 + 1;
+            return int(pow(ld, p))%10;
+        }
+    }
+};
