@@ -1,0 +1,28 @@
+Maximum Number of People Defeated
+Difficulty: MediumAccuracy: 48.32%Submissions: 23K+Points: 4
+There are infinitely many people standing in a row, indexed from 1. The strength of the person at index i is i².
+
+Given a strength p, determine the maximum number of people that can be defeated. A person with strength x can be defeated only if p ≥ x, after which the strength p decreases by x.
+
+
+
+
+vector<int> v;
+class Solution {
+    void preprocess() {
+        if(!v.empty()) {
+            return;
+        }
+        v.reserve(1000);
+        for(int i = 1, sum = 0; sum <= 3e8 ; i++) {
+            sum += i * i;
+            v.push_back(sum);
+        }
+    }
+public:
+    int maxPeopleDefeated(int p) {
+        // Code Here
+        preprocess();
+        return upper_bound(v.begin(), v.end(), p) - v.begin();
+    }
+};
