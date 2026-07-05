@@ -1,0 +1,34 @@
+Max Gap Between Two Same
+Difficulty: EasyAccuracy: 47.57%Submissions: 17K+Points: 2
+Given a string s consisting of lowercase English letters, find the maximum number of characters between any two identical characters. If no character repeats, return -1.
+
+
+
+
+
+
+
+
+
+class Solution {
+  public:
+    int maxCharGap(string &s) {
+        // code here
+        vector<int> last(26, -1);
+        int n = s.length();
+        int  ans = -1;
+        
+        for (int i=0; i<n; i++) {
+            
+            if (last[s[i] - 'a'] != -1) {
+                ans = max(ans, i - last[s[i] - 'a']- 1);
+            } else {
+                last[s[i] - 'a'] = i;
+            }
+        }
+        
+        
+        return ans;
+    }
+};
+
