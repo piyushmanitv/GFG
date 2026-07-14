@@ -1,0 +1,75 @@
+Max Amount by Selling K Tickets
+Difficulty: MediumAccuracy: 49.96%Submissions: 20K+Points: 4
+Given an integer array arr[], where arr[i] denotes the number of tickets available with the i-th ticket seller.
+
+The price of each ticket is equal to the number of tickets remaining with that seller at the time of sale. 
+A seller can sell at most one ticket at a time, and after each sale, the price of the next ticket from that seller decreases by 1.
+All sellers are allowed to sell at most k tickets in total.
+Find the maximum amount that can be earned by selling k tickets. Return the answer modulo 109+7.
+
+
+
+
+
+
+
+
+
+
+
+
+class Solution {
+  public:
+    int maxAmount(vector<int>& arr, int k) {
+
+        long long total_earning = 0;
+
+        long long MOD = 1000000007;
+
+        
+
+        priority_queue<int> pq;
+
+        for (int tickets : arr) {
+
+            if (tickets > 0) {
+
+                pq.push(tickets);
+
+            }
+
+        }
+
+        
+
+        while (k > 0 && !pq.empty()) {
+
+            int current_max_tickets = pq.top();
+
+            pq.pop();
+
+            
+
+            total_earning = (total_earning + current_max_tickets) % MOD;
+
+            
+
+            if (current_max_tickets - 1 > 0) {
+
+                pq.push(current_max_tickets - 1);
+
+            }
+
+            
+
+            k--;
+
+        }
+
+        
+
+        return total_earning;
+
+    }
+
+};
