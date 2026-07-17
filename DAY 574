@@ -1,0 +1,28 @@
+Smallest Non-Zero Number
+Solved
+Difficulty: MediumAccuracy: 48.41%Submissions: 19K+Points: 4
+Given an array arr[], find the smallest number x such that when x is processed sequentially with each element of the array (from index 0 to n-1), it never becomes negative, under the following conditions:
+
+If x is greater than the current array element, x is increased by the difference between x and the array element.
+If x is less than or equal to the current array element, x is decreased by the difference between the array element and x.
+
+
+
+
+
+
+
+
+class Solution {
+  public:
+    int find(vector<int>& arr) {
+        // code here
+        int ans = 0, n = arr.size(), xAfter = 0;
+        
+        for (int i = n-1; i >= 0; i--) {
+            xAfter = ceil((((double)xAfter + arr[i])/2));
+        }
+        
+        return xAfter;
+    }
+};
