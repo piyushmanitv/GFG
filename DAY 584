@@ -1,0 +1,43 @@
+Construct a Full Binary Tree
+Solved
+Difficulty: MediumAccuracy: 74.63%Submissions: 30K+Points: 4
+Given two arrays pre[] and preMirror[] of size n containing unique elements, where pre[] represents the preorder traversal of a full binary tree and preMirror[] represents the preorder traversal of its mirror tree, construct the original full binary tree using these traversals.
+
+Note: A general binary tree cannot be uniquely constructed using these two traversals. However, a full binary tree can be constructed uniquely from the given traversals without any ambiguity.
+
+
+
+
+
+
+
+class Solution {
+    int i, j;
+    Node* createRecursively(vector<int> &pre, vector<int> &preM) {
+        Node* node = new Node(pre[i]);
+        
+        if(pre[i] == preM[j]) {
+            j--;
+            return node;
+        }
+        
+        int rootVal = pre[i];
+        
+        i++;
+        node->left = createRecursively(pre, preM);
+        
+        i++;
+        node->right = createRecursively(pre, preM);
+        
+        if(rootVal == preM[j]) j--;
+        
+        return node;
+    }
+  public:
+    Node *constructBinaryTree(vector<int> &pre, vector<int> &preMirror) {
+        i = 0;
+        j = preMirror.size() - 1;
+        
+        return createRecursively(pre, preMirror);
+    }
+};
