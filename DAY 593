@@ -1,0 +1,34 @@
+Pairs with Less Than K Diff
+Solved
+Difficulty: EasyAccuracy: 50.0%Submissions: 19K+Points: 2
+Given an array arr[] of positive integers and an integer k, find the total number of pairs of elements that have an absolute difference strictly less than k.
+
+Note:  Pair (i, j) is considered the same as (j, i).
+
+
+
+
+
+
+
+
+
+class Solution {
+  public:
+    int countPairs(vector<int>& arr, int k) {
+        // code here
+        //sort  the array
+        sort(begin(arr), end(arr));
+        int i=0;
+        int j=0;
+        int total_count=0;
+        while(j<arr.size()){
+            while(arr[j]- arr[i]>=k){
+                i++;
+            }
+            total_count+=j-i;
+            j+=1;
+        }
+        return total_count;
+    }
+};
