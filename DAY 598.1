@@ -1,0 +1,45 @@
+High Effort vs Low Effort
+Difficulty: EasyAccuracy: 53.04%Submissions: 10K+Points: 2
+Given two integer arrays h[] and l[], where h[i] and l[i] denote the number of tasks that can be completed on the i-th day by performing a high-effort task and a low-effort task, respectively.
+
+For each day, you may choose exactly one of the following:
+
+Perform no task.
+Perform a low-effort task.
+Perform a high-effort task, which can only be performed on the first day or if no task was performed on the previous day.
+Return the maximum total number of tasks that can be completed over all days.
+
+
+
+
+
+
+
+
+
+
+
+class Solution {
+  public:
+    int days=0;
+    int solve(int day,bool prv,vector<int>& h, vector<int>& l,vector<vector<int>> &dp){
+        if(day>=days)
+            return 0;
+        int p=prv==true?1:0;
+        if(dp[day][p]!=-1)
+            return dp[day][p];
+        
+        int low=l[day]+solve(day+1,true,h,l,dp);
+        int high=0;
+        if(!prv)
+            high=h[day]+solve(day+1,true,h,l,dp);
+        int noEff=solve(day+1,false,h,l,dp);
+        
+        return dp[day][p]=max(max(low,high),noEff);
+    }
+    int maxTask(vector<int>& h, vector<int>& l) {
+        days=h.size();
+        vector<vector<int>> dp(l.size(),vector<int>(2,-1));
+        return solve(0,false,h,l,dp);
+    }
+};
