@@ -1,0 +1,39 @@
+Largest Zigzag Sequence
+Solved
+Difficulty: EasyAccuracy: 50.0%Submissions: 18K+Points: 2Average Time: 20m
+Given a square matrix mat[][] of size n × n. A zigzag sequence starts from the top and ends at the bottom. Two consecutive elements of sequence cannot belong to the same column.
+
+Return the maximum sum of such a zigzag sequence.
+
+
+
+
+
+
+
+  class Solution {
+  public:
+    int zigzagSequence(vector<vector<int>>& mat) {
+        //code here
+        int n=mat.size();
+        vector<vector<long long>>dp(n,vector<long long>(n,0));
+        for(int i=0;i<n;i++) dp[0][i]=mat[0][i];
+        
+        long long ans=0;
+        for(int i=1;i<n;i++){
+            for(int j=0;j<n;j++){
+                 
+                 for(int k=0;k<n;k++){
+                     if(k!=j){
+                         dp[i][j]=max(dp[i][j], (long long)mat[i][j] + dp[i-1][k]);
+                     }
+                 }
+            }
+        }
+        for(int i=0;i<n;i++){
+             ans=max(ans,dp[n-1][i]);
+        }
+        return ans;
+        
+    }
+};
