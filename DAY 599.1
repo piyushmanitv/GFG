@@ -1,0 +1,39 @@
+Rod Cutting
+Solved
+Difficulty: MediumAccuracy: 60.66%Submissions: 227K+Points: 4Average Time: 20m
+Given a rod of length n inches and an array price[], where price[i] denotes the value of a piece of length i (1-based Index). Determine the maximum value obtainable by cutting up the rod and selling the pieces.
+
+Note: The value of n is equal to the size of price array.
+
+
+
+
+
+
+
+
+
+class Solution {
+  public:
+  
+    int cutRod(vector<int> &price) {
+        int n=price.size();
+        vector<int> prev(n+2);
+        //base case;
+        for(int len=1;len<=n;len++){
+            if(1<=len) prev[len]=len*price[0];
+        }
+        // tabulated code;
+        for(int idx=1;idx<n;idx++){
+            for(int len=0;len<=n;len++){
+                int take=0;
+                if(idx+1<=len) take = price[idx] + prev[len-(idx+1)];
+                int non_take=prev[len];
+                prev[len]=max(take,non_take);
+            }
+        }
+        return prev[n];
+    
+        
+    }
+};
