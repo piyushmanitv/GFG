@@ -1,0 +1,44 @@
+All Distinct Subset (or Subsequence) Sums
+Difficulty: MediumAccuracy: 42.81%Submissions: 24K+Points: 4Average Time: 20m
+Given an array arr[] of integers, generate all possible subset sums and return the distinct sums in sorted order.
+
+A subset may contain any number of elements, including the empty subset.
+
+
+
+
+
+
+
+class Solution {
+    private:
+    void get_ans(vector<int> &nums, int index, int sum, vector<vector<int>> &dp, set<int> &st){
+        if(index>=nums.size()){
+            st.insert(sum);
+            return;
+        }
+        if(dp[index][sum]==1){
+            return;
+        }
+        dp[index][sum]=1;
+        get_ans(nums, index+1, sum+nums[index], dp, st);
+        get_ans(nums, index+1, sum, dp, st);
+        
+    }
+  public:
+    vector<int> distinctSum(vector<int> &nums) {
+        // code here
+        int sum=0;
+        for(auto i: nums){
+            sum+=i;
+        }
+        vector<vector<int>> dp(nums.size()+1, vector<int> (sum+1, 0));
+        vector<int> ans;
+       set<int> st;
+        get_ans(nums, 0, 0, dp, st);
+       for(auto  i: st){
+           ans.push_back(i);
+       }
+        return ans;
+    }
+};
