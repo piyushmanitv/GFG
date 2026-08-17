@@ -1,0 +1,52 @@
+Maximum path sum in matrix
+Difficulty: MediumAccuracy: 42.59%Submissions: 127K+Points: 4
+You are given a matrix mat[][] of size n x m where each element is a positive integer. Starting from any cell in the first row, you are allowed to move to the next row, but with specific movement constraints. From any cell (r, c) in the current row, you can move to any of the three possible positions :
+
+(r+1, c-1) — move diagonally to the left.
+(r+1, c) — move directly down.
+(r+1, c+1) — move diagonally to the right.
+Find the maximum sum of any path starting from any column in the first row and ending at any column in the last row, following the above movement constraints.
+
+
+
+
+
+
+
+
+  class Solution {
+  public:
+    int maximumPath(vector<vector<int>>& mat) {
+        // code here
+        int n = mat.size();
+        int m = mat[0].size();
+        int maxpath=0;
+        vector<vector<int>> dp(n+1,vector<int>(m+1,-1));
+        
+        for(int i=0;i<m;i++){
+            
+            int pathsum = findpath(0,i,mat,dp);
+            maxpath=max(maxpath,pathsum);
+        }
+        return maxpath;
+    }
+    
+    int findpath(int row , int col , vector<vector<int>>&mat,vector<vector<int>>&dp){
+        
+        if(row <0 || row >= mat.size() || col < 0 || col >= mat[0].size()){
+            return 0;
+        }
+        
+        if(dp[row][col] != -1){
+            return dp[row][col];
+        }
+        
+        int downright = findpath(row+1,col+1,mat,dp);
+        int downleft = findpath(row+1,col-1,mat,dp);
+        int down = findpath(row+1,col,mat,dp);
+        
+        int path = mat[row][col]+max({downright,downleft,down});
+        dp[row][col]=path;
+        return dp[row][col];
+    }
+};
