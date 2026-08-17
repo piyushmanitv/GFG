@@ -1,0 +1,34 @@
+Subset Sum on Generated Sequence
+Difficulty: MediumAccuracy: 37.44%Submissions: 28K+Points: 4Average Time: 15m
+There are n children standing in a queue, each assigned a number arr[i]. The teacher writes s on a paper and gives it to the first child.
+
+Each child writes the sum of all numbers already on the paper and arr[i], then passes it to the next child.
+
+Return true if x can be formed by adding some of the numbers written on the paper: else return false.
+
+
+
+
+
+
+
+class Solution {
+  public:
+    bool isPossible(vector<int>& arr, long long s, int x) {
+        // code here
+        
+        int i=0, n=arr.size();
+        
+        while(i<n && s<x){
+            s=s*2+arr[i];
+            i++;
+        }
+        
+        while(--i >=0){
+            s-=arr[i];
+            s/=2;
+            if(s+arr[i]<=x)x-=s+arr[i];
+        }
+        return x==0 || x==s;
+    }
+};
