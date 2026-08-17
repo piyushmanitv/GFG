@@ -1,0 +1,59 @@
+Longest Path in a Directed Acyclic Graph
+Difficulty: HardAccuracy: 50.38%Submissions: 17K+Points: 8
+Given a weighted Directed Acyclic Graph (DAG) with V vertices numbered from 0 to V - 1, represented by edges[][], where edges[i] = [u, v, w] denotes a directed edge from u to v with weight w, and a source vertex src.
+
+Return the distance array, where the value at index i represents the longest distance from s to vertex i.
+If a vertex is unreachable from s, store INT_MIN for that vertex. The driver code will automatically display INT_MIN as INF.
+
+
+
+
+
+
+
+
+
+class Solution {
+  public:
+    vector<int> maxDistance(int n, int src, vector<vector<int>> &edges) {
+        vector<pair<int,int>>g[n];
+        vector<int>degree(n);
+        for(auto &val:edges){
+            int u=val[0];
+            int v=val[1];
+            int w=val[2];
+            g[u].push_back({v,w});
+            degree[v]++;
+        }
+        int dp[n][2];
+        memset(dp,0,sizeof(dp));
+        queue<int>q;
+        for(int i=0;i<n;i++){
+            dp[i][1]=INT_MIN;
+            if(degree[i])continue;
+            q.push(i);
+        }
+        // cout<<-1<<endl;
+        dp[src][0]=1;
+        dp[src][1]=0;
+        while(!q.empty()){
+            int v=q.front();
+            q.pop();
+            for(auto &c:g[v]){
+                degree[c.first]--;
+                dp[c.first][0]|=dp[v][0];
+                if(dp[v][0]){
+                    dp[c.first][1]=max(dp[c.first][1],dp[v][1]+c.second);
+                }
+                if(degree[c.first]==0){
+                    q.push(c.first);
+                }
+            }
+        }
+        vector<int>res(n);
+        for(int i=0;i<n;i++){
+            res[i]=dp[i][1];
+        }
+        return res;
+    }
+};
