@@ -1,0 +1,50 @@
+Triplets with Sum in Range
+Difficulty: MediumAccuracy: 30.77%Submissions: 31K+Points: 4
+Given an array arr[]  and a range from l to r, the task is to count the number of triplets having a sum in the range [l, r].
+
+
+
+
+
+
+
+
+
+class Solution {
+  public:
+  
+  int countValidPairs(vector<int>& arr, int target) {
+      
+      int n = arr.size();
+      int count = 0;
+      
+      for (int i = 0; i < n-2; i++) {
+          
+          int j = i + 1;
+          int k = n-1;
+          
+          
+          while (j < k) {
+              int sum = arr[i] + arr[j] + arr[k];
+              
+              if (sum <= target) {
+                  count += (k - j);
+                  j++;
+              } else {
+                  k--;
+              }
+          }
+      }
+      
+      return count;
+  }
+  
+  int countTriplets(vector<int> &arr, int l, int r) {
+        // code here
+        sort(begin(arr), end(arr));
+        int fullRange = countValidPairs(arr, r);
+        int leftRange = countValidPairs(arr, l-1);
+        
+        return fullRange - leftRange;
+    }
+};
