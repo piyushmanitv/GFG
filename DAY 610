@@ -1,0 +1,92 @@
+Number of Turns in Binary Tree
+Difficulty: HardAccuracy: 42.63%Submissions: 32K+Points: 8
+Given root of a binary tree and the values of its two nodes p and q, count turns required to travel from node p to q.
+
+A turn occurs whenever the direction of movement changes from left to right or right to left while traversing the tree.
+If the path between the two nodes does not involve any turns (i.e., the nodes lie on the same straight path), return -1.
+Note: All node values are distinct.
+
+
+
+
+
+
+
+
+
+
+  class Solution {
+    private:
+    Node* LCS(Node* root,int p,int q){
+        if(root==NULL || root->data==p || root->data==q){
+            return root;
+        }
+
+        Node* left=LCS(root->left,p,q);
+        Node* right=LCS(root->right,p,q);
+
+        if(left && right){
+            return root;
+        }
+
+        else if(left){
+            return left;
+        }
+
+        else {
+            return right;
+        }
+    }
+
+    int solver(Node* root,int p,int q,int prev){
+        if(root==NULL){
+            return 1e9;
+        }
+
+        if(root->data==p || root->data==q){
+            return 0;
+        }
+
+        int ans=1e9;
+
+        if(!prev){
+            ans=min({ans,0+solver(root->left,p,q,0),1+solver(root->right,p,q,1)});
+        }
+
+        else{
+            ans=min({ans,1+solver(root->left,p,q,0),0+solver(root->right,p,q,1)});
+        }
+
+        return ans;
+    }
+  public:
+    int numberOfTurns(Node* root, int p, int q) {
+        // code here
+        Node* point=LCS(root,p,q);
+
+        int left=solver(point->left,p,q,0);
+        int right=solver(point->right,p,q,1);
+
+        int ans=0;
+        if(left<1e9){
+            ans+=left;
+        }
+
+        if(right<1e9){
+            ans+=right;
+        }
+
+        ans++;
+
+        if(point->data==p || point->data==q){
+            ans--;
+        }
+
+        if(ans==0){
+            return -1;
+        }
+
+
+        return ans;
+    }
+};
