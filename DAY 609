@@ -1,0 +1,57 @@
+Transform String
+Difficulty: MediumAccuracy: 29.76%Submissions: 60K+Points: 4
+Given two strings s1 and s2. Find the minimum number of steps required to transform string s1 into string s2. The only allowed operation for the transformation is selecting a character from string s1 and inserting it in the beginning of string s1.
+
+If transformation is not possible return -1.
+
+
+
+class Solution {
+public:
+    int transform(string &s1, string &s2) {
+        //let me check for -1 case.
+        if(s1.length() > s2.length() || s1.length() < s2.length()){
+            return -1;
+        }
+        int countt[26] = {0};
+        int countt1[26] = {0};
+        int countt2[26] = {0};
+        int countt3[26] = {0};
+        for(int i = 0;i<s1.length();i++){
+            if(s1[i] >= 'a' && s1[i] <= 'z'){
+                countt[s1[i]-'a']++;
+            }
+            if(s1[i] >= 'A' && s1[i] <= 'Z'){
+                countt1[s1[i]-'A']++;
+            }
+            if(s2[i] >= 'a' && s2[i] <= 'z'){
+                countt2[s2[i]-'a']++;
+            }
+            if(s2[i] >= 'A' && s2[i] <= 'Z'){
+                countt3[s2[i]-'A']++;
+            }
+        }
+        for(int i = 0;i<26;i++){
+            if(countt[i] != countt2[i]){
+                return -1;
+            }
+            if(countt1[i] != countt3[i]){
+                return -1;
+            }
+        }
+        int i = s1.length()-1;
+        int j = s2.length()-1;
+        int ans = 0;
+        while(i >= 0){
+            if(s2[j] != s1[i]){
+                ans++;
+                i--;
+            }
+            else{
+                i--;
+                j--;
+            }
+        }
+        return ans;
+    }
+};
