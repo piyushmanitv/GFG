@@ -1,0 +1,38 @@
+Minimum Cost for n Characters
+Difficulty: MediumAccuracy: 48.62%Submissions: 10K+Points: 4
+Given four integers n, i, d, and c, where:
+
+i is the cost of inserting a single character,
+d is the cost of deleting the last character,
+c is the cost of copying the entire current string and pasting it immediately (thereby doubling its length).
+Find the minimum cost required to obtain exactly n characters on the screen. Initially, the screen is empty.
+
+
+
+
+
+
+
+
+class Solution {
+  public:
+    int minCost(int n, int i, int d, int c) {
+        vector<int> dp(n + 1, 0);
+
+        dp[0] = 0;
+
+        for (int x = 1; x <= n; x++) {
+            dp[x] = dp[x - 1] + i;
+
+            if (x % 2 == 0) {
+                dp[x] = min(dp[x], dp[x / 2] + c);
+            } else {
+                dp[x] = min(dp[x], dp[x / 2] + c + i);
+
+                dp[x] = min(dp[x], dp[x / 2 + 1] + c + d);
+            }
+        }
+
+        return dp[n];
+    }
+};
