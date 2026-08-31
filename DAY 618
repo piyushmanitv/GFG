@@ -1,0 +1,43 @@
+Marks from Ranks
+Difficulty: MediumAccuracy: 52.15%Submissions: 13K+Points: 4
+Consider an input where all marks obtained are divided into intervals of consecutive numbers represented as l[] and r[] where l[i] and r[i] represent the starting and ending marks (inclusive) of the i-th interval. 
+
+The intervals are sorted in increasing order and do not overlap.
+The rank of a mark is defined by its position among all valid marks in increasing order, with the smallest mark assigned rank 1, the next smallest rank 2, and so on.
+Given an array rank[]. for each value in rank[], find the corresponding mark and return as an array.
+
+
+
+
+
+
+
+
+  class Solution {
+  public:
+    vector<int> getMarks(vector<int> &l, vector<int> &r, vector<int> &rank) {
+        int ls = l.size();
+        int rs = r.size();
+        int start =0;
+        int end = 0;
+        int currank =1;
+        unordered_map<long long ,long long>map;
+        while(start<ls && end<rs)
+        {
+            for(int i= l[start] ; i<=r[end];i++)
+            {
+                map[currank]=i;
+                currank++;
+            }
+            start++;
+            end++;
+        }
+        vector<int>ans;
+        for(int x : rank)
+        {
+            ans.push_back(map[x]);
+        }
+        return ans;
+        
+    }
+}; 
