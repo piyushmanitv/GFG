@@ -1,0 +1,43 @@
+Count Palindromic Strings with Constraints
+Difficulty: MediumAccuracy: 51.99%Submissions: 11K+Points: 4
+Given two integers n  and k, consider an alphabet consisting of the first k lowercase English letters. Find the number of palindromic strings whose length is less than or equal to n, such that:
+
+Every character in the string belongs to the given alphabet.
+No character appears more than twice in the string.
+Note: Since the answer can be very large, return it modulo 10^9+7.
+
+
+
+
+
+
+
+
+
+class Solution {
+  public:
+    typedef long long ll;
+    int mod=1e9+7;
+    int palindromicStrings(int n, int k) {
+        // code here
+        if(n==1) return k;
+        
+        ll ans=k+k;
+        
+        ll prev=k,p=1;
+        for(int i=3; i<=n; i++){
+            if(i%2==0){
+                ans+=prev*1ll;
+                ans%=mod;
+            }
+            else{
+                ans+=(((k-p)*1ll*prev)%mod);
+                ans%=mod;
+                prev=(((k-p)*1ll*prev)%mod);
+                p++;
+            }
+        }
+        
+        return ans%mod;
+    }
+};
