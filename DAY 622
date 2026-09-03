@@ -1,0 +1,78 @@
+Unoccupied Computers
+Difficulty: EasyAccuracy: 51.47%Submissions: 16K+Points: 2Average Time: 20m
+A cafe has n computers. The customer events are represented by a string s of uppercase English letters, where each distinct letter appears exactly twice:
+
+The first occurrence denotes the customer's arrival.
+The second occurrence denotes the customer's departure.
+A customer is assigned a computer only if one is available at the time of arrival, otherwise the customer is rejected and does not use a computer.
+
+Return the number of customers who could not be assigned a computer upon arrival.
+
+
+
+
+
+
+
+
+
+class Solution {
+
+public:
+
+    int solve(int n, string s) {
+
+        vector<int> currentState(26, 0);
+
+        int occupiedCount = 0;
+
+        int unassignedCount = 0;
+
+
+
+        for (char c : s) {
+
+            int idx = c - 'A';
+
+
+
+            if (currentState[idx] == 0) {
+
+                if (occupiedCount < n) {
+
+                    currentState[idx] = 1; 
+
+                    occupiedCount++;
+
+                } else {
+
+                    currentState[idx] = 2; 
+
+                    unassignedCount++;
+
+                }
+
+            }
+
+
+            else {
+
+                if (currentState[idx] == 1) {
+
+                    occupiedCount--; 
+
+                }
+
+                currentState[idx] = 0; 
+
+            }
+
+        }
+
+
+
+        return unassignedCount;
+
+    }
+
+};
