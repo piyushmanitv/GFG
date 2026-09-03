@@ -1,0 +1,34 @@
+Max Adjacent Diffs Sum with 1 Replacements
+Difficulty: MediumAccuracy: 59.76%Submissions: 8K+Points: 4
+Given an integer array arr[], you are allowed to replace any elements with 1.  Find the maximum sum of absolute differences between consecutive elements after any number of modifications.
+
+
+
+
+
+
+class Solution {
+    public:
+      int maxDiffSum(vector<int>& arr) {
+          long long keep = 0;
+
+          long long replace = 0;
+
+          for (int i = 1; i < arr.size(); i++) {
+              long long newKeep = max(
+                  keep + abs(arr[i] - arr[i - 1]),
+                  replace + abs(arr[i] - 1)
+              );
+
+              long long newReplace = max(
+                  keep + abs(1 - arr[i - 1]),
+                  replace
+              );
+
+              keep = newKeep;
+              replace = newReplace;
+          }
+
+          return (int)max(keep, replace);
+      }
+  };
