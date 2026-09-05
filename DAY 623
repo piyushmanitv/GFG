@@ -1,0 +1,29 @@
+Longest Subsequence with Adjacent Diff as 1
+Difficulty: MediumAccuracy: 29.43%Submissions: 65K+Points: 4
+Given an array arr[] with n elements. find the longest subsequence such that the absolute difference between adjacent elements is one.
+
+
+
+
+
+
+
+
+
+class Solution {
+  public:
+    int longestSubseq(vector<int>& a) {
+        // code here
+        int n=a.size();
+        unordered_map<int,int>mp;
+        int maxi=0,b,c;
+        for(auto i:a)
+        {
+            b=i-1,c=i+1;
+            mp[i]=max(mp[b],mp[c])+1;
+            maxi=max(maxi,mp[i]);
+        }
+        return maxi;
+        
+    }
+};
