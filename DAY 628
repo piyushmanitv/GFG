@@ -1,0 +1,47 @@
+Max Digit Sum Number in 1 to n
+Difficulty: EasyAccuracy: 49.35%Submissions: 13K+Points: 2
+Given a number n, find a number in the range from 1 to n such that its digit sum is maximum. If there are multiple such numbers, return the largest of them.
+
+
+
+
+
+
+
+
+
+class Solution {
+  public:
+    int cnt9(string &num){
+        int cnt = 0 ;
+        for(int i = 1 ; i < num.length() ; i++){
+            if(num[i] == '9') cnt ++ ;
+        }
+        return cnt ;
+    }
+    
+    int findMax(int n) {
+        string num = to_string(n) ;
+        int l = num.length() ;
+        
+        // first case all 9 following a digit ;
+        if(cnt9(num) == l - 1) return n ;
+        
+        string num1 ;
+        // creating maximum with all 9 following one less most significant digit
+        if(num[0] > 1) num1.push_back(num[0] - 1) ;
+        for(int i = 1 ; i < l ; i ++) num1.push_back('9') ;
+        
+        int ans = max(ans ,stoi(num1)) ;
+        // shifting one , this will keep the sum of digit same , nut increase the actual digit
+        for(int i = 0 ; i < l - 1 ; i ++){
+            if(num1[i] + 1 <= num[i] && num1[i + 1] - 1 <= num[i + 1]) {
+                num1[i] += 1 ; 
+                num1[i + 1] -= 1 ;
+            }
+            if(ans < stoi(num1) && n >= stoi(num1)) ans = stoi(num1) ;
+            else break ;
+        }
+        return ans;
+    }
+};
