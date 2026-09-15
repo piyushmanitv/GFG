@@ -1,0 +1,41 @@
+Visit Leaves with Budget
+Difficulty: EasyAccuracy: 50.05%Submissions: 49K+Points: 2
+Given a binary tree and an integer k, where you start from the root at level 1. The cost of visiting a leaf node is equal to the level of that leaf node. You can visit any number of leaf nodes, but the total cost of visiting them must not exceed k.
+
+Return the maximum number of leaf nodes that can be visited within the given budget.
+
+
+
+
+
+
+
+
+
+class Solution {
+	public:
+	int getCount(Node *root, int k) {
+		// code here
+		int result = 0;
+		int depth = 1;
+		queue<Node*>q;
+		q.push(root);
+		
+		while (!q.empty()) {
+			int size = q.size();
+			for (int i = 0; i<size; ++i) {
+				Node *node = q.front(); q.pop();
+				if (node->left == nullptr && node->right == nullptr &&
+				k >= depth) {
+					result++;
+					k -= depth;
+				}
+				if (node->left != nullptr)q.push(node->left);
+				if (node->right != nullptr)q.push(node->right);
+			}
+			depth++;
+		}
+		return result;
+	}
+};
+ 
