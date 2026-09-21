@@ -1,0 +1,64 @@
+Check Level Anagrams in Binary Trees
+Solved
+Difficulty: MediumAccuracy: 56.88%Submissions: 29K+Points: 4
+Given the roots of two binary trees root1 and root2, check whether the nodes at every corresponding level of the two trees are anagrams of each other.
+
+Two levels are considered anagrams if they contain the same node values with the same frequencies, regardless of their order.
+
+
+
+
+
+
+
+
+
+
+/* Structure of binary tree Node
+class Node {
+    public:
+    int data;
+    Node *left, *right;
+    Node(int x) {
+        data = x;
+        left = right = nullptr;
+    }
+};
+*/
+
+class Solution {
+public:
+    static bool cmp(Node* n1, Node* n2) { return n1->data < n2->data; }
+    bool solve(vector<Node*> root1, vector<Node*> root2) {
+        if (root1.empty() && root2.empty())
+            return true;
+
+        if (root1.size() != root2.size())
+            return false;
+
+        sort(root1.begin(), root1.end(), cmp);
+        sort(root2.begin(), root2.end(), cmp);
+
+        for (int i = 0; i < root1.size(); i++)
+            if (root1[i]->data != root2[i]->data)
+                return false;
+
+        vector<Node*> v1, v2;
+        for (auto it : root1) {
+            if (it->left)
+                v1.push_back(it->left);
+            if (it->right)
+                v1.push_back(it->right);
+        }
+        for (auto it : root2) {
+            if (it->left)
+                v2.push_back(it->left);
+            if (it->right)
+                v2.push_back(it->right);
+        }
+        return solve(v1, v2);
+    }
+    bool areAnagrams(Node* root1, Node* root2) {
+        return solve({root1}, {root2});
+    }
+};
