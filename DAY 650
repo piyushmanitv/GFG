@@ -1,0 +1,63 @@
+Minimum Time to Finish Project
+Solved
+Difficulty: MediumAccuracy: 59.45%Submissions: 12K+Points: 4
+An IT company is working on a large project consisting of n modules.
+
+The given array time required (in months) to complete the ith module is stored in the array duration[].
+The array dependencies[][], where dependencies[i] = [u, v], indicates that module v can be started only after module u is completed. 
+Multiple modules can be worked on simultaneously as long as all their dependencies have been completed.
+
+Find the minimum time required to complete the entire project.
+
+If the project cannot be completed due to a cyclic dependency, return -1.
+A module is never dependent on itself.
+
+
+
+
+
+
+
+
+
+
+
+class Solution {
+  public:
+    int minTime(vector<int> &duration, vector<vector<int>> &dependencies) {
+        int n = duration.size(), ans = 0, count = 0;
+        vector<int> graph[n];
+        vector<int> indegree(n), timeToCompleteNode(n);
+        queue<pair<int, int>> q;
+        
+        for (const auto &v: dependencies) {
+            graph[v[0]].push_back(v[1]);
+            indegree[v[1]]++;
+        }
+        
+        for (int i = 0; i < n; i++) {
+            timeToCompleteNode[i] = duration[i];
+            if (indegree[i] == 0)
+                q.push({i, timeToCompleteNode[i]});
+        }
+        
+        while (!q.empty()) {
+            int node = q.front().first;
+            int totTime = q.front().second;
+            q.pop();
+            
+            ans = max(ans, totTime);
+            count++;
+            
+            for (const int &child: graph[node]) {
+                timeToCompleteNode[child] = max(timeToCompleteNode[child], totTime + duration[child]);
+                indegree[child]--;
+                
+                if (indegree[child] == 0)
+                    q.push({child, timeToCompleteNode[child]});
+            }
+        }
+        
+        return count == n ? ans : -1;
+    }
+};
