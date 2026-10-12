@@ -1,0 +1,64 @@
+Longest Increasing Path in Matrix
+Difficulty: HardAccuracy: 44.5%Submissions: 26K+Points: 8
+Given a matrix with n rows and m columns, find the length of the longest path such that:
+
+The path can start and end at any cell.
+A cell cannot be visited more than once.
+The values in path are strictly increasing. 
+From each cell,  you can move left, right, up, or down.
+Diagonal moves and moves outside the matrix are not allowed.
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+class Solution {
+public:
+    vector<int> v;
+    vector<int> dp;
+    int solve(int i,int j,vector<vector<int>> &matrix,int n,int m){
+        if(dp[i*m+j] != INT_MAX){
+            return dp[i*m+j];
+        }
+        v[i*m+j]++;
+        int a = 1;
+        int b = 1;
+        int c = 1;
+        int d = 1;
+        if(i+1 < n && v[(i+1)*m+j] == 0 && matrix[i+1][j] > matrix[i][j]){
+            a = 1 + solve(i+1,j,matrix,n,m);
+        }
+        if(i-1 >= 0 && v[(i-1)*m+j] == 0 && matrix[i-1][j] > matrix[i][j]){
+            b = 1 + solve(i-1,j,matrix,n,m);
+        }
+        if(j+1 < m && v[i*m+j+1] == 0 && matrix[i][j+1] > matrix[i][j]){
+            c = 1 + solve(i,j+1,matrix,n,m);
+        }
+        if(j-1 >= 0 && v[i*m+j-1] == 0 && matrix[i][j-1] > matrix[i][j]){
+            d = 1 + solve(i,j-1,matrix,n,m);
+        }
+        v[i*m+j]--;
+        return dp[i*m+j] = max(max(a,b),max(c,d));
+    }
+    int longIncPath(vector<vector<int>> &matrix, int n, int m) {
+        //no way other than DFS.
+        dp.assign(n*m+1,INT_MAX);
+        v.assign(n*m+1,0);
+        int maxi = 1;
+        for(int i = 0;i<n;i++){
+        for(int j = 0;j<m;j++){
+            maxi = max(maxi,solve(i,j,matrix,n,m));
+        }
+        }
+        return maxi;
+    }
+};
