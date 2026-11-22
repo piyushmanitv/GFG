@@ -1,0 +1,31 @@
+Longest Subarray Sum Divisible by K
+Difficulty: MediumAccuracy: 33.72%Submissions: 119K+Points: 4
+Given an array arr[] and a positive integer k, find the length of the longest subarray whose sum is divisible by k.
+
+Note: If there is no subarray with sum divisible by k, then return 0.
+
+
+
+
+
+
+
+class Solution {
+  public:
+    int longestSubarrayDivK(vector<int>& arr, int k) {
+        unordered_map<int, int> first;
+        long long sum = 0;
+        int maxLen = 0;
+        first[0] = -1;
+        for (int i = 0; i < arr.size(); i++) {
+            sum += arr[i];
+            int rem = ((sum % k) + k) % k;
+            if (first.count(rem)) {
+                maxLen = max(maxLen, i - first[rem]);
+            } else {
+                first[rem] = i;
+            }
+        }
+        return maxLen;
+    }
+};
