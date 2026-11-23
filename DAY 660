@@ -1,0 +1,53 @@
+Character at Position in Infinite String
+Difficulty: MediumAccuracy: 44.43%Submissions: 6K+Points: 4
+Given a string s and an integer pos, an infinite string is constructed by repeatedly applying the following operation. In the i-th step, append i consecutive $ characters, followed by the reverse of the current string, to the current string.
+
+Formally, if the current string is s, update it as:
+
+s = s + ('$' repeated i times) + reverse(s)
+The initial string is the given s, and the process continues indefinitely.
+
+Find and return the character at the pos(1-based indexing) in the resulting infinite string.
+
+
+
+
+
+
+
+
+
+
+
+class Solution {
+  public:
+    char posInfinite(string &s, int pos) {
+        long long len = s.size();
+        long long p = pos;
+
+        long long i = 1;
+        while (len < p) {
+            len = 2 * len + i;
+            i++;
+        }
+
+        while (p > (long long)s.size()) {
+            long long oldLen = (len - (i - 1)) / 2;
+
+            if (p <= oldLen) {
+                len = oldLen;
+            }
+            else if (p <= oldLen + i - 1) {
+                return '$';
+            }
+            else {
+                p = len - p + 1;
+                len = oldLen;
+            }
+
+            i--;
+        }
+
+        return s[p - 1];
+    }
+};
