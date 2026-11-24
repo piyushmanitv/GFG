@@ -1,0 +1,50 @@
+Two Pairs with Same Sum
+Difficulty: MediumAccuracy: 50.31%Submissions: 20K+Points: 4Average Time: 15m
+Given an array arr[] of positive integers, find four indices a, b, c, and d such that arr[a] + arr[b] = arr[c] + arr[d], where a, b, c, d are all distinct indices.
+
+If multiple such quadruplets exist, return the one that is lexicographically smallest when the indices are considered in the order a, b, c, d.
+If no such quadruplet exists, return {-1, -1, -1, -1}. 
+Ensure a < b and c < d, and the pair (a, b) is lexicographically smaller than the pair (c, d).
+
+
+
+
+
+
+
+
+
+class Solution {
+  public:
+    vector<int> findPairs(vector<int>& arr) {
+        // code here
+        
+        int n = arr.size();
+        unordered_map<long long, pair<int, int>> map;
+        vector<int> ans = {-1, -1, -1, -1};
+        
+        for (int i = 0; i < n; i++) {
+            for (int j = i +1; j < n; j++) {
+                long long sum = arr[i] + arr[j];
+                
+                if (map.count(sum)) {
+                    auto [a, b] = map[sum];
+                    
+                    if (a != i && a != j && b != i && b != j) {
+                        vector<int>temp = {a, b, i, j};
+                        
+                        if (ans[0] == -1 || temp < ans) {
+                            ans = temp;
+                        }
+                    }
+                } else {
+                    map[sum] = {i, j};
+                }
+            }
+        }
+        
+        return ans;
+        
+    }
+};
+
