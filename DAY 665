@@ -1,0 +1,30 @@
+Range Vowel Count Queries
+Difficulty: MediumAccuracy: 82.03%Submissions: 4K+Points: 4
+Given a string s and a 2D array queries[][], where each query consists of two integers l and r, find the number of vowels in the substring s[l....r] for each query. The substring includes both indices l and r.
+
+Return an array containing the answers to all queries in the order they are given.
+
+
+
+
+
+
+
+
+
+class Solution {
+  public:
+    vector<int> countVowels(string &s, vector<vector<int>> &queries) {
+            int count=0;
+            vector<int>pre, ans;
+            for(auto &b: s){
+                if(b=='a' or b=='e' or b=='i' or b=='o' or b=='u'){count++;}
+                pre.push_back(count);
+            }
+            for(auto &b: queries){
+                if(b[0]==0){ans.push_back(pre[b[1]]);}
+                else{ans.push_back(pre[b[1]]- pre[b[0]-1]);}
+            }
+            return ans;
+    }
+};
