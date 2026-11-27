@@ -1,0 +1,53 @@
+3946. Maximum Number of Items From Sale I
+Medium
+Topics
+premium lock icon
+Companies
+Hint
+You are given a 2D integer array items, where items[i] = [factori, pricei] represents the ith item. You are also given an integer budget.
+
+There are unlimited copies of each item available for purchase.You may buy any number of copies of any items such that the total cost of the purchased copies is at most budget.
+
+After buying items, you may receive free copies according to the following rules:
+
+For each item i that you bought at least one copy of, you receive one free copy of every item j such that j != i and factori divides factorj.
+Buying multiple copies of the same item i does not give additional free copies through item i.
+The same item j can be received multiple times for free if it is received from purchases of different item types.
+Return the maximum total number of item copies you can obtain, including both purchased copies and free copies, while spending at most budget on purchased items.
+
+
+
+
+
+
+
+
+
+
+class Solution {
+public:
+    int maximumSaleItems(vector<vector<int>>& items, int budget) {
+        int maxF = 0, minP = INT_MAX;
+        for (auto& it : items) {
+            maxF = max(maxF, it[0]);
+            minP = min(minP, it[1]);
+        }
+        vector<int> freq(maxF + 1, 0), mult(maxF + 1, 0);
+        for (auto& it : items) freq[it[0]]++;
+        for (int d = 1; d <= maxF; d++) {
+            for (int k = d; k <= maxF; k += d) mult[d] += freq[k];
+        }
+        vector<int> dp(budget + 1, 0);
+        for (auto& it : items) {
+            int val = mult[it[0]], p = it[1];
+            for (int b = budget; b >= p; b--) {
+                dp[b] = max(dp[b], dp[b - p] + val);
+            }
+        }
+        int ans = 0;
+        for (int b = 0; b <= budget; b++) {
+            ans = max(ans, dp[b] + (budget - b) / minP);
+        }
+        return ans;
+    }
+};
