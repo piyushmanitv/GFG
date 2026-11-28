@@ -1,0 +1,33 @@
+Path Exists Between Two Vertices
+Difficulty: EasyAccuracy: 68.73%Submissions: 7K+Points: 2
+Given an undirected graph with V vertices numbered from 0 to V - 1, represented by an adjacency list adj[][], where adj[i] contains all vertices adjacent to vertex i. Also given two vertices u and v, check whether a path exists between them.
+
+Return true if a path exists, otherwise return false.
+
+
+
+
+
+
+
+
+class Solution {
+  public:
+    bool dfs(int u, vector<vector<int>> &adj, int v, vector<bool> &visited){
+      visited[u]=true;
+      if(u==v) return true;
+      
+      for(int ad: adj[u]){
+        if(!visited[ad])
+          { if(dfs(ad, adj, v, visited)) return true; }
+      }
+      return false;
+    }
+    
+    
+    bool checkPath(vector<vector<int>> &adj, int u, int v){
+      int n=adj.size(); 
+      vector<bool> visited(n, false);
+      return dfs(u, adj, v, visited);
+    }
+};
